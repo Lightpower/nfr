@@ -14,74 +14,93 @@
 ActiveRecord::Schema.define(:version => 20130320092202) do
 
   create_table "code_strings", :force => true do |t|
-    t.string   "data"
-    t.integer  "code_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string  "data",    :null => false
+    t.integer "code_id"
   end
+
+  add_index "code_strings", ["code_id"], :name => "index_code_strings_on_code_id"
+  add_index "code_strings", ["data"], :name => "index_code_strings_on_data", :unique => true
 
   create_table "codes", :force => true do |t|
-    t.string   "type"
-    t.integer  "number"
-    t.string   "name"
-    t.string   "info"
-    t.string   "ko"
-    t.integer  "parent_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string  "type",      :default => "TaskCode", :null => false
+    t.integer "number",                            :null => false
+    t.string  "name",                              :null => false
+    t.string  "info"
+    t.string  "ko",                                :null => false
+    t.integer "parent_id"
   end
+
+  add_index "codes", ["ko"], :name => "index_codes_on_ko"
+  add_index "codes", ["number"], :name => "index_codes_on_number"
+  add_index "codes", ["parent_id"], :name => "index_codes_on_parent_id"
+  add_index "codes", ["type"], :name => "index_codes_on_type"
 
   create_table "hints", :force => true do |t|
-    t.integer  "number"
-    t.string   "data"
-    t.integer  "delay"
-    t.integer  "cost"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer "number",  :null => false
+    t.text    "data"
+    t.integer "delay"
+    t.float   "cost"
+    t.integer "task_id", :null => false
   end
+
+  add_index "hints", ["number", "task_id"], :name => "index_hints_on_number_and_task_id", :unique => true
+  add_index "hints", ["number"], :name => "index_hints_on_number"
+  add_index "hints", ["task_id"], :name => "index_hints_on_task_id"
 
   create_table "logs", :force => true do |t|
-    t.integer  "team_id"
-    t.integer  "user_id"
-    t.string   "data"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "login",       :null => false
+    t.string   "data",        :null => false
+    t.integer  "result_code", :null => false
+    t.integer  "team_id",     :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
+
+  add_index "logs", ["team_id"], :name => "index_logs_on_team_id"
 
   create_table "tasks", :force => true do |t|
-    t.integer  "number"
-    t.string   "name"
-    t.string   "data"
-    t.integer  "zone_id"
-    t.integer  "task_id"
-    t.integer  "code_count"
-    t.integer  "bonus"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer "number"
+    t.string  "name"
+    t.text    "data"
+    t.integer "code_quota"
+    t.float   "bonus"
+    t.integer "duration"
+    t.integer "zone_id"
+    t.integer "task_id"
   end
+
+  add_index "tasks", ["task_id"], :name => "index_tasks_on_task_id"
+  add_index "tasks", ["zone_id"], :name => "index_tasks_on_zone_id"
 
   create_table "team_codes", :force => true do |t|
-    t.integer  "team_id"
-    t.integer  "code_id"
     t.string   "data"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "team_zones", :force => true do |t|
-    t.integer  "team_id"
+    t.integer  "state"
+    t.integer  "team_id",    :null => false
+    t.integer  "code_id",    :null => false
     t.integer  "zone_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
-  create_table "teams", :force => true do |t|
-    t.string   "name"
-    t.string   "alternative_name"
-    t.string   "avatar_url"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+  add_index "team_codes", ["code_id"], :name => "index_team_codes_on_code_id"
+  add_index "team_codes", ["team_id", "code_id"], :name => "index_team_codes_on_team_id_and_code_id", :unique => true
+  add_index "team_codes", ["team_id"], :name => "index_team_codes_on_team_id"
+  add_index "team_codes", ["zone_id"], :name => "index_team_codes_on_zone_id"
+
+  create_table "team_zones", :force => true do |t|
+    t.integer "team_id"
+    t.integer "zone_id"
   end
+
+  add_index "team_zones", ["team_id", "zone_id"], :name => "index_team_zones_on_team_id_and_zone_id", :unique => true
+
+  create_table "teams", :force => true do |t|
+    t.string "name",             :null => false
+    t.string "alternative_name"
+    t.string "avatar_url"
+  end
+
+  add_index "teams", ["name"], :name => "index_teams_on_name"
 
   create_table "users", :force => true do |t|
     t.integer  "team_id"
@@ -101,12 +120,15 @@ ActiveRecord::Schema.define(:version => 20130320092202) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+  add_index "users", ["team_id"], :name => "index_users_on_team_id"
 
   create_table "zones", :force => true do |t|
-    t.integer  "number"
-    t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer "number",    :null => false
+    t.string  "name",      :null => false
+    t.string  "image_url"
   end
+
+  add_index "zones", ["name"], :name => "index_zones_on_name", :unique => true
+  add_index "zones", ["number"], :name => "index_zones_on_number", :unique => true
 
 end
