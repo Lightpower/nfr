@@ -1,4 +1,8 @@
 class TeamZone < ActiveRecord::Base
-  attr_accessible :team_id, :zone_id
+
+  belongs_to :team
+  belongs_to :zone
+
+  attr_accessible :team, :team_id, :zone, :zone_id
 
 end

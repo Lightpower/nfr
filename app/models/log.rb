@@ -1,3 +1,6 @@
 class Log < ActiveRecord::Base
-  attr_accessible :data, :team_id, :user_id
+
+  belongs_to :team
+
+  attr_accessible :data, :team, :team_id, :user_id
 end

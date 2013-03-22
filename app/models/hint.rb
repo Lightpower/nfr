@@ -1,3 +1,6 @@
 class Hint < ActiveRecord::Base
-  attr_accessible :cost, :data, :delay, :number
+
+  belongs_to :task
+
+  attr_accessible :cost, :data, :delay, :number, :task, :task_id
 end

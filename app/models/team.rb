@@ -2,7 +2,9 @@ class Team < ActiveRecord::Base
 
   has_many :users
   has_many :zones, throw: :team_zones
-  has_many :codes, throw: :team_codes
+  has_many :team_codes
+  has_many :logs
+  has_many :team_bonuses
 
   attr_accessible :name, :alternative_name, :avatar_url
 

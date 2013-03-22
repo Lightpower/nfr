@@ -2,8 +2,9 @@ class TeamCode < ActiveRecord::Base
 
   belongs_to :code
   belongs_to :team
+  belongs_to :zone
 
-  attr_accessible :code, :code_id, :data, :team, :team_id, :state
+  attr_accessible :code, :code_id, :data, :team, :team_id, :state, :zone, :zone_id
 
   class << self
 

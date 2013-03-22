@@ -1,9 +1,11 @@
 class Zone < ActiveRecord::Base
 
-  has_many :teams, throw: :team_zones
-  has_many :team_codes
+  has_many   :teams, throw: :team_zones
+  has_many   :team_codes
+  has_many   :tasks
+  belongs_to :access_code, foreign_key: "code_id"
 
-  attr_accessible :name, :number, :image_url
+  attr_accessible :name, :number, :image_url, :access_code, :code_id
 
   ##
   # Define the master of this zone and the time of capturing
