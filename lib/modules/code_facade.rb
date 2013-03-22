@@ -2,9 +2,10 @@
 module CodeFacade
 
   RESULT = [
-      {not_found: 'Код не найден'},
-      {repeated:  'Повторное введение кода'},
-      {ok:        'Код принят'}
+      {not_found:     'Код не найден'},
+      {not_available: 'Код недоступен'},
+      {repeated:      'Повторное введение кода'},
+      {ok:            'Код принят'}
   ]
 
   ##
@@ -37,19 +38,27 @@ module CodeFacade
   #
   def check_code(params)
     result = nil
-    code = CodeString.find_by_data params[:code]
+    code_string = CodeString.find_by_data params[:code]
+    code = code_string.code
     # Found?
     if code.present?
-      team_code = TeamCode.where(team: params[:user].team, code: code.code)
-      if team_code.blank?
+      #Check if Zone of this code is available for this team
+      if code.zone.blank? || TeamZone.where(team: params[:user].team, zone: code.zone).present?
 
-        # Check as found
-        TeamCode.create(team: params[:user].team, code: code.code, state: 'found', zone: code.zone)
+        # Was this code already found?
+        team_code = TeamCode.where(team: params[:user].team, code: code)
+        if team_code.blank?
+
+          # Mark as found
+          TeamCode.create(team: params[:user].team, code: code.code, state: 'accepted', zone: code.zone)
+        else
+          result = :repeated
+        end
       else
-        result = :repeated
+        result = :not_found
       end
     else
-      result = :not_found
+      result = :not_available
     end
 
     # Add to log

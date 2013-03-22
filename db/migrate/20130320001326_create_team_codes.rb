@@ -1,8 +1,9 @@
 class CreateTeamCodes < ActiveRecord::Migration
   def change
     create_table :team_codes do |t|
-      t.string :data
+      t.string  :data
       t.integer :state
+      t.string  :color
 
       t.references :team, null: false
       t.references :code, null: false
