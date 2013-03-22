@@ -2,9 +2,9 @@ class CreateHints < ActiveRecord::Migration
   def change
     create_table :hints do |t|
       t.integer :number, null: false
-      t.text :data
+      t.text    :data
       t.integer :delay
-      t.float :cost
+      t.float   :cost
 
       t.references :task, null: false
     end

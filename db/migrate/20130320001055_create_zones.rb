@@ -4,6 +4,8 @@ class CreateZones < ActiveRecord::Migration
       t.integer :number,  null: false, unique: true
       t.string :name,     null: false, unique: true
       t.string :image_url
+
+      t.references :code
     end
 
     add_index :zones, :number, unique: true

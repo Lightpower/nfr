@@ -10,6 +10,7 @@ class CreateTasks < ActiveRecord::Migration
 
       t.references :zone
       t.references :task
+      t.references :code
     end
 
     add_index :tasks, :zone_id
