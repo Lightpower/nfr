@@ -1,10 +1,10 @@
 class CreateCodeStrings < ActiveRecord::Migration
   def change
     create_table :code_strings do |t|
-      t.string :data,    null: false, unique: true
+      t.string :data,     null: false, unique: true
       t.string :color
 
-      t.references :code
+      t.references :code, null: false
     end
 
     add_index :code_strings, :data, unique: true

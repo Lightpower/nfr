@@ -1,0 +1,9 @@
+<% if current_user.present? %>
+  <nav id="user_info" class="menu">
+    Дом: <%= content_tag(:b, current_user.team.name) %><br><br>
+    <ul>
+      <%= content_tag(:li, link_to("Изменить данные", edit_user_registration_path)) %>
+      <%= content_tag(:li, link_to("Выйти", destroy_user_session_path, method: :delete)) %>
+    </ul>
+  </nav>
+<% end %>

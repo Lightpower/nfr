@@ -3,7 +3,7 @@ class CreateTeams < ActiveRecord::Migration
     create_table :teams do |t|
       t.string :name,             null: false
       t.string :alternative_name
-      t.string :avatar_url
+      t.string :image_url
     end
 
     add_index :teams, :name

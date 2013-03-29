@@ -11,29 +11,29 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130320092202) do
+ActiveRecord::Schema.define(:version => 20130323145654) do
 
   create_table "code_strings", :force => true do |t|
     t.string  "data",    :null => false
-    t.integer "code_id"
+    t.string  "color"
+    t.integer "code_id", :null => false
   end
 
   add_index "code_strings", ["code_id"], :name => "index_code_strings_on_code_id"
   add_index "code_strings", ["data"], :name => "index_code_strings_on_data", :unique => true
 
   create_table "codes", :force => true do |t|
-    t.string  "type",      :default => "TaskCode", :null => false
-    t.integer "number",                            :null => false
-    t.string  "name",                              :null => false
+    t.integer "number",                   :null => false
+    t.string  "name",                     :null => false
     t.string  "info"
-    t.string  "ko",                                :null => false
-    t.integer "parent_id"
+    t.string  "ko",                       :null => false
+    t.string  "color"
+    t.float   "bonus",   :default => 0.0, :null => false
+    t.integer "task_id"
   end
 
   add_index "codes", ["ko"], :name => "index_codes_on_ko"
   add_index "codes", ["number"], :name => "index_codes_on_number"
-  add_index "codes", ["parent_id"], :name => "index_codes_on_parent_id"
-  add_index "codes", ["type"], :name => "index_codes_on_type"
 
   create_table "hints", :force => true do |t|
     t.integer "number",  :null => false
@@ -61,31 +61,57 @@ ActiveRecord::Schema.define(:version => 20130320092202) do
   create_table "tasks", :force => true do |t|
     t.integer "number"
     t.string  "name"
+    t.text    "preview"
     t.text    "data"
     t.integer "code_quota"
     t.float   "bonus"
     t.integer "duration"
     t.integer "zone_id"
     t.integer "task_id"
+    t.integer "code_id"
   end
 
   add_index "tasks", ["task_id"], :name => "index_tasks_on_task_id"
   add_index "tasks", ["zone_id"], :name => "index_tasks_on_zone_id"
 
+  create_table "team_bonus", :force => true do |t|
+    t.string  "bonus_type", :null => false
+    t.float   "rate"
+    t.integer "amount"
+    t.integer "team_id",    :null => false
+  end
+
+  add_index "team_bonus", ["team_id"], :name => "index_team_bonus_on_team_id"
+
   create_table "team_codes", :force => true do |t|
     t.string   "data"
     t.integer  "state"
-    t.integer  "team_id",    :null => false
-    t.integer  "code_id",    :null => false
+    t.string   "color"
+    t.float    "bonus",      :default => 0.0, :null => false
+    t.integer  "team_id",                     :null => false
+    t.integer  "code_id",                     :null => false
     t.integer  "zone_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
   end
 
   add_index "team_codes", ["code_id"], :name => "index_team_codes_on_code_id"
   add_index "team_codes", ["team_id", "code_id"], :name => "index_team_codes_on_team_id_and_code_id", :unique => true
   add_index "team_codes", ["team_id"], :name => "index_team_codes_on_team_id"
   add_index "team_codes", ["zone_id"], :name => "index_team_codes_on_zone_id"
+
+  create_table "team_hints", :force => true do |t|
+    t.float    "cost",       :default => 0.0, :null => false
+    t.integer  "team_id"
+    t.integer  "hint_id"
+    t.integer  "zone_id"
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+  end
+
+  add_index "team_hints", ["hint_id"], :name => "index_team_hints_on_hint_id"
+  add_index "team_hints", ["team_id"], :name => "index_team_hints_on_team_id"
+  add_index "team_hints", ["zone_id"], :name => "index_team_hints_on_zone_id"
 
   create_table "team_zones", :force => true do |t|
     t.integer "team_id"
@@ -97,7 +123,7 @@ ActiveRecord::Schema.define(:version => 20130320092202) do
   create_table "teams", :force => true do |t|
     t.string "name",             :null => false
     t.string "alternative_name"
-    t.string "avatar_url"
+    t.string "image_url"
   end
 
   add_index "teams", ["name"], :name => "index_teams_on_name"
@@ -126,6 +152,8 @@ ActiveRecord::Schema.define(:version => 20130320092202) do
     t.integer "number",    :null => false
     t.string  "name",      :null => false
     t.string  "image_url"
+    t.text    "preview"
+    t.integer "code_id"
   end
 
   add_index "zones", ["name"], :name => "index_zones_on_name", :unique => true

@@ -1,12 +1,13 @@
 class CreateTasks < ActiveRecord::Migration
   def change
     create_table :tasks do |t|
-      t.integer :number
-      t.string :name
-      t.text :data
-      t.integer :code_quota
-      t.float :bonus
-      t.integer :duration
+      t.integer  :number
+      t.string   :name
+      t.text     :preview
+      t.text     :data
+      t.integer  :code_quota
+      t.float    :bonus
+      t.integer  :duration
 
       t.references :zone
       t.references :task

@@ -1,10 +1,10 @@
 <h2>Вход</h2>
 
 <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-  <div><%= f.label :email %><br />
+  <div><%= f.label :email %>
   <%= f.email_field :email, :autofocus => true %></div>
 
-  <div><%= f.label :password, "Пароль" %><br />
+  <div><%= f.label :password, "Пароль" %>
   <%= f.password_field :password %></div>
 
   <% if devise_mapping.rememberable? -%>

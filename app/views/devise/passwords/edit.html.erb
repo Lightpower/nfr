@@ -4,10 +4,10 @@
   <%= devise_error_messages! %>
   <%= f.hidden_field :reset_password_token %>
 
-  <div><%= f.label :password, "Новый пароль" %><br />
+  <div><%= f.label :password, "Новый пароль" %>
   <%= f.password_field :password, :autofocus => true %></div>
 
-  <div><%= f.label :password_confirmation, "Подтвердите новый пароль" %><br />
+  <div><%= f.label :password_confirmation, "Подтвердите новый пароль" %>
   <%= f.password_field :password_confirmation %></div>
 
   <div><%= f.submit "Сменить мой пароль" %></div>

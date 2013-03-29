@@ -1,0 +1,7 @@
+<% if @zones.present? %>
+  <% @zones.each do |zone|  %>
+    <%=  render 'zones/item', zone: zone %>
+	<% end %>
+<% else %>
+	 <div class='zone'>Нет доступных королевств</div>
+<% end %>

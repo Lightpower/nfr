@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class Code < ActiveRecord::Base
 
   has_one :hold_zone, class_name: 'Zone', foreign_key: 'code_id'
@@ -5,7 +6,21 @@ class Code < ActiveRecord::Base
   belongs_to :task
   has_many :code_strings
 
-  attr_accessible :info, :ko, :name, :number, :parent_id, :type
+  attr_accessible :info, :ko, :name, :number, :parent_id, :type, :code_strings, :color, :bonus
+  accepts_nested_attributes_for :code_strings
+
+  STATES = [:accepted, :accessed, :repeated, :not_found, :not_available, :not_enough_costs]
+  STATE_NAMES = {accepted: 'принят', accessed: 'код доступа', repeated: 'повторно', not_found: 'не принят', not_available: ' не принят', not_enough_costs: 'слишком дорого'}
+  STATE_COLORS = {accepted: 'lime', accessed: 'darkgreen', repeated: 'yellow', not_found: 'grey', not_available: 'grey', not_enough_costs: 'red'}
+
+  class << self
+    ##
+    # Ordered by number
+    #
+    def by_order
+      order("codes.number")
+    end
+  end
 
   ##
   # Define Zone which this code belongs to.
@@ -14,8 +29,14 @@ class Code < ActiveRecord::Base
   # Returns:
   # - {Zone} Zone if any or nil if this is the multizone code
   def zone
-    task.try(:zone)
+    hold_zone || task.try(:zone) || hold_task.zone
   end
 
-
+  ##
+  # Show code by name or by the first code_string
+  #
+  def show_code
+    return name if name.present?
+    code_strings.first.try(:data)
+  end
 end

@@ -1,9 +1,10 @@
 class Zone < ActiveRecord::Base
 
-  has_many   :teams, throw: :team_zones
+  has_many   :teams, through: :team_zones
+  has_many   :team_zones
   has_many   :team_codes
   has_many   :tasks
-  belongs_to :access_code, foreign_key: "code_id"
+  belongs_to :access_code, class_name: 'Code', foreign_key: 'code_id'
 
   attr_accessible :name, :number, :image_url, :access_code, :code_id
 
@@ -21,5 +22,12 @@ class Zone < ActiveRecord::Base
     end
 
     result
+  end
+
+  ##
+  # Generate autoincrement task number
+  #
+  def new_task_number
+    tasks.size + 1
   end
 end

@@ -4,6 +4,7 @@ class CreateTeamCodes < ActiveRecord::Migration
       t.string  :data
       t.integer :state
       t.string  :color
+      t.float   :bonus, null: false, default: 0
 
       t.references :team, null: false
       t.references :code, null: false

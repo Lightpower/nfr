@@ -1,0 +1,11 @@
+<div class='task <%= 'unavailable' unless task.is_available?(current_user) %>'>
+	<% if task.is_available?(current_user) %>
+    <%= content_tag(:span, task.number) %>. <%= content_tag(:span, task.name) %><br>
+    <%= task.data.html_safe %><br>
+		KO: <%= task.codes.by_order.map{|code| ko_colored(code, current_user.team.id, @results)}.join(', ').html_safe %>
+	<% else %>
+    <%= content_tag(:span, task.number) %>. <%= content_tag(:span, task.name) %> <span class='warning'>(Недоступно)</span><br>
+    <%= task.show_preview.html_safe %>
+  <% end %>
+	<%= render 'hints/item', task: task %>
+</div>

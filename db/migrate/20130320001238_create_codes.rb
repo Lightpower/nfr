@@ -6,6 +6,7 @@ class CreateCodes < ActiveRecord::Migration
       t.string  :info
       t.string  :ko,      null: false
       t.string  :color
+      t.float   :bonus,   null:false, default: 0
 
       t.references :task
     end
