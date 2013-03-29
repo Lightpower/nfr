@@ -1,0 +1,12 @@
+// Place all the styles related to the Game controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+div.hint, div.hint_data {
+  display: block;
+  margin: 5px;
+  background-color: #CCCCCC;
+  border-color: #000000;
+  border-width: 1px;
+  border-style: solid
+}

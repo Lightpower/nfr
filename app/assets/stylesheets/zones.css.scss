@@ -1,0 +1,29 @@
+// Place all the styles related to the Game controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+div.zone {
+  display: block;
+  margin: 10px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  background-color: #999999;
+  border-color: #222222;
+  border-width: 2px;
+  border-style: solid
+}
+
+div.zone_header {
+  display: inline-block;
+  span {
+    font-size: 1.5em;
+    font-style: bold;
+    margin: 10px;
+  }
+  img {
+    width:  32px;
+    height: 32px;
+  }
+}
+

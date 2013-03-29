@@ -1,0 +1,314 @@
+// Place all the styles related to the all project but not to the defined controller
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #444444;
+}
+
+div.inline {
+  display: inline;
+}
+
+div.inline-block {
+  display: inline-block;
+}
+
+header {
+  display: block;
+  min-height: 30px;
+  margin-bottom: 5px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  background-color: #CCCCCC;
+  border-color: #FFFFFF;
+  border-width: 1px 1px 1px 1px;
+  border-style: solid;
+}
+
+div {
+  vertical-align: top;
+}
+
+nav, section, aside {
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: top;
+
+}
+
+aside.aside_right {
+  min-height: 220px;
+  width: 200px;
+  margin-right: 5px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  background-color: #CCCCCC;
+  border-color: #FFFFFF;
+  border-width: 1px 1px 1px 1px;
+  border-style: solid
+}
+
+nav#info_container {
+  min-height: 220px;
+  width: 200px;
+  margin-right: 5px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  background-color: #CCCCCC;
+  border-color: #FFFFFF;
+  border-width: 1px 1px 1px 1px;
+  border-style: solid;
+}
+
+section.main_content {
+  min-height: 220px;
+  width: 800px;
+  margin-right: 10px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  background-color: #CCCCCC;
+  border-color: #FFFFFF;
+  border-width: 1px 1px 1px 1px;
+  border-style: solid;
+}
+
+aside {
+  width: 200px;
+}
+
+h1 {
+  font-size: 1.5em;
+  margin: 1px 0px 2px 0px;
+}
+
+h2 {
+  font-size: 1.3em;
+  margin: 1px 0px 2px 0px;
+}
+
+h3 {
+  font-size: 1.2em;
+  margin: 1px 0px 2px 0px;
+}
+
+section.content {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  background-color: #CCCCCC;
+  border-color: #FFFFFF;
+  border-width: 1px 1px 1px 1px;
+  border-style: solid;
+  padding: 10px;
+  margin: 5px;
+
+  span.content{
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    background-color: #CCCCCC;
+    border-color: #FFFFFF;
+    border-width: 1px 1px 1px 1px;
+    border-style: solid;
+    padding: 1px;
+    margin: 1px;
+  }
+}
+
+nav.menu {
+  display: block;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  background-color: #CCCCCC;
+  border-color: #FFFFFF;
+  border-width: 2px 2px 2px 2px;
+  border-style: solid;
+  -webkit-box-shadow: 6px 6px 8px #282b1f;
+  -moz-box-shadow: 6px 6px 8px #282b1f;
+  box-shadow: 6px 6px 8px #282b1f;
+  padding: 3px;
+  font-family: "Sans";
+  font-style: bold;
+  font-size: 20px;
+  ul {
+    margin: 0px;
+    padding: 4px;
+    list-style-type: none;
+
+  }
+
+  li {
+    margin: 0px;
+    height: 21px;
+  }
+  ul.submenu {
+    font-style: bold;
+    font-size: 14px;
+    padding: 0px 0px 0px 12px;
+    li {
+      margin: 0px;
+      height: 15px;
+    }
+
+  }
+}
+
+nav#user_info {
+  font-size: 15px;
+
+  li {
+    height: 21px;
+  }
+}
+
+div#blitz_info {
+  display: block;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  background-color: #f5ff64;
+  border-color: red;
+  border-width: 2px 2px 2px 2px;
+  border-style: dotted;
+  -webkit-box-shadow: 6px 6px 8px #282b1f;
+  -moz-box-shadow: 6px 6px 8px #282b1f;
+  box-shadow: 6px 6px 8px #282b1f;
+  margin-top: 10px;
+  padding: 3px;
+  font-family: "Sans";
+  color: #520000;
+  font-size: 12px;
+
+  li {
+    height: 21px;
+  }
+}
+
+
+.nav_button {
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  background-color: #CCCCCC;
+  border-color: #FFFFFF;
+  border-width: 1px 1px 1px 1px;
+  border-style: solid;
+  -webkit-box-shadow: 2px 2px 3px #282b1f;
+  -moz-box-shadow: 2px 2px 3px #282b1f;
+  box-shadow: 2px 2px 3px #282b1f;
+  padding: 2px;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.action_button {
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  color: #000000;
+  text-decoration: none;
+  background-color: #AAAAAA;
+  border-color: #000000;
+  border-width: 1px 1px 1px 1px;
+  border-style: solid;
+  -webkit-box-shadow: 2px 2px 3px #282b1f;
+  -moz-box-shadow: 2px 2px 3px #282b1f;
+  box-shadow: 2px 2px 3px #282b1f;
+  padding: 2px;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.action_button_min {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  color: #000000;
+  text-decoration: none;
+  background-color: #AAAAAA;
+  border-color: #000000;
+  border-width: 1px 1px 1px 1px;
+  border-style: solid;
+  font-size: 12px;
+  font-weight: bold;
+  margin: 0px;
+  padding: 0px;
+}
+
+
+
+div.datetime_select select {
+  width: 80px;
+}
+
+textarea {
+  width: 500px;
+  height: 200px;
+}
+
+span.caption, label.caption {
+  font-weight: bold;
+}
+
+div.horizontal {
+  float:left;
+}
+
+div.top_panel {
+  display: block;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  background-color: #FFD800;
+  border-color: #FFA203;
+  border-width: 1px 1px 1px 1px;
+  border-style: solid;
+  margin-top: 10px;
+  padding: 3px;
+  font-family: "Sans";
+  color: #000000;
+  font-size: 16px;
+  font-weight: bold;
+
+}
+
+label {
+  display: inherit;
+}
+
+
+.hidden {
+  display: none;
+}
+
+span.hint {
+  font-family: "Times New Roman";
+  font-size: 14px;
+  font-style: italic;
+  color: grey;
+}
+
+form.button_to, form.button_to div{
+  display: inline;
+}
+
+span.warning {
+  color:  red;
+}
+
+table.logs {
+  font-family: "Sans";
+  color: #520000;
+  font-size: 10px;
+
+  td {
+    border-top: 1px solid black;
+  }
+}
