@@ -1,4 +1,4 @@
-class Zone < ActiveRecord::Base
+ class Zone < ActiveRecord::Base
 
   has_many   :teams, through: :team_zones
   has_many   :team_zones
@@ -29,5 +29,17 @@ class Zone < ActiveRecord::Base
   #
   def new_task_number
     tasks.size + 1
+  end
+
+   private
+
+  ##
+  # Define who was the master of zone at defined time
+  #
+  def master_at(time)
+    teams.each do |team|
+      amount = TeamCode.codes_of_team(team.id, self.id, time: time)
+
+    end
   end
 end
