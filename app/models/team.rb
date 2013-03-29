@@ -14,22 +14,41 @@ class Team < ActiveRecord::Base
   ##
   # Number of accepted codes in defined zone
   #
-  def codes_number_in_zone(zone)
-    TeamCode.codes_of_team(self.id, zone.id)
+  def codes_number_in_zone(zone, time=Time.now)
+    TeamCode.codes_of_team(self.id, zone.id, time)
   end
 
   ##
-  # List of team's codes int defined zone
+  # List of team's codes in defined zone
   #
-  def codes_in_zone(zone)
-    TeamCode.where(team_id: self.id, zone_id: zone.id, state: [:accepted, :accessed])
+  def codes_in_zone(zone, time=Time.now)
+    #code_states = [Code::STATE_NAMES.index(:accepted), Code::STATE_NAMES.index(:accessed)]
+    #team_codes.where(zone_id: zone.id, state: code_states).where('created_at <= ?', time).order("created_at")
+    team_codes.where(zone_id: zone.id).where('created_at <= ?', time).order("created_at")
   end
 
   ##
-  # Time of last code of current team in defined zone
+  # Time of sending the last correct code or hint before defined time.
+  # It is searching by :accepted, :accessed states of codes and by all hints
   #
-  def last_code_in_zone
-    TeamCode.last_code_of_team(self.id, zone.id)
+  #
+  # Returns
+  # - {Hash} - Hash which contains time and state (:accepted, :accessed, :hint)
+  #
+  def last_code_in_zone(zone, time=Time.now)
+    codes = {
+      code: team_codes.select('created_at, state').where(zone_id: zone.id).where('created_at <= ?', time).order("created_at desc").try(:first),
+      hint: team_hints.select('created_at').where(zone_id: zone.id).where('created_at <= ?', time).order("created_at desc").try(:first)
+    }
+
+    return nil if codes == {code: nil, hint: nil}
+
+    if codes[:hint].blank? || codes[:code].created_at >= codes[:hint].created_at
+      { time: codes[:code].created_at, state: Code::STATES[codes[:code].state] }
+    else
+      { time: codes[:hint].created_at, state: :hint }
+    end
+
   end
 
 end
