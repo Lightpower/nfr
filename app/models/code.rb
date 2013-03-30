@@ -29,7 +29,7 @@ class Code < ActiveRecord::Base
   # Returns:
   # - {Zone} Zone if any or nil if this is the multizone code
   def zone
-    hold_zone || task.try(:zone) || hold_task.zone
+    hold_zone || task.try(:zone) || hold_task.try(:zone)
   end
 
   ##
