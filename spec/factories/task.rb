@@ -6,7 +6,5 @@ FactoryGirl.define do
     sequence(:name)   {|n| "Task #{n}"}
     data              '<i>Text of task</i>'
     zone
-    task
-    code
   end
 end
