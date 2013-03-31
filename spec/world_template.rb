@@ -25,9 +25,7 @@ def create_simple_game
   Zone.create(number: 1, name: 'Winterfell', image_url: '/image/test1.png', access_code: access_codes.first)
   Zone.create(number: 2, name: 'Casterly Rock', image_url: '/image/test2.png', access_code: access_codes.last)
 
-# Tasks with codes and included tasks
-
-
+  # Tasks with codes and included tasks
 
   Zone.all.each do |zone|
 
