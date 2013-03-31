@@ -24,7 +24,7 @@ module CodeFacade
     # Try to buy hint
     #
     def get_hint(params)
-      task = Task.find_by_id params[:task_id]
+      task = params[:task] || Task.find_by_id(params[:task_id])
       return {hint: nil, result: :not_available} if task.blank?
 
       hint = nil
@@ -119,14 +119,14 @@ module CodeFacade
     def check_hint(hint, user)
       # Has hint already been taken?
       if user.team.team_hints.flatten.map(&:hint).include? hint
-        result = :repeated
+        result = :hint_repeated
       else
         # Does team enough codes to buy this hint?
         if have_enough_codes?(hint, user.team)
-          result = :accessed
+          result = :hint_accessed
           TeamHint.create(team_id: user.team.id, hint_id: hint.id, zone_id: hint.task.zone.id, cost: hint.cost)
         else
-          result = :not_enough_costs
+          result = :hint_not_enough_costs
         end
       end
 
