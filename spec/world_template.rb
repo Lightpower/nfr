@@ -75,7 +75,7 @@ def create_simple_game
       code = Code.create(
           number: code_number,
           name: '',
-          bonus: code_number % 2,
+          bonus: code_number % 2 + 1,
           ko: "#{task_number % 6}" ,
           info: 'Код нанесён на лавочке',
           color: CODE_COLORS[code_number - 1])
