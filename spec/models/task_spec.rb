@@ -61,7 +61,7 @@ describe Task do
       @task.hints_of(@user.team).should be_blank
       # Get the first hint
       CodeFacade.get_hint({task: @task, user: @user})
-      @task.hints_of(@user.team).should == [@task.hints.first]
+      @task.hints_of(@user.team).should == [@task.hints.by_order.first]
     end
   end
 

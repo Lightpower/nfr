@@ -82,10 +82,13 @@ describe Log do
                    })
 
       # Get different hints for each team
-      hints = [Task.first.hints.first, Task.last.hints.first]
-      CodeFacade.get_hint({task: hints.first.task, user: @user_boltons})
+      hints = [Task.first.hints.by_order.first, Task.last.hints.by_order.first]
+      res = CodeFacade.get_hint({task: hints.first.task, user: @user_boltons})
+      res[:result].should == :hint_accessed
       # the next one hint costs more than Trants have
-      CodeFacade.get_hint({task: hints.last.task, user: @user_trants})
+      res = CodeFacade.get_hint({task: hints.last.task, user: @user_trants})
+      res[:result].should == :hint_not_enough_costs
+
       log_number += 1
       compare_logs(Log.all[log_number],
                    {
@@ -112,6 +115,6 @@ def compare_logs(log, params)
   log.login.should == user.email
   log.data.should == params[:code].show_code if params[:code].present?
   log.data.should == "Hint #{params[:hint].id} (цена #{params[:hint].cost})" if params[:hint]
-  log.result_code.should == Code::STATES.index(params[:result])
+  Code::STATES[log.result_code].should == params[:result]
   log.team_id.should == params[:team].id
 end
