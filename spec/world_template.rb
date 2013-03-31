@@ -102,4 +102,7 @@ def destroy_simple_game
   Hint.destroy_all
   Code.destroy_all
   CodeString.destroy_all
+  TeamCode.destroy_all
+  TeamHint.destroy_all
+  Log.destroy_all
 end
