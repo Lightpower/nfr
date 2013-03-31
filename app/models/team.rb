@@ -15,15 +15,13 @@ class Team < ActiveRecord::Base
   # Number of accepted codes in defined zone
   #
   def codes_number_in_zone(zone, time=Time.now)
-    TeamCode.codes_of_team(self.id, zone.id, time)
+    TeamCode.codes_number_of_team(self.id, zone.id, time)
   end
 
   ##
   # List of team's codes in defined zone
   #
   def codes_in_zone(zone, time=Time.now)
-    #code_states = [Code::STATE_NAMES.index(:accepted), Code::STATE_NAMES.index(:accessed)]
-    #team_codes.where(zone_id: zone.id, state: code_states).where('created_at <= ?', time).order("created_at")
     team_codes.where(zone_id: zone.id).where('created_at <= ?', time).order("created_at")
   end
 
