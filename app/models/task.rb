@@ -43,19 +43,6 @@ class Task < ActiveRecord::Base
   end
 
   ##
-  # Show preview or compose it with access code
-  #
-  def show_preview
-    result = preview
-    result << "<br>Код доступа к заданию: #{access_code.code_strings.map(&:data).join(", ")}"
-    result << "<br>Стоимость задания: #{- access_code.try(:bonus)} кодов. В задании есть:"
-    result << "<br>- реальных кодов: #{codes.where("ko != 'null'").size}"
-    result << "<br>- виртуальных кодов: #{codes.where(ko: 'null').size}"
-    result << "<br>- вложенных заданий: #{tasks.size}"
-    result
-  end
-
-  ##
   # List of hints which are bought by defined team
   #
   def hints_of(team)
