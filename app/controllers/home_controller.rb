@@ -8,7 +8,7 @@ class HomeController < ApplicationController
     if params[:code_string].present?
       @results = CodeFacade.input({code_string: params[:code_string][:code], user: current_user})
     elsif params[:task_id].present?
-      @results = CodeFacade.get_hint({task_id: params[:task_id], user: current_user})
+      @results = [CodeFacade.get_hint({task_id: params[:task_id], user: current_user})]
     else
       @results = nil
     end

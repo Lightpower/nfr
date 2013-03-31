@@ -23,6 +23,13 @@ module CodeFacade
     ##
     # Try to buy hint
     #
+    # Returns:
+    # - {Hash} - hash with results
+    #
+    # Example:
+    #
+    # { id: 1092, data: "Hint 1092 (цена -1.0)", result: :hint_not_enough_costs }
+    #
     def get_hint(params)
       task = params[:task] || Task.find_by_id(params[:task_id])
       return {hint: nil, result: :not_available} if task.blank?
@@ -36,7 +43,7 @@ module CodeFacade
       end
       return {hint: nil, result: :not_available} if hint.blank?
 
-      [check_hint(hint, params[:user])]
+      check_hint(hint, params[:user])
     end
 
   private
