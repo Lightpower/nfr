@@ -9,9 +9,17 @@ class Code < ActiveRecord::Base
   attr_accessible :info, :ko, :name, :number, :parent_id, :type, :code_strings, :color, :bonus
   accepts_nested_attributes_for :code_strings
 
-  STATES = [:accepted, :accessed, :repeated, :not_found, :not_available, :not_enough_costs]
-  STATE_NAMES = {accepted: 'принят', accessed: 'код доступа', repeated: 'повторно', not_found: 'не принят', not_available: ' не принят', not_enough_costs: 'слишком дорого'}
-  STATE_COLORS = {accepted: 'lime', accessed: 'darkgreen', repeated: 'yellow', not_found: 'grey', not_available: 'grey', not_enough_costs: 'red'}
+  STATES = [:accepted, :accessed, :repeated, :not_found, :not_available, :not_enough_costs,
+            :hint_accessed, :hint_repeated, :hint_not_enough_costs
+  ]
+  STATE_NAMES = {accepted: 'принят', accessed: 'код доступа', repeated: 'повторно',
+                 not_found: 'не принят', not_available: ' не принят', not_enough_costs: 'слишком дорого',
+                 hint_accessed: 'получена подсказка', hint_repeated: 'повторно', hint_not_enough_costs: 'слишком дорого'
+  }
+  STATE_COLORS = {accepted: 'lime', accessed: 'darkgreen', repeated: 'yellow', not_found: 'grey',
+                  not_available: 'grey', not_enough_costs: 'red',
+                  hint_accessed: 'darkgreen', hint_repeated: 'darkyellow', hint_not_enough_costs: 'red'
+  }
 
   class << self
     ##
