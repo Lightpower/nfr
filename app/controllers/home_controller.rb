@@ -18,10 +18,16 @@ class HomeController < ApplicationController
     render 'zones/index'
   end
 
+  def stat
+    render 'stat/index', locals: {data: Stat.total(current_user.team)}, layout: nil
+  end
+
+
   private
 
   def validate_team_presence
     raise(CanCan::AccessDenied, 'В доступе отказано: пользователь не привязан ни к одному Дому.') if current_user.team.blank?
   end
+
 
 end
