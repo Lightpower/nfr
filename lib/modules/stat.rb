@@ -7,7 +7,7 @@ module Stat
     # Show the statistics by each kingdoms.
     #
     # Params:
-    # - team {Team} - Team which is asking for statistics
+    # - asking_team {Team} - Team which is asking for statistics
     #
     #
     # Returns:
@@ -22,42 +22,65 @@ module Stat
     #
     # Example:
     #
-    # [
+    #
     #   {
-    #     'Winterfell' => {
-    #       master: {
+    #     1 => {
+    #       name: 'Winterfell',
+    #       team_codes: 12,
+    #       holder: {
     #         name: 'Starks',
     #         codes: 15,
     #         time: '01:23:45',
-    #         color: 15,
     #         image: '/images/starks.png',
-    #         team_codes: 12,
     #       },
-    #     'Casterly Rocks' => {
-    #       master: {
+    #     2 => {
+    #       name: 'Casterly Rocks',
+    #       team_codes: 12,
+    #       holder: {
     #         name: 'Lannisters',
     #         codes: 11,
     #         time: '03:03:17',
-    #         color: 15,
-    #         image: '/images/starks.png',
-    #         team_codes: 12,
+    #         image: '/images/starks.png'
     #       },
     #     }
     #   }
     #
-    #
-    #
-    #
-    # ]
-    #
-    def total(team)
-      return [] unless team.present? && team.is_a?(Team)
+    def total(asking_team)
+      return [] unless asking_team.present? && asking_team.is_a?(Team)
 
+      result = {}
       Zone.all.each do |zone|
-
-
+        holder = zone.holder
+        if holder
+          team = holder.team
+          result.merge!({
+            zone.id =>{
+              name: zone.name,
+              team_codes: asking_team.codes_number_in_zone(zone),
+              holder: {
+                name:  team.name,
+                codes: team.codes_number_in_zone(zone),
+                time:  holder.time.strftime('%H:%M:%S'),
+                image: team.image_url
+              }
+            }
+          })
+        else
+          result.merge!({
+            zone.id =>{
+              name: zone.name,
+              team_codes: 0,
+              holder: {
+                name:  'Free zone',
+                codes: 0,
+                time:  '22:00:00',
+              }
+            }
+          })
+        end
       end
-    end
 
+      result
+    end
   end
 end
