@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130323145654) do
+ActiveRecord::Schema.define(:version => 20130331234625) do
 
   create_table "code_strings", :force => true do |t|
     t.string  "data",    :null => false
@@ -147,6 +147,19 @@ ActiveRecord::Schema.define(:version => 20130323145654) do
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["team_id"], :name => "index_users_on_team_id"
+
+  create_table "zone_holders", :force => true do |t|
+    t.integer  "zone_id"
+    t.integer  "team_id"
+    t.integer  "team_code_id"
+    t.datetime "time"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "zone_holders", ["team_code_id"], :name => "index_zone_holders_on_team_code_id"
+  add_index "zone_holders", ["team_id"], :name => "index_zone_holders_on_team_id"
+  add_index "zone_holders", ["zone_id"], :name => "index_zone_holders_on_zone_id"
 
   create_table "zones", :force => true do |t|
     t.integer "number",    :null => false
