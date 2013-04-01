@@ -54,6 +54,7 @@ Nfr::Application.routes.draw do
   root :to => 'home#index'
 
   match '/hint' => 'home#hint', via: :put
+  match '/stat' => 'home#stat'
 
 
 
