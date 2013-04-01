@@ -4,24 +4,16 @@
   has_many   :team_zones
   has_many   :team_codes
   has_many   :tasks
+  has_many   :zone_holders
   belongs_to :access_code, class_name: 'Code', foreign_key: 'code_id'
 
   attr_accessible :name, :number, :image_url, :access_code, :code_id
 
   ##
-  # Define the master of this zone and the time of capturing
+  # Define the holder of this zone and the time of capturing
   #
-  def master
-    result = {}
-    teams.each do |team|
-      amount = TeamCode.codes_of_team(team.id, self.id)
-      last_time = TeamCode.last_code_of_team(team.id, self.id)
-      if result[:team_id].blank? || (amount > result[:amount]) || ((amount == result[:amount]) && (last_time < result[:last_time]))
-        result = {team_id: team.id, amount: amount, last_time: last_time}
-      end
-    end
-
-    result
+  def holder(time=Time.now)
+    zone_holders.where('time <= ?', time).order('zone_holders.time DESC').first
   end
 
   ##
@@ -29,17 +21,5 @@
   #
   def new_task_number
     tasks.size + 1
-  end
-
-   private
-
-  ##
-  # Define who was the master of zone at defined time
-  #
-  def master_at(time)
-    teams.each do |team|
-      amount = TeamCode.codes_of_team(team.id, self.id, time: time)
-
-    end
   end
 end
