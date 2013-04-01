@@ -15,9 +15,14 @@ module CodeFacade
       params[:code_string].downcase.split(" ").each do |code|
         res << check_code({code: code, user: params[:user]})
       end
-      res << check_code({code: params[:code_string], user: params[:user]}) if params[:code_string].index(' ').present?
 
-      res #make_result(res)
+      # Check if this code passing have changed any zone holding
+      res_success = res.select { |i| i[:team_code] }
+      check_holding(res_success)
+
+      res << check_code({code: params[:code_string], user: params[:user]}) if params[:code_string].index(' ').present?
+      res.each { |item| item.delete(:team_code) }
+      res
     end
 
     ##
@@ -61,6 +66,7 @@ module CodeFacade
       user = params[:user]
       code_string = CodeString.find_by_data params[:code]
       code = code_string.try(:code)
+      new_team_code = nil
       # Found?
       if code.present?
 
@@ -73,7 +79,7 @@ module CodeFacade
 
             result = :accessed
             # Mark as found
-            TeamCode.create(team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accessed), zone_id: code.hold_zone.id, bonus: code.bonus)
+            new_team_code = TeamCode.create(team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accessed), zone_id: code.hold_zone.id, bonus: code.bonus)
             TeamZone.create(team_id: user.team.id, zone_id: code.hold_zone.id)
 
           else
@@ -84,7 +90,7 @@ module CodeFacade
               if have_enough_codes?(code, user.team)
                 result = :accessed
                 # Mark as found
-                TeamCode.create(team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accessed), zone_id: code.zone.id, bonus: code.bonus)
+                new_team_code = TeamCode.create(team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accessed), zone_id: code.zone.id, bonus: code.bonus)
               else
                 result = :not_enough_costs
               end
@@ -97,7 +103,7 @@ module CodeFacade
                 if have_enough_codes?(code, user.team)
                   result = :accepted
                   # Mark as found
-                  TeamCode.create(team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accepted), zone_id: code.zone.id, bonus: code.bonus)
+                  new_team_code = TeamCode.create(team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accepted), zone_id: code.zone.id, bonus: code.bonus)
                 else
                   result = :not_enough_costs
                 end
@@ -116,7 +122,7 @@ module CodeFacade
       # Add to log
       Log.create(login: user.email, data: params[:code], result_code: Code::STATES.index(result), team: user.team)
 
-      { id: code.try(:id), data: params[:code], result: result }
+      { id: code.try(:id), data: params[:code], result: result, team_code: new_team_code }
     end
 
 
@@ -160,6 +166,42 @@ module CodeFacade
 
       team.codes_number_in_zone(zone) + cost >= 0
     end
-  end
 
+    ##
+    # Change the holder of zones if should
+    #
+    # Params:
+    # - results      {Array of Hash} - result of #check_code
+    #
+    # Returns:
+    # - {Array of String} - list of names of zones that change their holders
+    #
+    def check_holding(results)
+      # Get the list of zones
+      zones = results.map { |res| res[:team_code].zone }
+
+      holders = {} # {1 => {team: Team, amount: 13, time: TIME}}
+      # define current holders of each zone
+      zones.each do |zone|
+        holders.merge!(zone.id => {amount: 0, time: Time.now - 2.days} )
+        Team.all.each do |team|
+          amount = team.codes_number_in_zone(zone)
+          time = team.last_code_in_zone(zone)[:time]
+
+          if( amount > holders[zone.id][:amount]) ||
+              ( (amount == holders[zone.id][:amount]) && (time < holders[zone.id][:time]) )
+
+            holders[zone.id] = { amount: amount, time: team }
+          end
+        end
+        if zone.holder != holders[zone_id][:team]
+          team_code = TeamCode.order('created_at DESC').first
+          ZoneHolder.create(zone_id: zone.id, team_id: holders[zone_id][:team].id,
+                            team_code_id: team_code.id, time: team_code.created_at)
+        end
+
+      end
+
+    end
+  end
 end
