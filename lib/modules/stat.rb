@@ -60,7 +60,7 @@ module Stat
               holder: {
                 name:  team.name,
                 codes: team.codes_number_in_zone(zone),
-                time:  holder.time.strftime('%H:%M:%S'),
+                time:  holder.time.localtime.strftime('%H:%M:%S'),
                 image: team.image_url
               }
             }
