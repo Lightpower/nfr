@@ -149,8 +149,9 @@ ActiveRecord::Schema.define(:version => 20130331234625) do
   add_index "users", ["team_id"], :name => "index_users_on_team_id"
 
   create_table "zone_holders", :force => true do |t|
-    t.integer  "zone_id"
-    t.integer  "team_id"
+    t.float    "amount",       :null => false
+    t.integer  "zone_id",      :null => false
+    t.integer  "team_id",      :null => false
     t.integer  "team_code_id"
     t.datetime "time"
     t.datetime "created_at",   :null => false
