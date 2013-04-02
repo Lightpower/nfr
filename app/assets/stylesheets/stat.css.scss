@@ -1,0 +1,58 @@
+// Place all the styles related to the Game controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+div.stat {
+  background: #444444 url(/images/map.jpg) no-repeat;
+  height: 850px;
+  width:  450px;
+  margin: 0 auto;
+
+}
+
+span.label {
+  font-size: 0.7em;
+  font-weight: bold;
+}
+
+span.zone_title {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+span.holder {
+  font-weight: bold;
+  color: red;
+}
+
+span.codes {
+  font-weight: bold;
+  font-size: 0.8em;
+}
+
+span.team_codes {
+  font-size: 0.8em;
+  font-style: italic;
+}
+
+span.time {
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+div.div_winterfell {
+  position: relative;
+  left: 150px;
+  top:  180px;
+  background-color: transparent;
+  border-style: none;
+}
+
+div.div_casterly_rock {
+  position: relative;
+  left: 100px;
+  top:  400px;
+  background-color: transparent;
+  border-style: none;
+}
+
