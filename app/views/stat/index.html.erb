@@ -1,7 +1,3 @@
-<table>
-	<tbody>
-  <% data.each_pair do |key, params|%>
-  	<%= show_stat_row(params) %>
-  <% end %>
-	</tbody>
-</table>
+<% data.each_pair do |key, params|%>
+  <%= show_zone_stat(params) %>
+<% end %>
