@@ -1,0 +1,4 @@
+<%= link_to 'Задания', root_path, class: 'nav_link' %>
+<%= link_to 'Статистика', stat_path, class: 'nav_link' %>
+<%= link_to 'Логи', logs_path, class: 'nav_link' %>
+<%= link_to 'Свободные коды', stat_path, class: 'action_link' if @current_user.team.codes_number_in_zone(nil) > 0%>

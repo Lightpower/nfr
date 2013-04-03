@@ -1,0 +1,9 @@
+<div class='zone'>
+  <div class='zone_header'>
+    <%= image_tag(zone.image_url) if zone.image_url.present?%>
+    <%= content_tag(:span, zone.name) %>
+	 </div>
+   <% zone.tasks.by_order.each do |task| %>
+	   <%= render 'tasks/item', task: task  %>
+	 <% end %>
+</div>

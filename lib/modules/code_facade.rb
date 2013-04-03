@@ -12,7 +12,7 @@ module CodeFacade
     # - {string} - Result
     def input(params)
       res = []
-      params[:code_string].downcase.split(" ").each do |code|
+      params[:code_string].downcase.split(" ").uniq.each do |code|
         res << check_code({code: code, user: params[:user]})
       end
       res << check_code({code: params[:code_string], user: params[:user]}) if params[:code_string].index(' ').present?
@@ -119,7 +119,7 @@ module CodeFacade
       end
 
       # Add to log
-      Log.create(login: user.email, data: params[:code], result_code: Code::STATES.index(result), team: user.team)
+      Log.create(login: user.email, code_id: code.try(:id), data: params[:code], result_code: Code::STATES.index(result), team: user.team)
 
       { id: code.try(:id), data: params[:code], result: result, team_code: new_team_code }
     end
