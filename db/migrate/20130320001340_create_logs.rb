@@ -6,6 +6,7 @@ class CreateLogs < ActiveRecord::Migration
       t.integer :result_code, null: false
 
       t.references :team,     null: false
+      t.references :code
 
       t.timestamps
     end
