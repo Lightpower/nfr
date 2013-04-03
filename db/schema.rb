@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(:version => 20130331234625) do
     t.string   "data",        :null => false
     t.integer  "result_code", :null => false
     t.integer  "team_id",     :null => false
+    t.integer  "code_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
