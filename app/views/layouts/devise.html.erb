@@ -10,9 +10,11 @@
 <body>
 
 <section class="devise">
-  <%= show_flash %>
 
-  <div class='content'><%= yield %></div>
+  <div class='content'>
+    <%= show_flash %>
+    <%= yield %>
+  </div>
 </section>
 
 </body>

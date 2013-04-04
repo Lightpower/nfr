@@ -122,7 +122,7 @@ zones.each do |zone|
     code = Code.create(
         number: code_number,
         name: '',
-        bonus: code_number % 2,
+        bonus: code_number % 2 + 1,
         ko: "#{task_number % 6}" ,
         info: 'Код нанесён на лавочке',
         color: CODE_COLORS[code_number - 1])
@@ -132,8 +132,26 @@ zones.each do |zone|
   end
   zone.reload
 
-
 end
+
+# Free task
+task = Task.create(number: 1, name: "За Узким морем", data: '')
+
+# 10 codes for this task
+10.times do
+  code_number = task.new_code_number
+  code = Code.create(
+      number: code_number,
+      name: '',
+      bonus: code_number % 2 + 1,
+      ko: "1+" ,
+      info: 'Код нанесён на стене',
+      color: CODE_COLORS[code_number - 1])
+  CodeString.create(data: "R0D#{code_number}", code: code)
+  task.codes << code
+  task.reload
+end
+
 
 # Show the world
 puts "User: #{user.email}"
@@ -150,5 +168,14 @@ Zone.all.each do |zone|
     task.codes.each do |code|
       puts "    Code #{code.number}: #{code.code_strings.map(&:data).join(" ")}"
     end
+  end
+
+
+end
+
+Task.where(zone_id: nil).each do |task|
+  puts "\n  Free Task #{task.number}"
+  task.codes.each do |code|
+    puts "    Code #{code.number}: #{code.code_strings.map(&:data).join(" ")}"
   end
 end

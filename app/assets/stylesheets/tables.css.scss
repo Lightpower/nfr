@@ -8,17 +8,25 @@ table.logs {
   }
 }
 
-table.log_full {
-  border: 2px solid black;
+table.log_full, table.free_code {
   margin: 10px;
+  border-spacing: 0px;
+  border-style: none;
+  background-color: #CCCCCC;
 
   th {
-    border: 2px solid black;
+    border: 2px;
+    border-color: black;
+    border-style: solid;
+    margin-right: 10px;
   }
-  tr, td {
-    vertical-align: inherit;
-    border-collapse: collapse;
-    border: 1px solid black;
-    margin:  0px;;
+
+  tr {
+    font-size: 14px;
+    td {
+      border: 1px;
+      border-style: solid;
+      margin-right: 0px;
+    }
   }
 }

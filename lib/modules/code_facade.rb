@@ -89,7 +89,7 @@ module CodeFacade
               if have_enough_codes?(code, user.team)
                 result = :accessed
                 # Mark as found
-                new_team_code = TeamCode.create(team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accessed), zone_id: code.zone.id, bonus: code.bonus)
+                new_team_code = TeamCode.create(team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accessed), zone_id: code.zone.try(:id), bonus: code.bonus)
               else
                 result = :not_enough_costs
               end
@@ -102,7 +102,7 @@ module CodeFacade
                 if have_enough_codes?(code, user.team)
                   result = :accepted
                   # Mark as found
-                  new_team_code = TeamCode.create(team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accepted), zone_id: code.zone.id, bonus: code.bonus)
+                  new_team_code = TeamCode.create(team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accepted), zone_id: code.zone.try(:id), bonus: code.bonus)
                 else
                   result = :not_enough_costs
                 end
@@ -177,7 +177,8 @@ module CodeFacade
     #
     def check_holding(results)
       # Get the list of zones
-      zones = results.map { |res| res[:team_code].zone }
+      zones = results.map { |res| res[:team_code].try(:zone) }.compact!
+      return [] if zones.blank?
 
       holders = {} # {1 => {team: Team, amount: 13, time: TIME}}
       # define current holders of each zone

@@ -1,3 +1,4 @@
+# encoding: UTF-8
 module ApplicationHelper
 
   ##
@@ -21,6 +22,13 @@ module ApplicationHelper
 
       result << content_tag(:tr, zone_html)
     end
+
+    # Free zone
+    zone_html =  content_tag(:td, content_tag(:b, "В резерве -") )
+    zone_html << content_tag(:td, team.codes_number_in_zone(nil) )
+
+    result << content_tag(:tr, zone_html)
+
     result = content_tag(:table, result.html_safe, class: 'quick_stat')
     result.html_safe
   end

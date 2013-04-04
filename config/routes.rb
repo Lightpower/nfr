@@ -8,6 +8,13 @@ Nfr::Application.routes.draw do
   match '/stat' => 'home#stat'
 
   resources :logs,    only: [:index]
+
+  resources :codes, only: [:index] do
+    collection do
+      put :attach
+    end
+  end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
