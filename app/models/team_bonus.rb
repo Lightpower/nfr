@@ -1,9 +1,13 @@
 class TeamBonus < ActiveRecord::Base
 
   belongs_to :team
+  has_many   :team_bonus_actions
 
   attr_accessible :amount, :bonus_type, :rate, :team, :team_id, :ko, :description
 
+  # types
+  MODIFIABLE_TYPES = %w(KoMultifier)
+  ACTION_TYPES = %(Pirate)
 
   ##
   # Modify bonus of code by TeamBonus if this is Multiplier bonus type
@@ -23,5 +27,12 @@ class TeamBonus < ActiveRecord::Base
     else
       0
     end
+  end
+
+  ##
+  # Get the time of last action
+  #
+  def last_action_time
+    team_bonus_actions.order('created_at desc').try(:first)
   end
 end
