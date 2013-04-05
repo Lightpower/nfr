@@ -78,7 +78,8 @@ module CodeFacade
 
             result = :accessed
             # Mark as found
-            new_team_code = TeamCode.create(team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accessed), zone_id: code.hold_zone.id, bonus: code.bonus)
+            bonus = user.team.modify_bonus(code)
+            new_team_code = TeamCode.create(team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accessed), zone_id: code.hold_zone.id, bonus: bonus)
             TeamZone.create(team_id: user.team.id, zone_id: code.hold_zone.id)
 
           else
@@ -89,7 +90,8 @@ module CodeFacade
               if have_enough_codes?(code, user.team)
                 result = :accessed
                 # Mark as found
-                new_team_code = TeamCode.create(team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accessed), zone_id: code.zone.try(:id), bonus: code.bonus)
+                bonus = user.team.modify_bonus(code)
+                new_team_code = TeamCode.create(team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accessed), zone_id: code.zone.try(:id), bonus: bonus)
               else
                 result = :not_enough_costs
               end
@@ -102,7 +104,8 @@ module CodeFacade
                 if have_enough_codes?(code, user.team)
                   result = :accepted
                   # Mark as found
-                  new_team_code = TeamCode.create(team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accepted), zone_id: code.zone.try(:id), bonus: code.bonus)
+                  bonus = user.team.modify_bonus(code)
+                  new_team_code = TeamCode.create(team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accepted), zone_id: code.zone.try(:id), bonus: bonus)
                 else
                   result = :not_enough_costs
                 end
