@@ -54,8 +54,21 @@ class Team < ActiveRecord::Base
   #
   def modify_bonus(code)
     bonus = nil
-    self.team_bonuses.each { |team_bonus| bonus = team_bonus.modify_bonus(code, bonus) }
+    self.modifiable_bonuses.each { |team_bonus| bonus = team_bonus.modify_bonus(code, bonus) }
     bonus
   end
 
+  ##
+  # Modifiable bonuses (Multipliers)
+  #
+  def modifiable_bonuses
+    team_bonuses.where(bonus_type: TeamBonus::MODIFIABLE_TYPES)
+  end
+
+  ##
+  # Action bonuses (Pirates)
+  #
+  def action_bonuses
+    team_bonuses.where(bonus_type: TeamBonus::ACTION_TYPES)
+  end
 end
