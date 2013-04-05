@@ -4,7 +4,7 @@ class Team < ActiveRecord::Base
   has_many :zones, through: :team_zones
   has_many :team_codes
   has_many :logs
-  has_many :team_bonuses
+  has_many :team_bonuses, class_name: 'TeamBonus'
   has_many :team_hints
   has_many :team_zones
   has_many :team_hints
@@ -47,6 +47,15 @@ class Team < ActiveRecord::Base
       { time: codes[:hint].created_at, state: :hint }
     end
 
+  end
+
+  ##
+  # Try to apply all team bonuses to the code
+  #
+  def modify_bonus(code)
+    bonus = nil
+    self.team_bonuses.each { |team_bonus| bonus = team_bonus.modify_bonus(code, bonus) }
+    bonus
   end
 
 end
