@@ -39,7 +39,7 @@ module ApplicationHelper
   def show_log(number=20)
     result = ''
     team = current_user.team
-    team.logs.last(20).reverse.each do |log|
+    team.logs.first(20).each do |log|
       state = Code::STATES[log.result_code]
       style = case state
                 when :accepted
@@ -60,4 +60,16 @@ module ApplicationHelper
     result.html_safe
   end
 
+  ##
+  # Makes div with information about team bonus
+  #
+  def team_bonus_div(team)
+    return '' if team.blank? || team.team_bonuses.blank?
+
+    result = ''
+    team.team_bonuses.each do |bonus|
+      result << content_tag(:p, "<b>Бонус:</b> #{bonus.description}".html_safe)
+    end
+    content_tag(:div, result.html_safe, class: 'blitz_info').html_safe
+  end
 end
