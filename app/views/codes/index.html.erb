@@ -2,6 +2,7 @@
   <table class='free_code'>
 	  <thead>
 	    <th>Код</th>
+	    <th>KO</th>
 	    <th>Цена</th>
 	    <th>Найден</th>
 	    <th>Зона</th>
@@ -10,6 +11,7 @@
   	  <% @free_codes.each do |team_code| %>
 	    <tr data-id="<%= team_code.id %>">
 	      <%= content_tag(:td, team_code.code.show_code) %>
+	      <%= content_tag(:td, team_code.code.ko) %>
 	      <%= content_tag(:td, team_code.code.bonus) %>
 	      <%= content_tag(:td, team_code.created_at.strftime('%H:%M:%S')) %>
 	      <td>
