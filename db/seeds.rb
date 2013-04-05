@@ -11,6 +11,11 @@
 # Team and User
 puts " Team and User:"
 
+TeamHint.destroy_all
+TeamCode.destroy_all
+TeamZone.destroy_all
+Log.destroy_all
+
 Team.destroy_all
 User.destroy_all
 team = Team.create(name: 'Boltons', alternative_name: 'DRузья', image_url: '/images/test.png')
@@ -158,14 +163,14 @@ puts "User: #{user.email}"
 puts "Team: #{team.name}"
 Zone.all.each do |zone|
   puts "### Zone #{zone.number} - #{zone.name} (access code: #{zone.access_code.code_strings.map(&:data).join(" ")})"
-  zone.tasks.each do |task|
-    access_code = task.access_code.present? ? task.access_code.code_strings.map(&:data).join(" ") : ""
-    puts "\n  Task #{task.number} - access code #{access_code}"
-    task.hints.each do |hint|
+  zone.tasks.each do |tsk|
+    access_code = tsk.access_code.present? ? tsk.access_code.code_strings.map(&:data).join(" ") : ""
+    puts "\n  Task #{tsk.number} - access code #{access_code}"
+    tsk.hints.each do |hint|
       puts "    Hint #{hint.number} (#{hint.cost} codes cost): #{hint.data}"
     end
     puts ""
-    task.codes.each do |code|
+    tsk.codes.each do |code|
       puts "    Code #{code.number}: #{code.code_strings.map(&:data).join(" ")}"
     end
   end
@@ -173,9 +178,28 @@ Zone.all.each do |zone|
 
 end
 
-Task.where(zone_id: nil).each do |task|
-  puts "\n  Free Task #{task.number}"
-  task.codes.each do |code|
+Task.where(zone_id: nil).each do |tsk|
+  puts "\n  Free Task #{tsk.number}"
+  tsk.codes.each do |code|
     puts "    Code #{code.number}: #{code.code_strings.map(&:data).join(" ")}"
   end
 end
+
+
+# Bonuses for Team
+TeamBonus.destroy_all
+
+TeamBonus.create(
+    team_id: team.id,
+    bonus_type: "KoMultiplier",
+    description: "Сила мозга",
+    ko: "null",
+    rate: 1.3  # each Code with ko:"null" will be multipled on 1.3
+)
+TeamBonus.create(
+    team_id: team.id,
+    bonus_type: "Pirate",
+    description: "Грабитель",
+    rate: 15,  # time of ability recharging
+    amount: 1  # Number of code which can be stealed
+)
