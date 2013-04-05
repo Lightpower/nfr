@@ -4,23 +4,27 @@
 	    <th>Время</th>
 	    <th>Код</th>
 	    <th>Результат</th>
+	    <th>КO</th>
 	    <th>Зона</th>
 	    <th>Задание</th>
 	    <th>Цена</th>
+	    <th>С бонусом</th>
 	    <th>Отправитель</th>
 	  </thead>
 	  <tbody>
   <% @logs.each do |log|  %>
     <tr>
-	    <%= content_tag(:td, log.created_at.strftime('%H;%M:%S')) %>
+	    <%= content_tag(:td, log.created_at.strftime('%H:%M:%S')) %>
 	    <%= content_tag(:td, log.data, style: "font-weight: bold; color: #{Code::STATE_COLORS[Code::STATES[log.result_code]]}") %>
 	    <%= content_tag(:td, Code::STATE_NAMES[Code::STATES[log.result_code]]) %>
       <% if log.code.present? %>
+        <%= content_tag(:td, log.code.ko) %>
         <%= content_tag(:td, log.code.zone.try(:name) || "Свободный код") %>
         <%= content_tag(:td, log.code.task.try(:number)) %>
         <%= content_tag(:td, log.code.bonus) %>
+        <%= content_tag(:td, current_user.team.modify_bonus(log.code)) %>
 		  <% else %>
-        <td></td><td></td><td></td>
+        <td></td><td></td><td></td><td></td><td></td>
       <% end %>
       <%= content_tag(:td, log.login) %>
     </tr>
