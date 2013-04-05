@@ -19,7 +19,7 @@ class HomeController < ApplicationController
   end
 
   def stat
-    render 'stat/index', locals: {data: Stat.total(current_user.team)}, layout: 'layouts/statistics'
+    render 'stat/index', locals: {data: Stat.total(current_user.team)}#, layout: 'layouts/statistics'
   end
 
 
