@@ -8,8 +8,6 @@ class LogsController < ApplicationController
     render 'logs/index'
   end
 
-
-
   private
 
   def validate_team_presence
