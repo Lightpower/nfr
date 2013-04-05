@@ -76,10 +76,12 @@ ActiveRecord::Schema.define(:version => 20130331234625) do
   add_index "tasks", ["zone_id"], :name => "index_tasks_on_zone_id"
 
   create_table "team_bonus", :force => true do |t|
-    t.string  "bonus_type", :null => false
+    t.string  "bonus_type",  :null => false
+    t.text    "description"
     t.float   "rate"
+    t.string  "ko"
     t.integer "amount"
-    t.integer "team_id",    :null => false
+    t.integer "team_id",     :null => false
   end
 
   add_index "team_bonus", ["team_id"], :name => "index_team_bonus_on_team_id"
