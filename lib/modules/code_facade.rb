@@ -180,7 +180,7 @@ module CodeFacade
     #
     def check_holding(results)
       # Get the list of zones
-      zones = results.map { |res| res[:team_code].try(:zone) }.compact!
+      zones = results.map { |res| res[:team_code].try(:zone) }.compact
       return [] if zones.blank?
 
       holders = {} # {1 => {team: Team, amount: 13, time: TIME}}
