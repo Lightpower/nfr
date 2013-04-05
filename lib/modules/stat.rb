@@ -56,10 +56,10 @@ module Stat
           result.merge!({
             zone.id =>{
               name: zone.name,
-              team_codes: asking_team.codes_number_in_zone(zone),
+              team_codes: asking_team.codes_number_in_zone(zone).round(3),
               holder: {
                 name:  team.name,
-                codes: team.codes_number_in_zone(zone),
+                codes: team.codes_number_in_zone(zone).round(3),
                 time:  holder.time.localtime.strftime('%H:%M:%S'),
                 image: team.image_url
               }
