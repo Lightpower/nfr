@@ -19,12 +19,13 @@ module CodesHelper
   # Color code's KO if it is passed
   #
   def ko_colored(code, team_id, last_result=nil)
+    ko_price = "#{code.ko}[#{code.bonus}]"
     if TeamCode.where(code_id: code.id, team_id: team_id, state: Code::STATES.index(:accepted)).present?
       style = "color: #{code.color || 'red'};"
       style << "border: 2px inset red;" if last_result.present? && last_result.select {|i| i[:id] == code.id}.present?
-      content_tag(:b, content_tag(:span, "#{code.ko}(#{code.show_code})", style: style).html_safe).html_safe
+      content_tag(:b, content_tag(:span, "#{ko_price}(#{code.show_code})", style: style).html_safe).html_safe
     else
-      content_tag(:span, code.ko).html_safe
+      content_tag(:span, ko_price).html_safe
     end
   end
 end
