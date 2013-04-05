@@ -18,7 +18,7 @@ module ApplicationHelper
     team = current_user.team
     team.zones.each do |zone|
       zone_html =  content_tag(:td, content_tag(:b, "#{zone.name}:") )
-      zone_html << content_tag(:td, team.codes_number_in_zone(zone) )
+      zone_html << content_tag(:td, team.codes_number_in_zone(zone).round(3) )
 
       result << content_tag(:tr, zone_html)
     end
