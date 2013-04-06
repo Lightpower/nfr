@@ -192,14 +192,24 @@ TeamBonus.destroy_all
 TeamBonus.create(
     team_id: team.id,
     bonus_type: "KoMultiplier",
-    description: "Сила мозга",
+    name: "Сила мозга",
+    description: "Цена каждого кода с КО null умножается на 1.3",
     ko: "null",
     rate: 1.3  # each Code with ko:"null" will be multipled on 1.3
 )
 TeamBonus.create(
     team_id: team.id,
     bonus_type: "Pirate",
-    description: "Грабитель",
+    name: "Грабитель",
+    description: "Возможность совершить набег раз в 15 минут. Набег - это попытка получить код от доступного задания. Если код уже снимала другая команда, то попытка удачна, иначе - нет.",
     rate: 15,  # time of ability recharging
+    amount: 1  # Number of code which can be stealed
+)
+TeamBonus.create(
+    team_id: team.id,
+    bonus_type: "Warrior",
+    name: "Удар дракона",
+    description: "Возможность совершить захват раз в 30 минут. Захват - это получение кода от доступного задания. Попытка всегда будет успешна.",
+    rate: 30,  # time of ability recharging
     amount: 1  # Number of code which can be stealed
 )
