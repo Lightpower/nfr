@@ -70,6 +70,19 @@ module ApplicationHelper
     team.team_bonuses.each do |bonus|
       result << content_tag(:p, "<b>#{bonus.name}</b><br>#{bonus.description}".html_safe)
     end
-    content_tag(:div, result.html_safe, class: 'blitz_info').html_safe
+    result = content_tag(:div, result.html_safe, class: 'openable').html_safe
+
+    caption = openable_tag('team_bonuses')
+    caption << content_tag(:span, 'Бонусы Дома', class: 'caption')
+
+    result = caption + result
+    content_tag(:div, result.html_safe, class: 'blitz_info openable_holder').html_safe
+  end
+
+  ##
+  # Helper for openable link with ID creating
+  #
+  def openable_tag(id)
+    content_tag(:a, '- ', href: '#', class: 'openable', id: id).html_safe
   end
 end
