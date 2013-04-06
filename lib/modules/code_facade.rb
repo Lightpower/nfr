@@ -50,7 +50,62 @@ module CodeFacade
       check_hint(hint, params[:user])
     end
 
-  private
+    ##
+    # Try to pass the code using TeamBonus
+    #
+    def get_code_by_action_bonus(user, bonus_id, code_id)
+      team = user.team
+      code = Code.find_by_id code_id
+      bonus = team.action_bonuses.find_by_id(bonus_id)
+      data = "Бонус #{bonus.try(:name)}"
+      new_team_code = nil
+
+      # Cannot get hold_code or free code!
+      if code.present? && bonus.present? && code.hold_zone.blank? && code.hold_task.blank? && code.zone.present?
+        #  Check if team can make this action
+        if bonus.can_new_action?
+
+          # mark action as made
+          tba = TeamBonusAction.create(team_bonus_id: bonus.id, is_ok: false)
+
+          result = nil
+          # Check bonus according its type
+          if bonus.bonus_type == 'Pirate'
+            result = :not_available if TeamCode.where(code_id: code.id).size == 0
+          end
+          # try to pass this code if it's allowed
+          result = check_code_result(team, code) if result != :not_available
+
+          if result == :accepted
+            tba.is_ok = true
+            tba.save
+          end
+        else
+          result = :not_available
+        end
+      else
+        result = :not_found
+      end
+
+      # Mark as found if need
+      if result == :accepted
+        bonus = user.team.modify_bonus(code)
+        new_team_code = TeamCode.create(team_id: team.id, code_id: code.id, state: Code::STATES.index(:accepted), zone_id: code.zone.try(:id), bonus: bonus)
+        check_holding([{team_code: new_team_code}])
+      end
+
+
+      # Add to log
+      Log.create(login: user.email, code_id: code.try(:id), data: data, result_code: Code::STATES.index(result), team: team)
+
+      { id: code.try(:id), data: data, result: result }
+    end
+
+
+
+  #########################
+  private #################
+  #########################
 
     ##
     # Seeking the code in database, check it is new, create a record about its getting and write to log anyway
@@ -66,59 +121,23 @@ module CodeFacade
       code_string = CodeString.find_by_data params[:code]
       code = code_string.try(:code)
       new_team_code = nil
-      # Found?
-      if code.present?
 
-        # Was this code already found?
-        team_code = TeamCode.where(team_id: user.team.id, code_id: code.id)
-        if team_code.blank?
+      result = check_code_result(user.team, code)
 
-          # check if this is accept code for a new zone
-          if code.hold_zone.present?
-
-            result = :accessed
-            # Mark as found
-            bonus = user.team.modify_bonus(code)
-            new_team_code = TeamCode.create(team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accessed), zone_id: code.hold_zone.id, bonus: bonus)
-            TeamZone.create(team_id: user.team.id, zone_id: code.hold_zone.id)
-
-          else
-            # check if this is accept code for a new task
-            if code.hold_task.present?
-
-              # Does team have enough codes to pass this code?
-              if have_enough_codes?(code, user.team)
-                result = :accessed
-                # Mark as found
-                bonus = user.team.modify_bonus(code)
-                new_team_code = TeamCode.create(team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accessed), zone_id: code.zone.try(:id), bonus: bonus)
-              else
-                result = :not_enough_costs
-              end
-
-            else
-              #Check if Zone of this code is available for this team
-              if code.zone.blank? || TeamZone.where(team_id: user.team.id, zone_id: code.zone.id).present?
-
-                # Does team have enough codes to pass this code?
-                if have_enough_codes?(code, user.team)
-                  result = :accepted
-                  # Mark as found
-                  bonus = user.team.modify_bonus(code)
-                  new_team_code = TeamCode.create(team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accepted), zone_id: code.zone.try(:id), bonus: bonus)
-                else
-                  result = :not_enough_costs
-                end
-              else
-                result = :not_available
-              end
-            end
-          end
-        else
-          result = :repeated
-        end
-      else
-        result = :not_found
+      # Mark as found if need
+      case result
+        when :accessed_zone
+          result = :accessed
+          bonus = user.team.modify_bonus(code)
+          new_team_code = TeamCode.create(team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accessed), zone_id: code.hold_zone.id, bonus: bonus)
+          TeamZone.create(team_id: user.team.id, zone_id: code.hold_zone.id)
+        when :accessed_task
+          result = :accessed
+          bonus = user.team.modify_bonus(code)
+          new_team_code = TeamCode.create(team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accessed), zone_id: code.zone.try(:id), bonus: bonus)
+        when :accepted
+          bonus = user.team.modify_bonus(code)
+          new_team_code = TeamCode.create(team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accepted), zone_id: code.zone.try(:id), bonus: bonus)
       end
 
       # Add to log
@@ -202,9 +221,55 @@ module CodeFacade
           ZoneHolder.create(amount: holders[zone.id][:amount], zone_id: zone.id,
             team_id: holders[zone.id][:team].id, team_code_id: team_code.id, time: team_code.created_at)
         end
-
       end
-
     end
+
+    ##
+    # Check if code can be passed by the team and returns result of checking
+    #
+    def check_code_result(team, code)
+      # Found?
+      if code.is_a?(Code) && code.present?
+
+        # Was this code already found?
+        team_code = TeamCode.where(team_id: team.id, code_id: code.id)
+        if team_code.blank?
+
+          # check if this is accept code for a new zone
+          if code.hold_zone.present?
+            result = :accessed_zone
+            # check if this is accept code for a new task
+          elsif code.hold_task.present?
+
+            # Does team have enough codes to pass this code?
+            if have_enough_codes?(code, team)
+              result = :accessed_task
+            else
+              result = :not_enough_costs
+            end
+          else
+            #Check if Zone of this code is available for this team
+            if code.zone.blank? || TeamZone.where(team_id: team.id, zone_id: code.zone.id).present?
+
+              # Does team have enough codes to pass this code?
+              if have_enough_codes?(code, team)
+                result = :accepted
+                # Mark as found
+              else
+                result = :not_enough_costs
+              end
+            else
+              result = :not_available
+            end
+          end
+        else
+          result = :repeated
+        end
+      else
+        result = :not_found
+      end
+      result
+    end
+
   end
 end
