@@ -1,5 +1,5 @@
 <div class='task openable_holder <%= 'unavailable' unless task.is_available?(current_user) %>'>
-  <%= content_tag(:a, '- ', href: '#', class: 'openable') %>
+  <%= openable_tag(task.make_id) %>
 	<% if task.is_available?(current_user) %>
     <%= content_tag(:span, task.number) %>. <%= content_tag(:span, task.name) %><br>
     <div class='openable'>

@@ -1,5 +1,10 @@
 <% if current_user.present? && current_user.team.present? %>
-  <div id="log">
-    <%= show_log %>
+  <div id="log" class="openable_holder">
+    <%= openable_tag("log20") %>
+    <%= content_tag(:span, 'Последние 20 событий', class: 'caption') %>
+
+    <div class='openable'>
+      <%= show_log %>
+    </div>
   </div>
 <% end %>

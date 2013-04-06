@@ -1,7 +1,7 @@
 <div class='zone openable_holder'>
   <div class='zone_header'>
     <%= image_tag(zone.image_url) if zone.image_url.present?%>
-    <%= content_tag(:a, '- ', href: '#', class: 'openable') %>
+    <%= openable_tag(zone.make_id) %>
     <%= content_tag(:span, zone.name) %>
   </div>
 	<div class='openable'>
