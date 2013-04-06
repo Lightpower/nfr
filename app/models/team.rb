@@ -55,7 +55,7 @@ class Team < ActiveRecord::Base
   def modify_bonus(code)
     bonus = nil
     self.modifiable_bonuses.each { |team_bonus| bonus = team_bonus.modify_bonus(code, bonus) }
-    bonus
+    bonus || 0
   end
 
   ##
