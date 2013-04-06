@@ -21,5 +21,10 @@ class Hint < ActiveRecord::Base
     TeamHint.where(team_id: team.id, hint_id: self.id).present?
   end
 
-
+  ##
+  # Make the ID for interface
+  #
+  def make_id
+    "#{self.class.name.downcase}#{id}"
+  end
 end

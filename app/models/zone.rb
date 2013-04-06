@@ -22,4 +22,11 @@
   def new_task_number
     tasks.size + 1
   end
+
+  ##
+  # Make the ID for interface
+  #
+  def make_id
+    "#{self.class.name.downcase}#{id}"
+  end
 end

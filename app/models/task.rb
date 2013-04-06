@@ -48,4 +48,11 @@ class Task < ActiveRecord::Base
   def hints_of(team)
     TeamHint.includes(:hint).where("team_hints.team_id = ? and hints.task_id = ?", team.id, self.id).order("hints.number").map(&:hint)
   end
+
+  ##
+  # Make the ID for interface
+  #
+  def make_id
+    "#{self.class.name.downcase}#{id}"
+  end
 end
