@@ -12,6 +12,7 @@ Nfr::Application.routes.draw do
   resources :codes, only: [:index] do
     collection do
       put :attach
+      put :bonus_action
     end
   end
 
