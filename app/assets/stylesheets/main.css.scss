@@ -298,3 +298,15 @@ a.openable {
   text-decoration: none;
   color: blue;
 }
+
+div#log {
+  width: 200px;
+  margin-right: 5px;
+  margin-top: 5px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  background-color: #CCCCCC;
+  border-color: #FFFFFF;
+  border-width: 1px 1px 1px 1px;
+  border-style: solid;}
