@@ -41,6 +41,7 @@ nav, section, aside {
 
 aside.aside_right {
   min-height: 220px;
+  max-width: 200px;
   margin-right: 5px;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
@@ -251,23 +252,6 @@ div.horizontal {
   float:left;
 }
 
-div.top_panel {
-  display: block;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-  background-color: #FFD800;
-  border-color: #FFA203;
-  border-width: 1px 1px 1px 1px;
-  border-style: solid;
-  margin-top: 10px;
-  padding: 3px;
-  font-family: "Sans";
-  color: #000000;
-  font-size: 16px;
-  font-weight: bold;
-
-}
 
 label {
   display: inherit;
@@ -310,19 +294,7 @@ a.nav_link {
   border-style: solid;
 }
 
-a.action_link {
-  display: block;
-  text-align: center;
+a.openable {
   text-decoration: none;
-  margin:  5px;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
-  font-size: 1.2em;
-  font-weight: bold;
-  color: red;
-  background-color: #555555;
-  border-color: black;
-  border-width: 1px 1px 1px 1px;
-  border-style: solid;
+  color: blue;
 }
