@@ -68,7 +68,7 @@ module ApplicationHelper
 
     result = ''
     team.team_bonuses.each do |bonus|
-      result << content_tag(:p, "<b>Бонус:</b> #{bonus.description}".html_safe)
+      result << content_tag(:p, "<b>#{bonus.name}</b><br>#{bonus.description}".html_safe)
     end
     content_tag(:div, result.html_safe, class: 'blitz_info').html_safe
   end

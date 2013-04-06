@@ -25,7 +25,7 @@ module CodesHelper
       style << "border: 2px inset red;" if last_result.present? && last_result.select {|i| i[:id] == code.id}.present?
       content_tag(:b, content_tag(:span, "#{ko_price}(#{code.show_code})", style: style).html_safe).html_safe
     else
-      content_tag(:span, ko_price).html_safe
+      content_tag(:span, ko_price, class: 'ko', 'data-id' => code.id).html_safe
     end
   end
 end
