@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(:version => 20130405003857) do
 
   create_table "team_bonus", :force => true do |t|
     t.string  "bonus_type",  :null => false
+    t.string  "name",        :null => false
     t.text    "description"
     t.float   "rate"
     t.string  "ko"
