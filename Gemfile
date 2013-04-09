@@ -30,6 +30,15 @@ group :test, :development do
   gem 'database_cleaner'
 end
 
+group :development do
+  gem 'mina', '~> 0.2.0'
+end
+
+group :poduction do
+  gem 'execjs'
+end
+
+
 gem 'jquery-rails'
 
 # To use ActiveModel has_secure_password
