@@ -5,7 +5,7 @@ pid File.join(app_path, 'shared/pids/unicorn.pid')
 stderr_path File.join(app_path, 'shared/log/unicorn.log')
 stdout_path File.join(app_path, 'shared/log/unicorn.log')
 
-listen File.join(app_path, 'current/tmp/unicorn.sock'), backlog: 64
+listen File.join(app_path, 'shared/tmp/unicorn.sock'), backlog: 64
 worker_processes 2
 timeout 30
 preload_app true
