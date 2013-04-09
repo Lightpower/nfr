@@ -71,7 +71,7 @@ namespace :unicorn do
     desc "#{command.capitalize} Unicorn"
     task command do
       queue %{echo "-----> #{command.capitalize}ing Unicorn..."}
-      queue %{#{unicorn_startup} #{command}}
+      queue %{bundle exec unicorn #{command} -c /srv/http/got.smile-team.info/current/config/unicorn.rb -E production -D}
     end
   end
 end
