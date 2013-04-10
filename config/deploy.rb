@@ -68,6 +68,23 @@ namespace :unicorn do
       queue %{echo "-----> #{command.capitalize}ing Unicorn..."}
       queue %{bundle exec unicorn #{command} -c /srv/http/got.smile-team.info/current/config/unicorn.rb -E production -D}
     end
+#=======
+#  set :unicorn_pid, "#{deploy_to}/shared/pids/unicorn.pid"
+#
+#  desc "Start unicorn"
+#  task :start => :environment do
+#    queue 'echo "-----> Start Unicorn"'
+#    queue! %{cd #{deploy_to}/current && bundle exec unicorn -c #{deploy_to}/current/config/unicorn.rb -E production -D}
+#  end
+#
+#  desc "Stop unicorn"
+#  task :stop do
+#    queue 'echo "-----> Stop Unicorn"'
+#    queue! %{
+#      test -s "#{unicorn_pid}" && kill -QUIT `cat "#{unicorn_pid}"` && echo "Stop Ok" && exit 0
+#      echo >&2 "Not running"
+#    }
+#>>>>>>> 93f26e5bebaea94088553ac9af2b66d10eeb8714
   end
 end
 
