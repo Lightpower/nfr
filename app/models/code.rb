@@ -16,9 +16,9 @@ class Code < ActiveRecord::Base
                  not_found: 'не принят', not_available: ' не принят', not_enough_costs: 'слишком дорого',
                  hint_accessed: 'получена подсказка', hint_repeated: 'повторно', hint_not_enough_costs: 'слишком дорого'
   }
-  STATE_COLORS = {accepted: 'lime', accessed: 'darkgreen', repeated: 'yellow', not_found: 'grey',
+  STATE_COLORS = {accepted: 'green', accessed: '#003c00', repeated: 'yellow', not_found: 'grey',
                   not_available: 'grey', not_enough_costs: 'red',
-                  hint_accessed: 'darkgreen', hint_repeated: 'darkyellow', hint_not_enough_costs: 'red'
+                  hint_accessed: '#662900', hint_repeated: 'darkyellow', hint_not_enough_costs: 'red'
   }
 
   class << self
