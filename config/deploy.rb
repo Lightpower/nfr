@@ -62,6 +62,12 @@ task :deploy => :environment do
 end
 
 namespace :unicorn do
+  #%w(start stop).each do |command|
+  #  desc "#{command.capitalize} Unicorn"
+  #  task command do
+  #    queue %{echo "-----> #{command.capitalize}ing Unicorn..."}
+  #    queue %{bundle exec unicorn #{command} -c /srv/http/got.smile-team.info/current/config/unicorn.rb -E production -D}
+  #  end
   set :unicorn_pid, "#{deploy_to}/shared/pids/unicorn.pid"
 
   desc "Start unicorn"
