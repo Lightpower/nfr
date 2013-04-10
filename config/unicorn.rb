@@ -1,18 +1,14 @@
-working_directory "/srv/http/got.smile-team.info/current"
-pid "/srv/http/got.smile-team.info/shared/pids/unicorn.pid"
-stderr_path "/srv/http/got.smile-team.info/shared/log/unicorn.stderr.log"
-stdout_path "/srv/http/got.smile-team.info/shared/log/unicorn.stdout.log"
+app_path = '/srv/apps/got.smile-team.info'
 
-listen "/srv/http/got.smile-team.info/current/tmp/sockets/spreel.sock", backlog: 64
+working_directory File.join(app_path, 'current')
+pid File.join(app_path, 'shared/pids/unicorn.pid')
+stderr_path File.join(app_path, 'shared/log/unicorn.log')
+stdout_path File.join(app_path, 'shared/log/unicorn.log')
+
+listen File.join(app_path, 'tmp/unicorn.sock'), backlog: 64
 worker_processes 2
 timeout 30
 preload_app true
-
-
-before_exec do |server|
-  ENV["BUNDLE_GEMFILE"] = "/srv/http/got.smile-team.info/current/Gemfile"
-end
-
 
 before_fork do |server, worker|
   if defined?(ActiveRecord::Base)
