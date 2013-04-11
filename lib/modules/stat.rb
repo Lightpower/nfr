@@ -75,7 +75,7 @@ module Stat
               holder: {
                 name:  'Free zone',
                 codes: 0,
-                time:  '0 c',
+                time:  '00:00:00',
               }
             }
           })

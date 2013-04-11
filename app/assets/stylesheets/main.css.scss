@@ -31,6 +31,9 @@ header {
 div {
   vertical-align: top;
 }
+section#container {
+  min-width: 1150px;
+}
 
 nav, section, aside {
   display: -moz-inline-stack;
@@ -67,7 +70,7 @@ nav#info_container {
 
 section.main_content {
   min-height: 220px;
-  width: 800px;
+  width: 700px;
   margin-right: 10px;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;

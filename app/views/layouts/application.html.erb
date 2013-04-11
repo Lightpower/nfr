@@ -8,25 +8,26 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<header class="main"><%= render 'layouts/input_code' %></header>
+<section id='container' name='container'>
+  <header class="main"><%= render 'layouts/input_code' %></header>
+	<nav id="info_container">
+	  <%= render "layouts/user_info" %><br>
+	  <%= render "layouts/blitz_info" %>
+	  <%= render "layouts/log" %>
 
-<nav id="info_container">
-  <%= render "layouts/user_info" %><br>
-  <%= render "layouts/blitz_info" %>
-  <%= render "layouts/log" %>
+	</nav>
 
-</nav>
+	<section class="main_content">
+	  <%= show_flash %>
 
-<section class="main_content">
-  <%= show_flash %>
+	  <%= yield %>
+	</section>
 
-  <%= yield %>
+	<aside class="aside_right">
+		<%= render 'layouts/actions' %>
+	  <%= render 'layouts/results' %>
+	</aside>
 </section>
-
-<aside class="aside_right">
-	<%= render 'layouts/actions' %>
-  <%= render 'layouts/results' %>
-</aside>
 
 </body>
 </html>
