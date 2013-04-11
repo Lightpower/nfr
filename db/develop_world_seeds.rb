@@ -234,24 +234,23 @@ def create_public_game
 
   Team.destroy_all
   User.destroy_all
-  team = Team.create(name: 'Boltons', alternative_name: 'DRузья', image_url: '/images/test.png')
-  user = User.create(email: 'test@ex.ua', password: '123456', password_confirmation: '123456', team: team)
-  puts " - Team and User are created"
+
+  houses = %w(Bolton Jast Dayne Dondarrion Frey Goodbrother Corbray)
 
   # Zones with accepted codes
   Code.destroy_all
   CodeString.destroy_all
   Zone.destroy_all
 
-
   kingdoms = ["Север", "Замковый Утёс", "Дорн", "Штормовые земли", "Речные земли", "Соль и Камень", "Долина Аррен"]
   7.times { |i|
+    team = Team.create(name: houses[i], image_url: "/images/house_test#{i}.png")
+    User.create(email: "test#{i}@ex.ua", password: '123456', password_confirmation: '123456', team: team)
     code = Code.create(number: i+1, name: '', ko: 'null')
     CodeString.create(data: "Z#{(i+1).to_s * 3}", code: code)
     Zone.create(number: i+1, name: kingdoms[i], image_url: "/image/test#{i+1}.png", access_code: code)
   }
-
-  puts " - Zones with their access codes are created"
+  puts " - Team, User and Zones with their access codes are created"
 
   # Tasks with codes and included tasks
   puts " Tasks with codes and included tasks"
@@ -366,8 +365,8 @@ def create_public_game
 
 
   # Show the world
-  puts "User: #{user.email}"
-  puts "Team: #{team.name}"
+  puts "Users: #{User.all.map(&:email).join(', ')}"
+  puts "Teams: #{Team.all.map(&:name).join(', ')}"
   Zone.all.each do |zone|
     puts "### Zone #{zone.number} - #{zone.name} (access code: #{zone.access_code.code_strings.map(&:data).join(" ")})"
     zone.tasks.each do |tsk|
