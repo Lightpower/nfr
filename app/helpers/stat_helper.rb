@@ -35,6 +35,6 @@ module StatHelper
     res << content_tag(:span, 'Ваше влияние в зоне: ', class: 'label')
     res << content_tag(:span, params[:team_codes], class: 'team_codes')
 
-    content_tag(:div, res.html_safe, class: "div_#{params[:name].gsub(' ','').underscore}").html_safe
+    content_tag(:div, res.html_safe, class: params[:class]).html_safe
   end
 end
