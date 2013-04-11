@@ -2,7 +2,7 @@
   <div class='hint openable_holder'>
     <%= openable_tag("#{task.make_id}hint") %>
     <%= content_tag(:span, "Подсказки (#{task.hints.size} шт.)") %>
-	  <%= content_tag(:span, "Цена: #{task.hints.map(&:cost).join(", ")}") %>
+	  <%= content_tag(:span, "Цена: #{task.hints.by_order.map(&:cost).join(", ")}") %>
     <div class="openable">
 		<% task.hints_of(current_user.team).each do |hint| %>
       <div class=hint_data>
