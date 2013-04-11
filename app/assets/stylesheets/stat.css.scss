@@ -7,6 +7,14 @@ div.stat {
   height: 600px;
   width:  800px;
   margin: 0 auto;
+
+  div {
+    position: relative;
+    background-color: transparent;
+    border-style: none;
+    width:  200px;
+
+  }
 }
 
 span.label {
@@ -39,21 +47,38 @@ span.time {
   font-weight: bold;
 }
 
-div.div_winterfell {
-  position: relative;
+div.north {
   left: 300px;
   top:  50px;
-  background-color: transparent;
-  border-style: none;
-  width:  200px;
 }
 
-div.div_casterly_rock {
-  position: relative;
+div.casterly {
+  left: 600px;
+  top:  70px;
+}
+
+div.dorn {
+  left: 80px;
+  top:  -120px;
+}
+
+div.storm {
   left: 200px;
-  top:  200px;
-  background-color: transparent;
-  border-style: none;
-  width:  200px;
+  top:  -60px;
+}
+
+div.river {
+  left: 410px;
+  top:  -220px;
+}
+
+div.salt {
+  left: 610px;
+  top:  -170px;
+}
+
+div.arren {
+  left: 320px;
+  top:  -200px;
 }
 
