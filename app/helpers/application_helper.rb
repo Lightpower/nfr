@@ -39,7 +39,7 @@ module ApplicationHelper
   def show_log(number=20)
     result = ''
     team = current_user.team
-    team.logs.first(20).each do |log|
+    team.logs.order('logs.created_at DESC').first(20).each do |log|
       state = Code::STATES[log.result_code]
       style = case state
                 when :accepted
