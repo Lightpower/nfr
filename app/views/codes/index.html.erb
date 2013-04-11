@@ -13,7 +13,7 @@
 	      <%= content_tag(:td, team_code.code.show_code) %>
 	      <%= content_tag(:td, team_code.code.ko) %>
 	      <%= content_tag(:td, team_code.code.bonus) %>
-	      <%= content_tag(:td, team_code.created_at.strftime('%H:%M:%S')) %>
+	      <%= content_tag(:td, team_code.created_at.localtime.strftime('%H:%M:%S')) %>
 	      <td>
 		      <%= select_tag(:zones, options_from_collection_for_select(@team_zones, "id", "name"), include_blank: true) %>
 	      </td>
