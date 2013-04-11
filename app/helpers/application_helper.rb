@@ -25,7 +25,7 @@ module ApplicationHelper
 
     # Free zone
     zone_html =  content_tag(:td, content_tag(:b, "В резерве -") )
-    zone_html << content_tag(:td, team.codes_number_in_zone(nil) )
+    zone_html << content_tag(:td, team.codes_number_in_zone(nil).round(3) )
 
     result << content_tag(:tr, zone_html)
 
