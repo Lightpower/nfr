@@ -235,7 +235,7 @@ def create_public_game
   Team.destroy_all
   User.destroy_all
 
-  houses = %w(Bolton Jast Dayne Dondarrion Frey Goodbrother Corbray)
+  houses = %w(Bolton Jast Dayne Dondarrion Frey Goodbrother Corbray Pain Amber Drogo)
 
   # Zones with accepted codes
   Code.destroy_all
@@ -243,9 +243,12 @@ def create_public_game
   Zone.destroy_all
 
   kingdoms = ["Север", "Замковый Утёс", "Дорн", "Штормовые земли", "Речные земли", "Соль и Камень", "Долина Аррен"]
-  7.times { |i|
+
+  10.times { |i|
     team = Team.create(name: houses[i], image_url: "/images/house_test#{i}.png")
     User.create(email: "test#{i}@ex.ua", password: '123456', password_confirmation: '123456', team: team)
+  }
+  7.times { |i|
     code = Code.create(number: i+1, name: '', ko: 'null')
     CodeString.create(data: "Z#{(i+1).to_s * 3}", code: code)
     Zone.create(number: i+1, name: kingdoms[i], image_url: "/image/test#{i+1}.png", access_code: code)
