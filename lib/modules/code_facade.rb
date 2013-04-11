@@ -90,7 +90,8 @@ module CodeFacade
       # Mark as found if need
       if result == :accepted
         bonus = user.team.modify_bonus(code)
-        new_team_code = TeamCode.create(team_id: team.id, code_id: code.id, state: Code::STATES.index(:accepted), zone_id: code.zone.try(:id), bonus: bonus)
+        new_team_code = TeamCode.create(team_id: team.id, code_id: code.id, state: Code::STATES.index(:accepted),
+                                        zone_id: code.zone.try(:id), bonus: bonus, team_bonus_id: bonus_id)
         check_holding([{team_code: new_team_code}])
       end
 
