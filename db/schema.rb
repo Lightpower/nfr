@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130405003857) do
+ActiveRecord::Schema.define(:version => 20130411164331) do
 
   create_table "code_strings", :force => true do |t|
     t.string  "data",    :null => false
@@ -100,15 +100,17 @@ ActiveRecord::Schema.define(:version => 20130405003857) do
     t.string   "data"
     t.integer  "state"
     t.string   "color"
-    t.float    "bonus",      :default => 0.0, :null => false
-    t.integer  "team_id",                     :null => false
-    t.integer  "code_id",                     :null => false
+    t.float    "bonus",         :default => 0.0, :null => false
+    t.integer  "team_id",                        :null => false
+    t.integer  "code_id",                        :null => false
     t.integer  "zone_id"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.integer  "team_bonus_id"
   end
 
   add_index "team_codes", ["code_id"], :name => "index_team_codes_on_code_id"
+  add_index "team_codes", ["team_bonus_id"], :name => "index_team_codes_on_team_bonus_id"
   add_index "team_codes", ["team_id", "code_id"], :name => "index_team_codes_on_team_id_and_code_id", :unique => true
   add_index "team_codes", ["team_id"], :name => "index_team_codes_on_team_id"
   add_index "team_codes", ["zone_id"], :name => "index_team_codes_on_zone_id"
