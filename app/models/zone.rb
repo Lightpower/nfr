@@ -1,4 +1,5 @@
- class Zone < ActiveRecord::Base
+# encoding: UTF-8
+class Zone < ActiveRecord::Base
 
   has_many   :teams, through: :team_zones
   has_many   :team_zones
@@ -9,6 +10,15 @@
 
   attr_accessible :name, :number, :image_url, :access_code, :code_id
 
+  CLASS_NAMES = {
+      'Север' => 'north',
+      'Замковый Утёс' => 'casterly',
+      'Дорн' => 'dorn',
+      'Штормовые земли' => 'storm',
+      'Речные земли' => 'river',
+      'Соль и Камень' => 'salt',
+      'Долина Аррен' => 'arren'
+  }
   ##
   # Define the holder of this zone and the time of capturing
   #
@@ -28,5 +38,12 @@
   #
   def make_id
     "#{self.class.name.downcase}#{id}"
+  end
+
+  ##
+  # Returns CSS class style for current zone
+  #
+  def css_class
+    CLASS_NAMES[name]
   end
 end
