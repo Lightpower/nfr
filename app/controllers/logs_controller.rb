@@ -4,7 +4,7 @@ class LogsController < ApplicationController
   before_filter :validate_team_presence
 
   def index
-    @logs = current_user.team.logs.reverse
+    @logs = current_user.team.logs.order('created_at DESC')
     render 'logs/index'
   end
 
