@@ -399,8 +399,8 @@ def create_public_game
 
 
   # Bonuses for each Team
+  TeamBonus.destroy_all
   Team.all.each do |t|
-    TeamBonus.destroy_all
 
     multiplier = 1.1 + rand(9) / 10
     ko = (KO_LIST + %w(null))[rand(7)]
