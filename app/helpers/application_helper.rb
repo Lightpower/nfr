@@ -49,7 +49,7 @@ module ApplicationHelper
                 else
                   'color:black;'
               end
-      log_html = content_tag(:td, content_tag(:span, log.created_at.strftime('%H:%M:%S')))
+      log_html = content_tag(:td, content_tag(:span, log.created_at.localtime.strftime('%H:%M:%S')))
       log_html << content_tag(:td, content_tag(:span, log.data, style: style))
       log_html << content_tag(:td, content_tag(:span, Code::STATE_NAMES[state]))
 
