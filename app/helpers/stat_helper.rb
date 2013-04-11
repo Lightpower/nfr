@@ -30,7 +30,7 @@ module StatHelper
     res << content_tag(:span, params[:holder][:codes], class: 'codes')
     res << '<br>'
     res << content_tag(:span, 'Время захвата: ', class: 'label')
-    res << content_tag(:span, params[:holder][:time], class: 'time')
+    res << content_tag(:span, (Time.now - params[:holder][:time]), class: 'time')
     res << '<br>'
     res << content_tag(:span, 'Ваше влияние в зоне: ', class: 'label')
     res << content_tag(:span, params[:team_codes], class: 'team_codes')

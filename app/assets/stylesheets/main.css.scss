@@ -294,6 +294,12 @@ a.nav_link {
   border-style: solid;
 }
 
+a.nav_link.refresh {
+  font-style: italic;
+  background-color: #00ec00;
+  color: #003a00;
+}
+
 a.openable {
   text-decoration: none;
   color: blue;
