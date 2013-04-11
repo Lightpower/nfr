@@ -61,7 +61,7 @@ module Stat
               holder: {
                 name:  team.name,
                 codes: team.codes_number_in_zone(zone).round(3),
-                time:  holder.time.localtime.strftime('%H:%M:%S'),
+                time:  Time.at(Time.now.localtime - holder.time.localtime).gmtime.strftime('%H:%M:%S'),
                 image: team.image_url
               }
             }
@@ -75,7 +75,7 @@ module Stat
               holder: {
                 name:  'Free zone',
                 codes: 0,
-                time:  '22:00:00',
+                time:  '0 c',
               }
             }
           })

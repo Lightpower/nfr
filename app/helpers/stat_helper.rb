@@ -20,7 +20,6 @@ module StatHelper
   #     }
   #
   def show_zone_stat(params)
-    debugger
     res = ''
     res << content_tag(:span, params[:name], class: 'zone_title')
     res << '<br>'
