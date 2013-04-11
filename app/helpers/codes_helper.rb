@@ -28,7 +28,7 @@ module CodesHelper
       code_text += "(#{code.show_code})" if team_code.team_bonus.blank?
       content_tag(:b, content_tag(:span, code_text, style: style).html_safe).html_safe
     else
-      content_tag(:span, ko_price, class: 'ko', 'data-id' => code.id).html_safe
+      content_tag(:span, "#{ko_price}###", class: 'ko', 'data-id' => code.id).html_safe
     end
   end
 end
