@@ -17,7 +17,7 @@
 	    <%= content_tag(:td, log.created_at.strftime('%H:%M:%S')) %>
 	    <%= content_tag(:td, log.data, style: "font-weight: bold; color: #{Code::STATE_COLORS[Code::STATES[log.result_code]]}") %>
 	    <%= content_tag(:td, Code::STATE_NAMES[Code::STATES[log.result_code]]) %>
-      <% if log.code.present? %>
+      <% if log.code.present? && log.can_show_info? %>
         <%= content_tag(:td, log.code.ko) %>
         <%= content_tag(:td, log.code.zone.try(:name) || "Свободный код") %>
         <%= content_tag(:td, log.code.task.try(:number)) %>

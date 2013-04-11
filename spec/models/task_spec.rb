@@ -25,15 +25,15 @@ describe Task do
     it 'success' do
       # task from zone without access
       task = Zone.where('id <> ?', @zone.id).first.tasks.where(code_id: nil).first
-      task.is_available?(@user).should be_false
+      task.is_available?(@user.team).should be_false
 
       # Access to zone
       res = CodeFacade.input({code_string: task.zone.access_code.show_code, user: @user})
-      task.is_available?(@user).should be_true
+      task.is_available?(@user.team).should be_true
 
       # Task is secured by access code
       task = Task.where(zone_id: @zone.id).where('code_id is not null').first
-      task.is_available?(@user).should be_false
+      task.is_available?(@user.team).should be_false
 
       # Enter the codes from this zone to get costs for getting task
       task_2 = Task.where(zone_id: @zone.id).where(code_id: nil).first
@@ -41,7 +41,7 @@ describe Task do
 
       # Enter access code of task
       CodeFacade.input({code_string: task.access_code.show_code, user: @user})
-      task.is_available?(@user).should be_true
+      task.is_available?(@user.team).should be_true
     end
   end
 

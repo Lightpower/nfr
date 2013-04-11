@@ -208,7 +208,13 @@ module CodeFacade
         holders.merge!(zone.id => {amount: 0, time: Time.now - 2.days, team: nil} )
         Team.all.each do |team|
           amount = team.codes_number_in_zone(zone)
-          time = team.last_code_in_zone(zone)[:time]
+          time = team.last_code_in_zone(zone)
+          if time.present?
+            time = time[:time] if time
+          else
+            time = Time.now - 1.day
+          end
+
 
           if( amount > holders[zone.id][:amount]) ||
               ( (amount == holders[zone.id][:amount]) && (time < holders[zone.id][:time]) )
@@ -249,7 +255,8 @@ module CodeFacade
             end
           else
             #Check if Zone of this code is available for this team
-            if code.zone.blank? || TeamZone.where(team_id: team.id, zone_id: code.zone.id).present?
+            #if (code.zone.blank? || TeamZone.where(team_id: team.id, zone_id: code.zone.id).present?)
+            if code.task.is_available?(team)
 
               # Does team have enough codes to pass this code?
               if have_enough_codes?(code, team)

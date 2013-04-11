@@ -53,8 +53,8 @@ class Team < ActiveRecord::Base
   # Try to apply all team bonuses to the code
   #
   def modify_bonus(code)
-    bonus = nil
-    self.modifiable_bonuses.each { |team_bonus| bonus = team_bonus.modify_bonus(code, bonus) }
+    bonus = code.bonus
+    self.modifiable_bonuses.each { |team_bonus| bonus = team_bonus.modify_bonus(bonus, code.ko) }
     bonus || 0
   end
 

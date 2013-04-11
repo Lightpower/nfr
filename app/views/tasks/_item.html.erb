@@ -1,6 +1,6 @@
-<div class='task openable_holder <%= 'unavailable' unless task.is_available?(current_user) %>'>
+<div class='task openable_holder <%= 'unavailable' unless task.is_available?(current_user.team) %>'>
   <%= openable_tag(task.make_id) %>
-	<% if task.is_available?(current_user) %>
+	<% if task.is_available?(current_user.team) %>
     <%= content_tag(:span, task.number) %>. <%= content_tag(:span, task.name) %><br>
     <div class='openable'>
       <%= task.data.html_safe %><br>

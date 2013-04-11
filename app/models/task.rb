@@ -30,13 +30,13 @@ class Task < ActiveRecord::Base
   end
 
   ##
-  # Is the task available for defined user's team
+  # Is the task available for defined team
   #
-  def is_available?(user)
-    return false if user.blank? || user.team.blank?
+  def is_available?(team)
+    return false if team.blank?
     return true if self.zone.blank?
-    if user.team.zones.include?(self.zone)
-      self.access_code.blank? || TeamCode.where(team_id: user.team.id, code_id: self.access_code.id).present?
+    if team.zones.include?(self.zone)
+      self.access_code.blank? || TeamCode.where(team_id: team.id, code_id: self.access_code.id).present?
     else
       false
     end
