@@ -14,7 +14,7 @@
 	  <tbody>
   <% @logs.each do |log|  %>
     <tr>
-	    <%= content_tag(:td, log.created_at.strftime('%H:%M:%S')) %>
+	    <%= content_tag(:td, log.created_at.localtime.strftime('%H:%M:%S')) %>
 	    <%= content_tag(:td, log.data, style: "font-weight: bold; color: #{Code::STATE_COLORS[Code::STATES[log.result_code]]}") %>
 	    <%= content_tag(:td, Code::STATE_NAMES[Code::STATES[log.result_code]]) %>
       <% if log.code.present? && log.can_show_info? %>
