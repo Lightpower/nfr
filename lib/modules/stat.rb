@@ -56,6 +56,7 @@ module Stat
           result.merge!({
             zone.id =>{
               name: zone.name,
+              class: zone.css_class,
               team_codes: asking_team.codes_number_in_zone(zone).round(3),
               holder: {
                 name:  team.name,
@@ -69,6 +70,7 @@ module Stat
           result.merge!({
             zone.id =>{
               name: zone.name,
+              class: zone.css_class,
               team_codes: 0,
               holder: {
                 name:  'Free zone',
