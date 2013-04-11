@@ -20,10 +20,13 @@ module CodesHelper
   #
   def ko_colored(code, team_id, last_result=nil)
     ko_price = "#{code.ko}[#{code.bonus}]"
-    if TeamCode.where(code_id: code.id, team_id: team_id, state: Code::STATES.index(:accepted)).present?
+    team_code = TeamCode.where(code_id: code.id, team_id: team_id, state: Code::STATES.index(:accepted)).first
+    if team_code.present?
       style = "color: #{code.color || 'red'};"
       style << "border: 2px inset red;" if last_result.present? && last_result.select {|i| i[:id] == code.id}.present?
-      content_tag(:b, content_tag(:span, "#{ko_price}(#{code.show_code})", style: style).html_safe).html_safe
+      code_text = ko_price
+      code_text += "(#{code.show_code})" if team_code.team_bonus.blank?
+      content_tag(:b, content_tag(:span, code_text, style: style).html_safe).html_safe
     else
       content_tag(:span, ko_price, class: 'ko', 'data-id' => code.id).html_safe
     end
