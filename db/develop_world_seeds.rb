@@ -373,29 +373,29 @@ def create_public_game
   # Show the world
   puts "Users: #{User.all.map(&:email).join(', ')}"
   puts "Teams: #{Team.all.map(&:name).join(', ')}"
-  Zone.all.each do |zone|
-    puts "### Zone #{zone.number} - #{zone.name} (access code: #{zone.access_code.code_strings.map(&:data).join(" ")})"
-    zone.tasks.each do |tsk|
-      access_code = tsk.access_code.present? ? tsk.access_code.code_strings.map(&:data).join(" ") : ""
-      puts "\n  Task #{tsk.number} - access code #{access_code}"
-      tsk.hints.each do |hint|
-        puts "    Hint #{hint.number} (#{hint.cost} codes cost): #{hint.data}"
-      end
-      puts ""
-      tsk.codes.each do |code|
-        puts "    Code #{code.number}: #{code.code_strings.map(&:data).join(" ")}"
-      end
-    end
-
-
-  end
-
-  Task.where(zone_id: nil).each do |tsk|
-    puts "\n  Free Task #{tsk.number}"
-    tsk.codes.each do |code|
-      puts "    Code #{code.number}: #{code.code_strings.map(&:data).join(" ")}"
-    end
-  end
+  #Zone.all.each do |zone|
+  #  puts "### Zone #{zone.number} - #{zone.name} (access code: #{zone.access_code.code_strings.map(&:data).join(" ")})"
+  #  zone.tasks.each do |tsk|
+  #    access_code = tsk.access_code.present? ? tsk.access_code.code_strings.map(&:data).join(" ") : ""
+  #    puts "\n  Task #{tsk.number} - access code #{access_code}"
+  #    tsk.hints.each do |hint|
+  #      puts "    Hint #{hint.number} (#{hint.cost} codes cost): #{hint.data}"
+  #    end
+  #    puts ""
+  #    tsk.codes.each do |code|
+  #      puts "    Code #{code.number}: #{code.code_strings.map(&:data).join(" ")}"
+  #    end
+  #  end
+  #
+  #
+  #end
+  #
+  #Task.where(zone_id: nil).each do |tsk|
+  #  puts "\n  Free Task #{tsk.number}"
+  #  tsk.codes.each do |code|
+  #    puts "    Code #{code.number}: #{code.code_strings.map(&:data).join(" ")}"
+  #  end
+  #end
 
 
   # Bonuses for each Team
