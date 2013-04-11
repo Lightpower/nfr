@@ -429,3 +429,18 @@ def create_public_game
     )
   end
 end
+
+def add_team_to_20
+  houses = %w(Bolton Jast Dayne Dondarrion Frey Goodbrother Corbray Pain Amber Drogo)
+  20.times { |i|
+    h_name = i<10 ? houses[i] : "House#{i}"
+    if Team.find_by_name(h_name).blank?
+      team = Team.create(name: h_name, image_url: "/images/house_test#{i}.png")
+      User.create(email: "test#{i}@ex.ua", password: '123456', password_confirmation: '123456', team: team)
+    end
+  }
+
+  puts "Users: #{User.all.map(&:email).join(', ')}"
+  puts "Teams: #{Team.all.map(&:name).join(', ')}"
+
+end
