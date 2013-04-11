@@ -20,7 +20,7 @@ class TeamBonus < ActiveRecord::Base
   # - {float} - modified bonus
   #
   def modify_bonus(bonus, ko)
-    bonus *= self.rate    if (self.bonus_type == "KoMultiplier") && (code.bonus > 0) && (ko == self.ko)
+    bonus *= self.rate    if (self.bonus_type == "KoMultiplier") && (bonus > 0) && (ko == self.ko)
     bonus
   end
 
