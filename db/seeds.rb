@@ -11,6 +11,6 @@
 # Team and User
 require_relative 'develop_world_seeds'
 
-#create_public_game
+create_public_game
 
-add_team_to_20
+#add_team_to_20
