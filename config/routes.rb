@@ -7,6 +7,8 @@ Nfr::Application.routes.draw do
   match '/hint' => 'home#hint', via: :put
   match '/stat' => 'home#stat'
 
+  match '/m' => 'mobile#index'
+
   resources :logs,    only: [:index]
 
   resources :codes, only: [:index] do
