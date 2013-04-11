@@ -15,6 +15,23 @@ a.action_link {
   border-style: solid;
 }
 
+a.action_link_wait {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  margin:  5px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  font-size: 0.8em;
+  font-weight: bold;
+  color: #222222;
+  background-color: #555555;
+  border-color: black;
+  border-width: 1px 1px 1px 1px;
+  border-style: solid;
+}
+
 div.start_action {
   display: block;
   -webkit-border-radius: 10px;
