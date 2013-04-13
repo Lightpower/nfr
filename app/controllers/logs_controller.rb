@@ -4,7 +4,11 @@ class LogsController < ApplicationController
   before_filter :validate_team_presence
 
   def index
-    @logs = current_user.team.logs.order('created_at DESC')
+    if current_user.is_admin?
+      @logs = Log.order('created_at DESC').all
+    else
+      @logs = current_user.team.logs.order('created_at DESC')
+    end
     render 'logs/index'
   end
 
