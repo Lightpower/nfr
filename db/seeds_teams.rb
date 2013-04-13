@@ -63,7 +63,6 @@ def create_teams
   end
   task.save
   task.reload
-  free_codes = task.codes
 
   #############################################################
   #Starks

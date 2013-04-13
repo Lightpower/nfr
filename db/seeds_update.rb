@@ -27,4 +27,18 @@ def update_1
   team6 = Team.find_by_name 'Грейджои'
   User.create(email: 'adm_ktozdes@ex.ua', password: '123456', password_confirmation: '123456', team: team6)
 
+
+  # create free codes
+  task = Task.where(zone_id: nil).first
+  code_names = %w(zd1r724 zd2r817 zd3r333 zd4r87 zd5r72 zd6r34 zd7r432 zd8r21 zd9r zd10r270387 zd11r8121983 zd12r121488 zd13r817 zd14r131 zd15r7)
+
+  # 20 codes for this task
+  15.times do |i|
+    code_number = task.new_code_number
+    code = Code.create(task_id: task.id, number: code_number, name: '', bonus: 100, ko: "bonus", color: 'black')
+    CodeString.create(data: code_names[i], code: code)
+  end
+  task.save
+  task.reload
+
 end

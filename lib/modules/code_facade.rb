@@ -202,32 +202,47 @@ module CodeFacade
       # Get the list of zones
       zones = results.map { |res| res[:team_code].try(:zone) }.compact
       return [] if zones.blank?
+      team_id = results.first[:team_code].try(:team_id)
+      return [] if team_id.blank?
+      team = Team.find team_id
 
-      holders = {} # {1 => {team: Team, amount: 13, time: TIME}}
       # define current holders of each zone
       zones.each do |zone|
-        holders.merge!(zone.id => {amount: 0, time: Time.now - 2.days, team: nil} )
-        Team.all.each do |team|
+        current_holder = ZoneHolder.where(zone_id: zone.id).order(:created_at).last
+        if current_holder.team_id != team.id
           amount = team.codes_number_in_zone(zone)
-          time = team.last_code_in_zone(zone)
-          if time.present?
-            time = time[:time] if time
-          else
-            time = Time.now - 1.day
-          end
-
-
-          if( amount > holders[zone.id][:amount]) ||
-              ( (amount == holders[zone.id][:amount]) && (time < holders[zone.id][:time]) )
-
-            holders[zone.id] = { amount: amount, time: time, team: team }
+          if current_holder.amount < amount
+            team_code = results.select {|res| res[:team_code].zone_id == zone.id}.first[:team_code]
+            ZoneHolder.create(amount: amount, zone_id: zone.id,
+                              team_id: team.id, team_code_id: team_code.id, time: team_code.created_at)
           end
         end
-        if zone.holder != holders[zone.id][:team]
-          team_code = TeamCode.order('created_at DESC').first
-          ZoneHolder.create(amount: holders[zone.id][:amount], zone_id: zone.id,
-            team_id: holders[zone.id][:team].id, team_code_id: team_code.id, time: team_code.created_at)
-        end
+
+
+
+
+        #holders.merge!(zone.id => {amount: 0, time: Time.now - 2.days, team: nil} )
+        #Team.all.each do |team|
+        #  amount = team.codes_number_in_zone(zone)
+        #  time = team.last_code_in_zone(zone)
+        #  if time.present?
+        #    time = time[:time] if time
+        #  else
+        #    time = Time.now - 1.day
+        #  end
+        #
+        #
+        #  if( amount > holders[zone.id][:amount]) ||
+        #      ( (amount == holders[zone.id][:amount]) && (time < holders[zone.id][:time]) )
+        #
+        #    holders[zone.id] = { amount: amount, time: time, team: team }
+        #  end
+        #end
+        #if zone.holder != holders[zone.id][:team]
+        #  team_code = TeamCode.order('created_at DESC').first
+        #  ZoneHolder.create(amount: holders[zone.id][:amount], zone_id: zone.id,
+        #    team_id: holders[zone.id][:team].id, team_code_id: team_code.id, time: team_code.created_at)
+        #end
       end
     end
 
