@@ -22,10 +22,10 @@ require_relative 'seeds_zone7'
 destroy_world
 create_teams
 
-#create_zone1
-#create_zone2
-#create_zone3
-#create_zone4
-#create_zone5
-#create_zone6
-#create_zone7
+create_zone1
+create_zone2
+create_zone3
+create_zone4
+create_zone5
+create_zone6
+create_zone7

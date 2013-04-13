@@ -4,7 +4,7 @@
     <%= content_tag(:span, task.number) %>. <%= content_tag(:span, task.name) %><br>
     <div class='openable'>
       <%= task.data.html_safe %><br>
-  		KO: <%= task.codes.by_order.map{|code| ko_colored(code, current_user.team.id, @results)}.join(', ').html_safe %>
+  		<br><b>KO:</b> <%= task.codes.by_order.map{|code| ko_colored(code, current_user.team.id, @results)}.join(', ').html_safe %>
 	<% else %>
       <%= content_tag(:span, task.number) %>. <%= content_tag(:span, task.name) %> <span class='warning'>(Недоступно)</span><br>
     <div class='openable'>

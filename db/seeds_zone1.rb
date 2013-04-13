@@ -8,10 +8,11 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-def create_zone1
+PRICE = {"1" => 100, "1+" => 121, "2" => 110, "2+" => 267, "3" => 175, "3+" => 100}
 
+def create_zone1
   access_code = Code.create(number: 1, name: '', info: '', ko: 'null')
-  CodeString.create(data: 'Winter1304', code: access_code)
+  CodeString.create(data: 'Winter1304', code_id: access_code.id)
   zone = Zone.create(number: 1, name: 'Север', image_url: '', access_code: access_code)
 
 
@@ -60,7 +61,8 @@ def create_zone1
   CodeString.create(data: "T#{zone.number}T#{task_number}", code: access_code)
 
   task = Task.create(number: task_number, name: "Задание №#{task_number}",
-                     data: 'ул. Сивашская 12/1<br>50.432901 30.639571',
+                     data: 'Машиностроительная, 8<br>
+50.444442 30.670545',
                      zone: zone,
                      access_code: access_code)
   add_code('BD1R452', '2', 100, task)
@@ -88,21 +90,6 @@ def create_zone1
   Hint.create(task: task, number: 2, cost: -bonus*0.3, data: 'Брану во сне приснилась ворона с третьим глазом. Она сказала: "Бран, тебе НУЖНО читать каждое ТРЕТЬЕ письмо. Тогда СЛОВО получишь".')
   zone.reload
 
-  # VIRTUAL - РЕЧНЫЕ заМЛИ
-  task_number = zone.new_task_number
-  bonus = 200
-  task = Task.create(number: task_number, name: "Задание №#{task_number}",
-                     data: 'Их в тот день было одиннадцать<br>
-Первому - отрезали голову, второй - перерезали горло, третий - застрелен из арбалета, четвертый был зарублен, защищая короля, пятая - убита топором в живот, шестой - заколот, седьмой и восьмой - застрелены из арбалета, девятый - зарублен шестым сыном, десятый - застрелен из арбалета.<br>
-Кто же был одиннадцатым, если он не человек?<br><br>
-<b>Формат ответа:</b> кириллица, два слова через пробел
-',
-                     zone: zone)
-  add_code('Серый Ветер', 'null', bonus, task)
-  Hint.create(task: task, number: 1, cost: -bonus*0.3, data: 'Эта свадьба закончилась не "они жили долго и счастливо".')
-  Hint.create(task: task, number: 2, cost: -bonus*0.3, data: 'Брану во сне приснилась ворона с третьим глазом. Она сказала: "Бран, тебе НУЖНО читать каждое ТРЕТЬЕ письмо. Тогда СЛОВО получишь".')
-  zone.reload
-
   # VIRTUAL
   task_number = zone.new_task_number
   bonus = 200
@@ -122,7 +109,7 @@ def create_zone1
   task = Task.create(number: task_number, name: "Задание №#{task_number}",
                      data: 'Мы помним: мудрость и сила днем или ночью всегда получит свое. Без отдыха правда побеждает!<br><br>
 
-<img src=\'http://fs137.www.ex.ua/get/52207170/52096094.png\'>
+<img src=\'http://fs137.www.ex.ua/get/52207170/52096094.png\'><br><br>
 
 <b>Формат ответа:</b> кириллица и цифры, два слова и шесть цифр (именно в таком порядке) без пробелов.<br>
 Шесть цифр - это те цифры, по которым вы рагадаете первые два слова (имя и фамилию)
@@ -130,28 +117,44 @@ def create_zone1
                      zone: zone)
   add_code('БрандонСтарк261283', 'null', bonus, task)
   Hint.create(task: task, number: 1, cost: -bonus*0.3, data: 'Девиз и цвет флага укажут 6 цифр слева направо')
-  Hint.create(task: task, number: 1, cost: -bonus*0.3, data: 'Цифры - это годы жизни')
+  Hint.create(task: task, number: 2, cost: -bonus*0.3, data: 'Цифры - это годы жизни')
   zone.reload
+
+  # VIRTUAL
+  task_number = zone.new_task_number
+  bonus = 200
+  task = Task.create(number: task_number, name: "Задание №#{task_number}",
+                     data: '<img src=\'http://klads.org.ua/classic/129/files/img001WSGS.jpg\'><br><br>
+
+<b>Формат ответа:</b> кириллица, одно слово
+',
+                     zone: zone)
+  add_code('Хилл', 'null', bonus, task)
+  Hint.create(task: task, number: 1, cost: -bonus*0.3, data: 'Вода, снег, гроза, ...')
+  Hint.create(task: task, number: 2, cost: -bonus*0.3, data: 'Не хватает одной фамилии. Какой?')
+  zone.reload
+
+
 
   # Kubraya
   task_number = zone.new_task_number
   bonus = 200
-  task = Task.create(number: task_number, name: "Задание №#{task_number}",
+  task = Task.create(number: task_number, name: "Задание №#{task_number} - Кубраи",
                      data: "чин кичтел<br>
 хи яьмес<br>
 разрешению пшеница<br>
 окрик преследование<br>
 luch шахматы<br>
 перед шосс саввина<br><br>
-Перед каждым ответом вводите #{zone.id}#{task_number}, например - #{zone.id}#{task_number}кубрай",
+Перед каждым ответом вводите #{zone.id}#{task_number}, например - <b>#{zone.id}#{task_number}кубрай</b>",
                      zone: zone)
 
-  add_code('санса', 'null', bonus, task)
-  add_code('сандор', 'null', bonus, task)
-  add_code('визерис', 'null', bonus, task)
-  add_code('эйгон', 'null', bonus, task)
-  add_code('рейго', 'null', bonus, task)
-  add_code('дотракия', 'null', bonus, task)
+  add_code("#{zone.id}#{task_number}санса", 'null', bonus, task)
+  add_code("#{zone.id}#{task_number}сандор", 'null', bonus, task)
+  add_code("#{zone.id}#{task_number}визерис", 'null', bonus, task)
+  add_code("#{zone.id}#{task_number}эйгон", 'null', bonus, task)
+  add_code("#{zone.id}#{task_number}рейго", 'null', bonus, task)
+  add_code("#{zone.id}#{task_number}дотракия", 'null', bonus, task)
 
   zone.reload
 
@@ -161,7 +164,10 @@ end
 #
 def add_code(data, ko, bonus, task)
   code_number = task.new_code_number
+  bonus = PRICE[ko] if ko != "null"
   code = Code.create(number: code_number, name: '', bonus: bonus, ko: ko, color: 'red', task_id: task.id)
   CodeString.create(data: data, code: code)
   task.reload
 end
+
+
