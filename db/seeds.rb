@@ -9,25 +9,26 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # Team and User
-require_relative 'seeds_develop_world'
-require_relative 'seeds_teams'
-require_relative 'seeds_zone1'
-require_relative 'seeds_zone2'
-require_relative 'seeds_zone3'
-require_relative 'seeds_zone4'
-require_relative 'seeds_zone5'
-require_relative 'seeds_zone6'
-require_relative 'seeds_zone7'
-#require_relative 'seeds_update'
+#require_relative 'seeds_develop_world'
+#require_relative 'seeds_teams'
+#require_relative 'seeds_zone1'
+#require_relative 'seeds_zone2'
+#require_relative 'seeds_zone3'
+#require_relative 'seeds_zone4'
+#require_relative 'seeds_zone5'
+#require_relative 'seeds_zone6'
+#require_relative 'seeds_zone7'
+require_relative 'seeds_update'
 
-destroy_world
-create_teams
+#destroy_world
+#create_teams
+#
+#create_zone1
+#create_zone2
+#create_zone3
+#create_zone4
+#create_zone5
+#create_zone6
+#create_zone7
 
-create_zone1
-create_zone2
-create_zone3
-create_zone4
-create_zone5
-create_zone6
-create_zone7
-
+update_1
