@@ -6,7 +6,7 @@ class Code < ActiveRecord::Base
   belongs_to :task
   has_many :code_strings
 
-  attr_accessible :info, :ko, :name, :number, :parent_id, :type, :code_strings, :color, :bonus
+  attr_accessible :info, :ko, :name, :number, :parent_id, :type, :code_strings, :color, :bonus, :task, :task_id
   accepts_nested_attributes_for :code_strings
 
   STATES = [:accepted, :accessed, :repeated, :not_found, :not_available, :not_enough_costs,
