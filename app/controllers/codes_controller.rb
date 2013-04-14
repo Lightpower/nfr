@@ -45,19 +45,20 @@ class CodesController < ApplicationController
   # Attach free codes to zone
   #
   def bonus_action
-    begin
-      if params[:bonus_action].present?
-        result = { result: "ok", status: 200 }
+    #begin
+    #  if params[:bonus_action].present?
+    #    result = { result: "ok", status: 200 }
+    #
+    #    get_result = CodeFacade.get_code_by_action_bonus(current_user, params[:bonus_action][:bonus_id], params[:bonus_action][:code_id])
+    #    result = { result: "failed", status: 200 } if get_result[:result] != :accepted
+    #  else
+    #    result = { result: "error", status: 500 }
+    #  end
+    #rescue
+    #  result = { result: "error", status: 500 }
+    #end
 
-        get_result = CodeFacade.get_code_by_action_bonus(current_user, params[:bonus_action][:bonus_id], params[:bonus_action][:code_id])
-        result = { result: "failed", status: 200 } if get_result[:result] != :accepted
-      else
-        result = { result: "error", status: 500 }
-      end
-    rescue
-      result = { result: "error", status: 500 }
-    end
-
+    result = { result: "error", status: 500 }
     respond_to do |format|
       format.js { render json: result }
     end
