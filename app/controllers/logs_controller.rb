@@ -5,11 +5,16 @@ class LogsController < ApplicationController
 
   def index
     if current_user.is_admin?
-      @logs = Log.order('created_at DESC').all
+      @logs = Log.where(result_code: [0, 6]).order('created_at DESC').all
     else
       @logs = current_user.team.logs.order('created_at DESC')
     end
     render 'logs/index'
+  end
+
+  def results
+    @stat_result = Stat.hold_bonuses
+
   end
 
   private
