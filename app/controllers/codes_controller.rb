@@ -26,7 +26,7 @@ class CodesController < ApplicationController
             result = { result: "error", status: 500 }
             break
           end
-          check_holding([{team_code: team_code}])
+          CodeFacade.check_holding([{team_code: team_code}])
         else
           result = { result: "not_found", status: 404 }
           break
