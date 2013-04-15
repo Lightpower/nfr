@@ -5,7 +5,7 @@ class LogsController < ApplicationController
 
   def index
     if current_user.is_admin?
-      @logs = Log.where(result_code: [0, 6]).order('created_at DESC').all
+      @logs = Log.where(result_code: [0, 1, 6]).order('created_at DESC').all
     else
       @logs = current_user.team.logs.order('created_at DESC')
     end
