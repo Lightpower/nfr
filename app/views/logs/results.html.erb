@@ -1,0 +1,31 @@
+<% if @stat_result.present? %>
+  <table class='log_full'>
+	  <thead>
+	    <th>Дом</th>
+	    <% Zone.all.each do |zone| %>
+	      <th><%= zone.name %></th>
+		  <% end %>
+	    <th>Всего</th>
+	  </thead>
+	  <tbody>
+	  <% @stat_result.each_pair do |key, val| %>
+	    <tr>
+	      <td><%= Team.find(key).name %></td>
+	      <% Zone.all.each do |zone| %>
+	        <td><%= val[zone.id] %></td>
+	      <% end %>
+		    <td><%= val.values.inject(0) {|r, i| r += i} %></td>
+
+	    </tr>
+		<% end %>
+
+	  <% Hint.where(id: [1961, 1958, 1955, 1944, 1960]).each do |hint|  %>
+	    <tr>
+	      <td><%= hint.task.zone.id %></td>
+	    </tr>
+
+		<% end %>
+
+	  </tbody>
+  </table>
+<% end %>
