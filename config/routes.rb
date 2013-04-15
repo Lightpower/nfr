@@ -6,10 +6,15 @@ Nfr::Application.routes.draw do
 
   match '/hint' => 'home#hint', via: :put
   match '/stat' => 'home#stat'
+  match '/reprocess' => 'home#reprocess'
 
   match '/m' => 'mobile#index'
 
-  resources :logs,    only: [:index]
+  resources :logs,    only: [:index] do
+    collection do
+      get :results
+    end
+  end
 
   resources :codes, only: [:index] do
     collection do
