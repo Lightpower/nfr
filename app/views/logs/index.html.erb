@@ -27,15 +27,15 @@
         <td></td><td></td><td></td><td></td><td></td>
       <% end %>
       <%= content_tag(:td, log.login) %>
+
+
     </tr>
 	<% end %>
-    <% TeamCode.where('created_at <> updated_at').each do |code|  %>
-	    <% #Hint.where(id: [2028, 2029]).each do |hint|  %>
+	<% Zone.all.each do |zone| %>
 	    <tr>
-
-	       <td><%= "['#{code.updated_at.localtime.strftime("%H:%M:%S")}','free','принят','free','#{code.zone_id}','0',#{code.bonus.to_i},#{code.bonus.to_i},'#{code.team.users.first.email}']," %></td>
+	    <td><%= zone.id %></td>
+	    <td><%= zone.name %></td>
 	    </tr>
-
 	  <% end %>
 
 	  </tbody>
