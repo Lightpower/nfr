@@ -31,4 +31,4 @@ require_relative 'seeds_update'
 #create_zone6
 #create_zone7
 
-update_1
+#update_1
