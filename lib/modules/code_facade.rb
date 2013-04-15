@@ -1,4 +1,5 @@
 # encoding: UTF-8
+#require 'unicode'
 module CodeFacade
 
   class << self
@@ -12,11 +13,12 @@ module CodeFacade
     # - {string} - Result
     def input(params)
       res = []
+      code_time = params[:time]
+      #Unicode::downcase(params[:code_string]).split(" ").uniq.each do |code|
       params[:code_string].downcase.split(" ").uniq.each do |code|
-        res << check_code({code: code, user: params[:user]})
+        res << check_code({code: code, user: params[:user], time: code_time})
       end
-      res << check_code({code: params[:code_string], user: params[:user]}) if params[:code_string].index(' ').present?
-
+      res << check_code({code: params[:code_string], user: params[:user], time: code_time}) if params[:code_string].index(' ').present?
       # Check if this code passing have changed any zone holding
       check_holding(res.select { |i| i[:team_code].present? })
 
@@ -119,6 +121,7 @@ module CodeFacade
     #
     def check_code(params)
       user = params[:user]
+      code_time = params[:time]
       code_string = CodeString.find_by_data params[:code]
       code = code_string.try(:code)
       new_team_code = nil
@@ -209,9 +212,9 @@ module CodeFacade
       # define current holders of each zone
       zones.each do |zone|
         current_holder = ZoneHolder.where(zone_id: zone.id).order(:created_at).last
-        if current_holder.team_id != team.id
+        if current_holder.blank? || current_holder.team_id != team.id
           amount = team.codes_number_in_zone(zone)
-          if current_holder.amount < amount
+          if current_holder.blank? || current_holder.amount < amount
             team_code = results.select {|res| res[:team_code].zone_id == zone.id}.first[:team_code]
             ZoneHolder.create(amount: amount, zone_id: zone.id,
                               team_id: team.id, team_code_id: team_code.id, time: team_code.created_at)
