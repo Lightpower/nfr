@@ -20,7 +20,9 @@
 		<% end %>
 
 	  <% Hint.where(id: [1961, 1958, 1955, 1944, 1960]).each do |hint|  %>
+	  <% #Hint.where(id: [2028, 2029]).each do |hint|  %>
 	    <tr>
+	      <td><%= hint.id %></td>
 	      <td><%= hint.task.zone.id %></td>
 	    </tr>
 
