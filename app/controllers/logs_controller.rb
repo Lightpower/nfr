@@ -9,11 +9,18 @@ class LogsController < ApplicationController
     else
       @logs = current_user.team.logs.order('created_at DESC')
     end
+
+
+
+    #Stat.reprocess
+    #
+    #debugger
+    #1+1
     render 'logs/index'
   end
 
   def results
-    @stat_result = Stat.hold_bonuses
+    @stat_result = Stat.reprocess
 
   end
 
