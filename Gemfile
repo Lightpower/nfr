@@ -8,6 +8,7 @@ gem 'rails', '3.2.9'
 gem 'pg'
 gem 'devise'
 gem 'cancan'
+gem 'unicode'
 
 
 # Gems used only for assets and not required
