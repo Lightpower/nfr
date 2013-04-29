@@ -28,7 +28,7 @@ describe Team do
       time = []
       time << Time.now
       # take a hint
-      CodeFacade.get_hint({task_id: @zone.tasks.first.id, user: @user})
+      code_res = CodeFacade.get_hint({task_id: @zone.tasks.first.id, user: @user})
       codes_number_hint = @zone.tasks.first.hints.by_order.first.cost
       @user.team.codes_number_in_zone(@zone).should == codes_number + codes_number_hint
 
@@ -36,10 +36,10 @@ describe Team do
       # more codes
       next_task = @zone.tasks[1]
       # enter accept code if need
-      CodeFacade.input({game: @zone.game, code_string: next_task.access_code.show_code, user: @user}) if next_task.access_code.present?
+      code_res = CodeFacade.input({game: @zone.game, code_string: next_task.access_code.show_code, user: @user}) if next_task.access_code.present?
       codes_2 = next_task.codes
       code_strings = codes_2.map {|code| code.code_strings.first.data}
-      CodeFacade.input({game: @zone.game, code_string: code_strings.join(' '), user: @user})
+      code_res = CodeFacade.input({game: @zone.game, code_string: code_strings.join(' '), user: @user})
       codes_number_2 = codes_2.inject(0) { |res, item| res + item.bonus }
       @user.team.codes_number_in_zone(@zone).should == codes_number +
           codes_number_hint +
