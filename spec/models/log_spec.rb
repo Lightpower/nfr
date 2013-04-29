@@ -16,9 +16,10 @@ describe Log do
       @zone_access_codes = Zone.all.map(&:access_code)
       @task_access_codes = Task.all.map(&:access_code)
 
-      @codes = Code.all - @zone_access_codes - @task_access_codes
-
+      @free_tasks_codes = Task.where(code_id: nil).map(&:codes).flatten
+      @access_task_codes = Task.where('code_id is not null').map(&:codes).flatten
     end
+
     after :all do
       destroy_simple_game
     end
@@ -27,25 +28,25 @@ describe Log do
       Log.all.should be_blank
 
       # Try to pass code from not available zone
-      Team.all.each { |team| CodeFacade.input({game: @codes.first.game, code_string: @codes.first.show_code, user: team.users.first}) }
+      Team.all.each { |team| CodeFacade.input({game: @free_tasks_codes.first.game, code_string: @free_tasks_codes.first.show_code, user: team.users.first}) }
 
       log_number = 0
       compare_logs(Log.all[log_number],
                    {
-                       code: @codes.first,
+                       code: @free_tasks_codes.first,
                        result: :not_available,
                        team: @team_boltons
                    })
       log_number += 1
       compare_logs(Log.all[log_number],
                    {
-                       code: @codes.first,
+                       code: @free_tasks_codes.first,
                        result: :not_available,
                        team: @team_trants
                    })
 
       # Pass code to zone
-      Team.all.each { |team| CodeFacade.input({game: @codes.first.game, code_string: @zone_access_codes.first.show_code, user: team.users.first}) }
+      Team.all.each { |team| CodeFacade.input({game: @zone_access_codes.first.game, code_string: @zone_access_codes.first.show_code, user: team.users.first}) }
 
       log_number += 1
       compare_logs(Log.all[log_number],
@@ -64,19 +65,21 @@ describe Log do
                    })
 
       # Repeat first code
-      Team.all.each { |team| CodeFacade.input({game: @codes.first.game, code_string: @codes.first.show_code, user: team.users.first}) }
+      Team.all.each do |team|
+        CodeFacade.input({game: @free_tasks_codes.first.game, code_string: @free_tasks_codes.first.show_code, user: team.users.first})
+      end
 
       log_number += 1
       compare_logs(Log.all[log_number],
                    {
-                       code: @codes.first,
+                       code: @free_tasks_codes.first,
                        result: :accepted,
                        team: @team_boltons
                    })
       log_number += 1
       compare_logs(Log.all[log_number],
                    {
-                       code: @codes.first,
+                       code: @free_tasks_codes.first,
                        result: :accepted,
                        team: @team_trants
                    })
