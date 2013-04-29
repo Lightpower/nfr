@@ -4,10 +4,11 @@ describe Code do
 
   context 'by_order' do
     before :each do
-      zone = FactoryGirl.create(:zone)
-      @task = FactoryGirl.create(:task, zone: zone)
-      [4, 2, 7, 9, 10, 1, 5, 3, 6, 8].map { |n| FactoryGirl.create(:code, task: @task, number: n)}.each do |code|
-        FactoryGirl.create(:code_string, code: code)
+      game = FactoryGirl.create(:game)
+      zone = FactoryGirl.create(:zone, game: game)
+      @task = FactoryGirl.create(:task, game: game, zone: zone)
+      [4, 2, 7, 9, 10, 1, 5, 3, 6, 8].map { |n| FactoryGirl.create(:code, game: game, task: @task, number: n)}.each do |code|
+        FactoryGirl.create(:code_string, game: game, code: code)
       end
     end
 
@@ -18,22 +19,23 @@ describe Code do
 
   context 'zone' do
     before :each do
-      @zones = [FactoryGirl.create(:zone), FactoryGirl.create(:zone)]
-      task = FactoryGirl.create(:task, zone: @zones.first)
-      free_task = FactoryGirl.create(:task, zone: nil)
+      game = FactoryGirl.create(:game)
+      @zones = [FactoryGirl.create(:zone, game: game), FactoryGirl.create(:zone)]
+      task = FactoryGirl.create(:task, game: game, zone: @zones.first)
+      free_task = FactoryGirl.create(:task, game: game, zone: nil)
 
-      @zone_access_code = FactoryGirl.create(:code, task: nil)
-      FactoryGirl.create(:code_string, code: @zone_access_code)
+      @zone_access_code = FactoryGirl.create(:code, game: game, task: nil)
+      FactoryGirl.create(:code_string, game: game, code: @zone_access_code)
       @zone_access_code.reload
       @zones.last.access_code = @zone_access_code
       @zones.last.save
 
-      @code = FactoryGirl.create(:code, task: task)
-      FactoryGirl.create(:code_string, code: @code)
+      @code = FactoryGirl.create(:code, game: game, task: task)
+      FactoryGirl.create(:code_string, game: game, code: @code)
       @code.reload
 
-      @free_code = FactoryGirl.create(:code, task: free_task)
-      FactoryGirl.create(:code_string, code: @zone_access_code)
+      @free_code = FactoryGirl.create(:code, game: game, task: free_task)
+      FactoryGirl.create(:code_string, game: game, code: @zone_access_code)
       @free_code.reload
     end
 

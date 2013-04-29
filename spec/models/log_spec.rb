@@ -27,7 +27,7 @@ describe Log do
       Log.all.should be_blank
 
       # Try to pass code from not available zone
-      Team.all.each { |team| CodeFacade.input({code_string: @codes.first.show_code, user: team.users.first}) }
+      Team.all.each { |team| CodeFacade.input({game: @codes.first.game, code_string: @codes.first.show_code, user: team.users.first}) }
 
       log_number = 0
       compare_logs(Log.all[log_number],
@@ -45,7 +45,7 @@ describe Log do
                    })
 
       # Pass code to zone
-      Team.all.each { |team| CodeFacade.input({code_string: @zone_access_codes.first.show_code, user: team.users.first}) }
+      Team.all.each { |team| CodeFacade.input({game: @codes.first.game, code_string: @zone_access_codes.first.show_code, user: team.users.first}) }
 
       log_number += 1
       compare_logs(Log.all[log_number],
@@ -64,7 +64,7 @@ describe Log do
                    })
 
       # Repeat first code
-      Team.all.each { |team| CodeFacade.input({code_string: @codes.first.show_code, user: team.users.first}) }
+      Team.all.each { |team| CodeFacade.input({game: @codes.first.game, code_string: @codes.first.show_code, user: team.users.first}) }
 
       log_number += 1
       compare_logs(Log.all[log_number],

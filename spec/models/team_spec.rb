@@ -15,10 +15,10 @@ describe Team do
       # pass some codes
       @user = User.first
       @zone = Zone.first
-      CodeFacade.input({code_string: @zone.access_code.code_strings.first.data, user: @user})
-      @codes = @zone.tasks.first.codes
+      CodeFacade.input({game: @zone.game, code_string: @zone.access_code.code_strings.first.data, user: @user})
+      @codes = @zone.tasks.select{ |i| i.is_available?(@user.team) }.first.codes
       code_strings = @codes.map {|code| code.code_strings.first.data}
-      CodeFacade.input({code_string: code_strings.join(' '), user: @user})
+      CodeFacade.input({game: @zone.game, code_string: code_strings.join(' '), user: @user})
     end
 
     it 'success' do
@@ -34,16 +34,22 @@ describe Team do
 
       time << Time.now
       # more codes
-      codes_2 = @zone.tasks[1].codes
+      next_task = @zone.tasks[1]
+      # enter accept code if need
+      CodeFacade.input({game: @zone.game, code_string: next_task.access_code.show_code, user: @user}) if next_task.access_code.present?
+      codes_2 = next_task.codes
       code_strings = codes_2.map {|code| code.code_strings.first.data}
-      CodeFacade.input({code_string: code_strings.join(' '), user: @user})
+      CodeFacade.input({game: @zone.game, code_string: code_strings.join(' '), user: @user})
       codes_number_2 = codes_2.inject(0) { |res, item| res + item.bonus }
-      @user.team.codes_number_in_zone(@zone).should == codes_number + codes_number_hint + codes_number_2
+      @user.team.codes_number_in_zone(@zone).should == codes_number +
+          codes_number_hint +
+          (next_task.access_code.try(:bonus) || 0) +
+          codes_number_2
 
       # check getting the codes number by time
       @user.team.codes_number_in_zone(@zone, time[0]).should == codes_number
       @user.team.codes_number_in_zone(@zone, time[1]).should == codes_number + codes_number_hint
-      @user.team.codes_number_in_zone(@zone, Time.now).should == codes_number + codes_number_hint + codes_number_2
+      @user.team.codes_number_in_zone(@zone, Time.now).should == codes_number + codes_number_hint  + next_task.access_code.bonus + codes_number_2
 
     end
   end
@@ -53,20 +59,23 @@ describe Team do
       # pass some codes
       @user = User.first
       @zone = Zone.first
-      CodeFacade.input({code_string: @zone.access_code.code_strings.first.data, user: @user})
+      CodeFacade.input({game: @zone.game, code_string: @zone.access_code.code_strings.first.data, user: @user})
       @codes = @zone.tasks.first.codes
       code_strings = @codes.map {|code| code.code_strings.first.data}
-      CodeFacade.input({code_string: code_strings.join(' '), user: @user})
+      CodeFacade.input({game: @zone.game, code_string: code_strings.join(' '), user: @user})
     end
 
     it 'success' do
       @user.team.codes_in_zone(@zone).map(&:code).should =~ [@zone.access_code] + @codes
 
       # more codes
-      codes_2 = @zone.tasks[1].codes
+      next_task = @zone.tasks[1]
+      # enter accept code if need
+      CodeFacade.input({game: @zone.game, code_string: next_task.access_code.show_code, user: @user}) if next_task.access_code.present?
+      codes_2 = next_task.codes
       code_strings = codes_2.map {|code| code.code_strings.first.data}
-      CodeFacade.input({code_string: code_strings.join(' '), user: @user})
-      @user.team.codes_in_zone(@zone).map(&:code).should =~ [@zone.access_code] + @codes + codes_2
+      CodeFacade.input({game: @zone.game, code_string: code_strings.join(' '), user: @user})
+      @user.team.codes_in_zone(@zone).map(&:code).should =~ [@zone.access_code] + @codes + [next_task.access_code] + codes_2
     end
   end
 
@@ -75,10 +84,10 @@ describe Team do
       # pass some codes
       @user = User.first
       @zone = Zone.first
-      CodeFacade.input({code_string: @zone.access_code.code_strings.first.data, user: @user})
+      CodeFacade.input({game: @zone.game, code_string: @zone.access_code.code_strings.first.data, user: @user})
       @codes = @zone.tasks.first.codes
       code_strings = @codes.map {|code| code.code_strings.first.data}
-      CodeFacade.input({code_string: code_strings.join(' '), user: @user})
+      CodeFacade.input({game: @zone.game, code_string: code_strings.join(' '), user: @user})
     end
 
     it 'success' do

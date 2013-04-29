@@ -19,7 +19,7 @@ describe Task do
       @zone = Zone.first
       @user = User.first
       # Access to zone
-      CodeFacade.input({code_string: @zone.access_code.show_code, user: @user})
+      CodeFacade.input({game: @zone.game, code_string: @zone.access_code.show_code, user: @user})
     end
 
     it 'success' do
@@ -28,7 +28,7 @@ describe Task do
       task.is_available?(@user.team).should be_false
 
       # Access to zone
-      res = CodeFacade.input({code_string: task.zone.access_code.show_code, user: @user})
+      CodeFacade.input({game: task.game, code_string: task.zone.access_code.show_code, user: @user})
       task.is_available?(@user.team).should be_true
 
       # Task is secured by access code
@@ -37,24 +37,24 @@ describe Task do
 
       # Enter the codes from this zone to get costs for getting task
       task_2 = Task.where(zone_id: @zone.id).where(code_id: nil).first
-      task_2.codes.each {|code| CodeFacade.input({code_string: code.show_code, user: @user}) }
+      task_2.codes.each {|code| CodeFacade.input({game: task_2.game, code_string: code.show_code, user: @user}) }
 
       # Enter access code of task
-      CodeFacade.input({code_string: task.access_code.show_code, user: @user})
+      CodeFacade.input({game: task.game, code_string: task.access_code.show_code, user: @user})
       task.is_available?(@user.team).should be_true
     end
   end
 
-  context 'hint_of (team)' do
+  context 'hints_of (team)' do
     before :each do
       create_simple_game
       zone = Zone.first
       @user = User.first
       # Access to zone
-      CodeFacade.input({code_string: zone.access_code.show_code, user: @user})
+      CodeFacade.input({game: zone.game, code_string: zone.access_code.show_code, user: @user})
       # get some codes to get costs for hints
       @task = Task.where(zone_id: zone.id).where(code_id: nil).first
-      @task.codes.each {|code| CodeFacade.input({code_string: code.show_code, user: @user}) }
+      @task.codes.each {|code| CodeFacade.input({game: @task.game, code_string: code.show_code, user: @user}) }
     end
 
     it 'success' do
