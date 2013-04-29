@@ -7,18 +7,17 @@ module CodeFacade
     # Get the group of codes and try to pass each of them. Write the log and return total result
     #
     # Params:
-    # - params {Hash} - hash with code string and user which sent this code
+    # - params {Hash} - hash with code string, user which sent this code and game
     #
     # Returns:
     # - {string} - Result
+    #
     def input(params)
       res = []
-      code_time = params[:time]
-      #Unicode::downcase(params[:code_string]).split(" ").uniq.each do |code|
-      params[:code_string].downcase.split(" ").uniq.each do |code|
-        res << check_code({code: code, user: params[:user], time: code_time})
+      Unicode::downcase(params[:code_string]).split(" ").uniq.each do |code|
+        res << check_code({game: params[:game], code: code, user: params[:user]})
       end
-      res << check_code({code: params[:code_string], user: params[:user], time: code_time}) if params[:code_string].index(' ').present?
+      res << check_code({game: params[:game], code: params[:code_string], user: params[:user]}) if params[:code_string].index(' ').present?
       # Check if this code passing have changed any zone holding
       check_holding(res.select { |i| i[:team_code].present? })
 
@@ -49,7 +48,7 @@ module CodeFacade
       end
       return {hint: nil, result: :not_available} if hint.blank?
 
-      check_hint(hint, params[:user])
+      check_hint({hint: hint, user: params[:user]})
     end
 
     ##
@@ -59,8 +58,8 @@ module CodeFacade
       team = user.team
       code = Code.find_by_id code_id
       bonus = team.action_bonuses.find_by_id(bonus_id)
+      game_id = code.game_id
       data = "Бонус #{bonus.try(:name)}"
-      new_team_code = nil
 
       # Cannot get hold_code or free code!
       if code.present? && bonus.present? && code.hold_zone.blank? && code.hold_task.blank? && code.zone.present?
@@ -68,7 +67,7 @@ module CodeFacade
         if bonus.can_new_action?
 
           # mark action as made
-          tba = TeamBonusAction.create(team_bonus_id: bonus.id, is_ok: false)
+          tba = TeamBonusAction.create(game_id: game_id, team_bonus_id: bonus.id, is_ok: false)
 
           result = nil
           # Check bonus according its type
@@ -99,11 +98,46 @@ module CodeFacade
 
 
       # Add to log
-      Log.create(login: user.email, code_id: code.try(:id), data: data, result_code: Code::STATES.index(result), team: team)
+      Log.create(game_id: game_id, login: user.email, code_id: code.try(:id), data: data, result_code: Code::STATES.index(result), team: team)
 
       { id: code.try(:id), data: data, result: result }
     end
 
+    ##
+    # Attach free codes to zone
+    #
+    # Params:
+    # - {code_1_id => zone_1_id, code_2_id => zone_2_id, ...}
+    # - user {User} - current_user
+    #
+    # Returns:
+    #   { result: "ok", status: 200 }
+    #
+    def attach(params, user)
+      result = { result: "ok", status: 200 }
+      team_codes = []
+      params.each_pair do |id, zone_id|
+        team_code = TeamCode.find_by_id(id)
+        if team_code.present?
+          team_code.zone_id = zone_id
+          unless team_code.save
+            result = { result: "error", status: 500 }
+            team_codes << {team_code: team_code}
+            break
+          end
+
+          # Add to log
+          Log.create(game_id: team_code.game_id, login: user.email, code_id: team_code.code_id, data: team_code.code.show_code,
+                     result_code: Code::STATES.index(:attached), team: user.team)
+        else
+          result = { result: "not_found", status: 404 }
+          break
+        end
+      end
+      CodeFacade.check_holding([{team_code: team_code}])
+
+      result
+    end
 
 
   #########################
@@ -121,31 +155,31 @@ module CodeFacade
     #
     def check_code(params)
       user = params[:user]
-      code_time = params[:time]
-      code_string = CodeString.find_by_data params[:code]
+      game = params[:game]
+      code_string = CodeString.where(game_id: game.id, data: params[:code]).first
       code = code_string.try(:code)
       new_team_code = nil
 
-      result = check_code_result(user.team, code)
+      result = check_code_result(game, user.team, code)
 
       # Mark as found if need
       case result
         when :accessed_zone
           result = :accessed
           bonus = user.team.modify_bonus(code)
-          new_team_code = TeamCode.create(team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accessed), zone_id: code.hold_zone.id, bonus: bonus)
-          TeamZone.create(team_id: user.team.id, zone_id: code.hold_zone.id)
+          new_team_code = TeamCode.create(game_id: game.id, team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accessed), zone_id: code.hold_zone.id, bonus: bonus)
+          TeamZone.create(game_id: game.id, team_id: user.team.id, zone_id: code.hold_zone.id)
         when :accessed_task
           result = :accessed
           bonus = user.team.modify_bonus(code)
-          new_team_code = TeamCode.create(team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accessed), zone_id: code.zone.try(:id), bonus: bonus)
+          new_team_code = TeamCode.create(game_id: game.id, team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accessed), zone_id: code.zone.try(:id), bonus: bonus)
         when :accepted
           bonus = user.team.modify_bonus(code)
-          new_team_code = TeamCode.create(team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accepted), zone_id: code.zone.try(:id), bonus: bonus)
+          new_team_code = TeamCode.create(game_id: game.id, team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accepted), zone_id: code.zone.try(:id), bonus: bonus)
       end
 
       # Add to log
-      Log.create(login: user.email, code_id: code.try(:id), data: params[:code], result_code: Code::STATES.index(result), team: user.team)
+      Log.create(game_id: game.id, login: user.email, code_id: code.try(:id), data: params[:code], result_code: Code::STATES.index(result), team: user.team)
 
       { id: code.try(:id), data: params[:code], result: result, team_code: new_team_code }
     end
@@ -154,7 +188,10 @@ module CodeFacade
     ##
     # Try to get hint
     #
-    def check_hint(hint, user)
+    def check_hint(params)
+      game = params[:hint].game
+      hint = params[:hint]
+      user = params[:user]
       # Has hint already been taken?
       if user.team.team_hints.flatten.map(&:hint).include? hint
         result = :hint_repeated
@@ -162,14 +199,14 @@ module CodeFacade
         # Does team enough codes to buy this hint?
         if have_enough_codes?(hint, user.team)
           result = :hint_accessed
-          TeamHint.create(team_id: user.team.id, hint_id: hint.id, zone_id: hint.task.zone.id, cost: hint.cost)
+          TeamHint.create(game_id: game.id, team_id: user.team.id, hint_id: hint.id, zone_id: hint.task.zone.id, cost: hint.cost)
         else
           result = :hint_not_enough_costs
         end
       end
 
       # Add to log
-      Log.create(login: user.email, data: "Hint #{hint.id} (цена #{hint.cost})", result_code: Code::STATES.index(result), team: user.team)
+      Log.create(game_id: game.id, login: user.email, data: "Hint #{hint.id} (цена #{hint.cost})", result_code: Code::STATES.index(result), team: user.team)
       {id: hint.id, data: "Hint #{hint.id} (цена #{hint.cost})", result: result}
     end
 
@@ -207,6 +244,7 @@ module CodeFacade
       return [] if zones.blank?
       team_id = results.first[:team_code].try(:team_id)
       return [] if team_id.blank?
+      game = zones.try(:first).try(:game)
       team = Team.find team_id
 
       # define current holders of each zone
@@ -216,48 +254,22 @@ module CodeFacade
           amount = team.codes_number_in_zone(zone)
           if current_holder.blank? || current_holder.amount < amount
             team_code = results.select {|res| res[:team_code].zone_id == zone.id}.first[:team_code]
-            ZoneHolder.create(amount: amount, zone_id: zone.id,
+            ZoneHolder.create(game_id: game.id, amount: amount, zone_id: zone.id,
                               team_id: team.id, team_code_id: team_code.id, time: team_code.created_at)
           end
         end
-
-
-
-
-        #holders.merge!(zone.id => {amount: 0, time: Time.now - 2.days, team: nil} )
-        #Team.all.each do |team|
-        #  amount = team.codes_number_in_zone(zone)
-        #  time = team.last_code_in_zone(zone)
-        #  if time.present?
-        #    time = time[:time] if time
-        #  else
-        #    time = Time.now - 1.day
-        #  end
-        #
-        #
-        #  if( amount > holders[zone.id][:amount]) ||
-        #      ( (amount == holders[zone.id][:amount]) && (time < holders[zone.id][:time]) )
-        #
-        #    holders[zone.id] = { amount: amount, time: time, team: team }
-        #  end
-        #end
-        #if zone.holder != holders[zone.id][:team]
-        #  team_code = TeamCode.order('created_at DESC').first
-        #  ZoneHolder.create(amount: holders[zone.id][:amount], zone_id: zone.id,
-        #    team_id: holders[zone.id][:team].id, team_code_id: team_code.id, time: team_code.created_at)
-        #end
       end
     end
 
     ##
     # Check if code can be passed by the team and returns result of checking
     #
-    def check_code_result(team, code)
+    def check_code_result(game, team, code)
       # Found?
       if code.is_a?(Code) && code.present?
 
         # Was this code already found?
-        team_code = TeamCode.where(team_id: team.id, code_id: code.id)
+        team_code = TeamCode.where(game_id: game.id, team_id: team.id, code_id: code.id)
         if team_code.blank?
 
           # check if this is accept code for a new zone
@@ -274,7 +286,6 @@ module CodeFacade
             end
           else
             #Check if Zone of this code is available for this team
-            #if (code.zone.blank? || TeamZone.where(team_id: team.id, zone_id: code.zone.id).present?)
             if code.task.is_available?(team)
 
               # Does team have enough codes to pass this code?
