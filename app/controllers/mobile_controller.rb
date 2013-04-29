@@ -6,7 +6,7 @@ class MobileController < ApplicationController
   def index
     # Codes processing
     if params[:code_string].present?
-      @results = CodeFacade.input({code_string: params[:code_string][:code], user: current_user})
+      @results = CodeFacade.input({game: current_game, code_string: params[:code_string][:code], user: current_user})
     elsif params[:task_id].present?
       @results = [CodeFacade.get_hint({task_id: params[:task_id], user: current_user})]
     else
