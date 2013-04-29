@@ -19,10 +19,10 @@
 	    <%= content_tag(:td, Code::STATE_NAMES[Code::STATES[log.result_code]]) %>
       <% if log.code.present? && log.can_show_info? %>
         <%= content_tag(:td, log.code.ko) %>
-        <%= content_tag(:td, log.code.zone.try(:name) || "Свободный код") %>
+        <%= content_tag(:td, log.team_code.zone.try(:name) || "Свободный код") %>
         <%= content_tag(:td, log.code.task.try(:number)) %>
         <%= content_tag(:td, log.code.bonus) %>
-        <%= content_tag(:td, current_user.team.modify_bonus(log.code)) %>
+        <%= content_tag(:td, log.team_code.bonus) %>
 		  <% else %>
         <td></td><td></td><td></td><td></td><td></td>
       <% end %>
