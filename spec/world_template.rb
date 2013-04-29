@@ -100,6 +100,7 @@ end
 #
 def destroy_simple_game
   Zone.destroy_all
+  ZoneHolder.destroy_all
   User.destroy_all
   Team.destroy_all
   Task.destroy_all
