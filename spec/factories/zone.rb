@@ -2,8 +2,9 @@
 
 FactoryGirl.define do
   factory :zone, :class => 'Zone' do
+    game             { Game.first || FactoryGirl.create(:game) }
     number           { Zone.all.size + 1 }
     sequence(:name)  { |n| "Zone #{n}" }
-    code_id          { FactoryGirl.create(:code, task_id: nil).id }
+    access_code      { FactoryGirl.create(:code, task_id: nil) }
   end
 end

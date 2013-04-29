@@ -2,7 +2,8 @@
 
 FactoryGirl.define do
   factory :team_hint do
-    team ""
-    hint nil
+    game             { Game.first || FactoryGirl.create(:game) }
+    team
+    hint
   end
 end

@@ -2,8 +2,10 @@
 
 FactoryGirl.define do
   factory :team_bonus, :class => 'TeamBonus' do
-    team nil
-    bonus_type "MyString"
+    game       { Game.first || FactoryGirl.create(:game) }
+    team 
+    bonus_type "Multiplier"
+    name       "Test bonus"
     rate 1.5
     amount 1
   end

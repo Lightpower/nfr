@@ -2,6 +2,7 @@
 
 FactoryGirl.define do
   factory :code_string, :class => 'CodeString' do
+    game             { Game.first || FactoryGirl.create(:game) }
     sequence(:data)  { |n| "DR#{n}" }
     code
   end

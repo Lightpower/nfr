@@ -2,8 +2,8 @@
 
 FactoryGirl.define do
   factory :team_bonus_action do
-    team_bonus nil
+    game             { Game.first || FactoryGirl.create(:game) }
+    team_bonus
     is_ok false
-    timestamps "MyString"
   end
 end

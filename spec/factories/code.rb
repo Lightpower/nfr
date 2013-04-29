@@ -2,10 +2,11 @@
 
 FactoryGirl.define do
   factory :code, :class => 'Code' do
+    game               { Game.first || FactoryGirl.create(:game) }
     sequence(:number)  { |n| n }
     name              ''
     ko                'null'
     bonus             1.0
-    task_id           { FactoryGirl.create(:task) }
+    task
   end
 end

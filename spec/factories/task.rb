@@ -2,6 +2,7 @@
 
 FactoryGirl.define do
   factory :task, :class => 'Task' do
+    game              { Game.first || FactoryGirl.create(:game) }
     sequence(:number) {|n| n}
     sequence(:name)   {|n| "Task #{n}"}
     data              '<i>Text of task</i>'
