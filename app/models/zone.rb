@@ -7,8 +7,9 @@ class Zone < ActiveRecord::Base
   has_many   :tasks
   has_many   :zone_holders
   belongs_to :access_code, class_name: 'Code', foreign_key: 'code_id'
+  belongs_to :game
 
-  attr_accessible :name, :number, :image_url, :access_code, :code_id
+  attr_accessible :game, :game_id, :name, :number, :image_url, :access_code, :code_id
 
   CLASS_NAMES = {
       'Север' => 'north',

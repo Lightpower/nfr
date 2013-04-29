@@ -1,9 +1,10 @@
 class Hint < ActiveRecord::Base
 
   belongs_to :task
+  belongs_to :game
   has_many   :team_hints
 
-  attr_accessible :cost, :data, :delay, :number, :task, :task_id
+  attr_accessible :game, :game_id, :cost, :data, :delay, :number, :task, :task_id
 
   class << self
     ##

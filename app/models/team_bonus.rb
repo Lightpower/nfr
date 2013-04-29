@@ -1,9 +1,10 @@
 class TeamBonus < ActiveRecord::Base
 
   belongs_to :team
+  belongs_to :game
   has_many   :team_bonus_actions
 
-  attr_accessible :amount, :bonus_type, :rate, :team, :team_id, :ko, :name, :description
+  attr_accessible :game, :game_id, :amount, :bonus_type, :rate, :team, :team_id, :ko, :name, :description
 
   # types
   MODIFIABLE_TYPES = %w(KoMultiplier)
