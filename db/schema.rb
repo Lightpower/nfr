@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130428153100) do
+ActiveRecord::Schema.define(:version => 20130501091923) do
 
   create_table "archive_code_strings", :force => true do |t|
     t.string  "data",            :null => false
@@ -149,7 +149,7 @@ ActiveRecord::Schema.define(:version => 20130428153100) do
   add_index "codes", ["number"], :name => "index_codes_on_number"
 
   create_table "game_requests", :force => true do |t|
-    t.boolean  "is_accepted", :default => false, :null => false
+    t.boolean  "is_accepted", :default => false
     t.integer  "game_id",                        :null => false
     t.integer  "team_id",                        :null => false
     t.datetime "created_at",                     :null => false
@@ -296,6 +296,7 @@ ActiveRecord::Schema.define(:version => 20130428153100) do
   end
 
   add_index "team_requests", ["by_user"], :name => "index_team_requests_on_by_user"
+  add_index "team_requests", ["team_id", "user_id"], :name => "index_team_requests_on_team_id_and_user_id", :unique => true
   add_index "team_requests", ["team_id"], :name => "index_team_requests_on_team_id"
   add_index "team_requests", ["user_id"], :name => "index_team_requests_on_user_id"
 
@@ -309,12 +310,14 @@ ActiveRecord::Schema.define(:version => 20130428153100) do
   add_index "team_zones", ["game_id"], :name => "index_team_zones_on_game_id"
 
   create_table "teams", :force => true do |t|
-    t.string "name",             :null => false
-    t.string "alternative_name"
-    t.string "image_url"
+    t.string  "name",             :null => false
+    t.string  "alternative_name"
+    t.string  "image_url"
+    t.integer "user_id",          :null => false
   end
 
   add_index "teams", ["name"], :name => "index_teams_on_name"
+  add_index "teams", ["user_id"], :name => "index_teams_on_user_id"
 
   create_table "users", :force => true do |t|
     t.integer  "team_id"
@@ -330,11 +333,15 @@ ActiveRecord::Schema.define(:version => 20130428153100) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.string   "username"
+    t.string   "role"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+  add_index "users", ["role"], :name => "index_users_on_role"
   add_index "users", ["team_id"], :name => "index_users_on_team_id"
+  add_index "users", ["username"], :name => "index_users_on_username"
 
   create_table "zone_holders", :force => true do |t|
     t.float    "amount",       :null => false
