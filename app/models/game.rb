@@ -17,7 +17,10 @@ class Game < ActiveRecord::Base
   attr_accessible :number, :name, :format, :start_date, :finish_date, :price, :area, :image_html, :preview,
                   :legend, :brief_place, :dopy_list, :is_active, :is_archived,  :prepare_url, :discuss_url
 
+  CSS_CLASSES = %w(nedostroy neformat klads dozor_classic dozor_lite en_tochki en_cx)
+
   class << self
+
     ##
     # Games which are not in archive
     #
@@ -45,7 +48,8 @@ class Game < ActiveRecord::Base
   # Get cass class by game format
   #
   def css_class
-    (self.format || '').downcase.gsub(' ', '_')
+    result = (self.format || '').downcase.gsub(' ', '_')
+    "other" unless CSS_CLASSES.include?(result)
   end
 
   ##
