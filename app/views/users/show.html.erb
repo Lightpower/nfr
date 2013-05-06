@@ -1,0 +1,19 @@
+
+<div class="content">
+  <p>
+    <b>Логин:</b>
+    <%= @user.username %>
+  </p>
+  <p>
+    <b>Команда:</b>
+    <%= @user.team.try(:name) || "Не в команде" %>
+    <%= content_tag(:span, " (ожидание авторизации)", class: "info") if @user.waiting_for_approving? %>
+  </p>
+  <p>
+    <b>Email:</b>
+    <%= @user.email %>
+  </p>
+</div>
+
+<%= link_to 'Править', edit_user_path(@user), class: "action_button" if can? :manage, @user %>
+<%= link_to 'Назад', users_path, class: "action_button" %>

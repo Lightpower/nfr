@@ -1,0 +1,21 @@
+<%= form_for @user, html: { class: "form-horizontal" } do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> не дают сохранить пользователя:</h2>
+
+      <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.label :team_id, (@user.team ? "Команда" : "Запрос в команду:"), class: "caption" %>
+  <%= team_select({f: f, user: @user}) %>
+  <div class="actions button">
+    <%= f.submit "Сохранить", class: "action_button" %>
+  </div>
+<% end %>
+
+<%= render 'users/team_settings', team_request_list: team_request_list %>

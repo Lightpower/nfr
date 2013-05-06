@@ -1,0 +1,18 @@
+<% if team_request_list.values.uniq != [[]] %>
+	<div class="field content">
+	  <% if (@user == current_user) && @user.team.blank? %>
+	    <span class="info">Вы не состоите ни в одной команде. Выберите команду, чтобы подать запрос на вступление в неё, и пните капитана, чтобы принял вас.</span>
+	  <% end %>
+	  <% if @user.is_captain? %>
+	    <div>
+	      <span class="caption">Командные заявки на вступление:</span>
+	      <%= render 'team_requests/as_team', team_request_list: team_request_list %>
+	    </div>
+	  <% elsif (@user == current_user) && @user.waiting_for_approving?%>
+	    <div>
+	      <h3>Ваши заявки на вступление:</h3>
+		    <%= render 'team_requests/as_user', team_request_list: team_request_list %>
+	    </div>
+	  <% end %>
+	</div>
+<% end %>
