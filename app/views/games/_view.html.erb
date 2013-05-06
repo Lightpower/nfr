@@ -1,0 +1,43 @@
+<% if game.present? %>
+	<div class="game <%= game.css_class %>">
+    <h1><%= game.name %></h1>
+		<h3><%= game.format %> #<%= game.number %></h3>
+	  <b>Старт: <%= game.start_date.strftime("%d.%m.%y %H:%M:%S") %></b><br>
+	  <% if (game.price || 0) > 0 %>
+	    <b>Взнос: <%= game.price %> грн.</b>
+  	<% end %>
+		<div class="content openable_holder">
+			<%= openable_tag(nil, false) %>Подробней
+			<div class="openable hidden">
+				<%= game.image_html.try(:html_safe) || "" %>
+			  <b>Зона игры:</b> <%= game.area || "уточняется" %><br>
+			  <% if game.preview %>
+			    <p><b>Анонс</b><br> <%= game.preview.try(:html_safe) %></p>
+			  <% end %>
+			  <% if game.legend %>
+			    <p><b>Легенда</b><br> <%= game.legend.try(:html_safe) %></p>
+			  <% end %>
+			  <% if game.legend %>
+			    <p><b>Место брифинга: </b> <%= game.brief_place.try(:html_safe) %></p>
+			  <% end %>
+			  <div class="content">
+  			  <b>Принятые заявки: </b> <%= game.teams.map(&:name).join(', ') %><br>
+  			  <b>Ждут принятия: </b> <%= game.teams_unaccepted.map(&:name).join(', ') %>
+			  </div>
+
+			</div>
+		</div>
+		<% if current_user %>
+	    <% if current_user.is_captain? %>
+	      <% if game.requests.map(&:team).include?(current_user.team) %>
+	        <%= link_to_delete_game_request(game, current_user) %>
+  			<% else %>
+					<%= link_to_create_game_request(game) %>
+	      <% end %>
+	    <% end %>
+	    <% if game.is_active? && game.teams.include?(current_user.team) %>
+				<%= link_to_enter_game(game) %>
+	    <% end %>
+	  <% end %>
+	</div>
+<% end %>

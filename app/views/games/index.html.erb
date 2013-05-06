@@ -1,0 +1,5 @@
+<% if @games.present? %>
+  <% @games.each do |game| %>
+		<%= render 'games/view', game: game %>
+  <% end %>
+<% end %>
