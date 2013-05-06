@@ -10,5 +10,6 @@ class CreateTeamRequests < ActiveRecord::Migration
     add_index :team_requests, :team_id
     add_index :team_requests, :user_id
     add_index :team_requests, :by_user
+    add_index :team_requests, [:team_id, :user_id], unique: true
   end
 end
