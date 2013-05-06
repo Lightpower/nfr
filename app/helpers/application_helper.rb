@@ -114,6 +114,10 @@ module ApplicationHelper
         {
             name: 'Клады',
             url: '/?games[format]=klads'
+        },
+        {
+            name: 'Другие',
+            url: '/?games[format]=other'
         }
     ]
     result = ''
