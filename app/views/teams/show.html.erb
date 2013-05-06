@@ -1,0 +1,24 @@
+
+<div class="content">
+  <p>
+    <span class="caption">Команда: </span>
+    <%= @team.name %>
+  </p>
+  <p>
+    <span class="caption">Эмблема:</span><br>
+    <%= image_tag(@team.image_url) if @team.image_url.present?%>
+  </p>
+  <p>
+    <span class="caption">Капитан:</span>
+    <%= @team.captain.show_name %>
+  </p>
+	<p>
+		<span class="caption">Игроки: </span><br>
+		<% @team.users.each do |user|%>
+		  <%= link_to(user.show_name, user_path(user), class: "action_button") %>
+	  <% end %>
+	</p>
+</div>
+
+<%= link_to 'Править', edit_team_path(@team), class: "action_button" if can? :manage, @team %>
+<%= link_to 'Назад', teams_path, class: "action_button" %>
