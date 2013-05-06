@@ -8,8 +8,10 @@ class Team < ActiveRecord::Base
   has_many :team_hints
   has_many :team_zones
   has_many :team_hints
+  has_many :team_requests
+  belongs_to :captain, class_name: 'User', foreign_key: 'user_id'
 
-  attr_accessible :name, :alternative_name, :image_url
+  attr_accessible :name, :alternative_name, :image_url, :captain, :user_id
 
   ##
   # Number of accepted codes in defined zone
@@ -28,7 +30,6 @@ class Team < ActiveRecord::Base
   ##
   # Time of sending the last correct code or hint before defined time.
   # It is searching by :accepted, :accessed states of codes and by all hints
-  #
   #
   # Returns
   # - {Hash} - Hash which contains time and state (:accepted, :accessed, :hint)
