@@ -1,0 +1,17 @@
+<nav id="team_info" class="menu">
+  <% if current_user.present? %>
+    <span>Здравствуйте, <%= content_tag(:b, current_user.show_name) %></span><br>
+    <ul>
+      <%= content_tag(:li, link_to("Изменить данные", edit_user_path(current_user))) %>
+      <%= content_tag(:li, link_to("Выйти", destroy_user_session_path, method: :delete)) %>
+    </ul>
+
+  <% else %>
+    <ul>
+      Здравствуйте, гость
+
+      <%= content_tag(:li, link_to("Войти", user_session_path)) %>
+      <%= content_tag(:li, link_to("Зарегистрироваться", user_registration_path)) %>
+    </ul>
+  <% end %>
+</nav>
