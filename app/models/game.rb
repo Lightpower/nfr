@@ -17,6 +17,16 @@ class Game < ActiveRecord::Base
   attr_accessible :number, :name, :format, :start_date, :finish_date, :price, :area, :image_html, :preview,
                   :legend, :brief_place, :dopy_list, :is_active, :is_archived,  :prepare_url, :discuss_url
 
+  class << self
+    ##
+    # Games which are not in archive
+    #
+    def actual
+      where(is_archived: false).order("start_date DESC")
+    end
+
+  end
+
   ##
   # List of teams with accepted requests
   #
@@ -29,5 +39,26 @@ class Game < ActiveRecord::Base
   #
   def teams_unaccepted
     requests.where(is_accepted: false).map(&:team).flatten
+  end
+
+  ##
+  # Get cass class by game format
+  #
+  def css_class
+    (self.format || '').downcase.gsub(' ', '_')
+  end
+
+  ##
+  # Make the ID for interface
+  #
+  def make_id
+    "#{self.class.name.downcase}#{id}"
+  end
+
+  ##
+  # Does current game has "is_active = true" and its start_date is being started
+  #
+  def is_active?
+    self.is_active && (self.start_date <= Time.now)
   end
 end
