@@ -1,5 +1,5 @@
 # encoding: UTF-8
-#require 'unicode'
+require 'unicode'
 module CodeFacade
 
   class << self
@@ -119,22 +119,24 @@ module CodeFacade
       params.each_pair do |id, zone_id|
         team_code = TeamCode.find_by_id(id)
         if team_code.present?
-          team_code.zone_id = zone_id
-          unless team_code.save
-            result = { result: "error", status: 500 }
+          if team_code.zone_id.blank?
+            team_code.zone_id = zone_id
+            unless team_code.save
+              result = { result: "error", status: 500 }
+              break
+            end
             team_codes << {team_code: team_code}
-            break
-          end
 
-          # Add to log
-          Log.create(game_id: team_code.game_id, login: user.email, code_id: team_code.code_id, data: team_code.code.show_code,
-                     result_code: Code::STATES.index(:attached), team: user.team)
+            # Add to log
+            Log.create(game_id: team_code.game_id, login: user.email, code_id: team_code.code_id, data: team_code.code.show_code,
+                       result_code: Code::STATES.index(:attached), team: user.team)
+          end
         else
           result = { result: "not_found", status: 404 }
           break
         end
       end
-      CodeFacade.check_holding([{team_code: team_code}])
+      check_holding(team_codes)
 
       result
     end
@@ -149,7 +151,7 @@ module CodeFacade
     #
     # Params:
     # - params {Hash} - hash with code string and user who sent this code
-    #
+    #                http://resist.kiev.ua/intel/
     # Returns
     # - {Symbol} - Code of result (see RESULT)
     #
