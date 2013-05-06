@@ -6,11 +6,11 @@ $(function() {
     if(submenu.hasClass("hidden")) {
       submenu.removeClass("hidden");
       this_text = "- " + this_text.split("+")[1];
-      NFR.openable.open(id);
+      if(id != '') NFR.openable.open(id);
     } else {
       submenu.addClass("hidden");
       this_text = "+" + this_text.split("- ")[1];
-      NFR.openable.close(id);
+      if(id != '') NFR.openable.close(id);
     }
     $(this).text(this_text);
 
