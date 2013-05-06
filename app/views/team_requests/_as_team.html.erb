@@ -1,0 +1,18 @@
+<div class="as_team settings">
+  <% if team_request_list[:from_users].present? %>
+    <div id="users_want_to_team" name="users_want_to_team" class="block_half">
+      <h3>Просятся в команду</h3>
+      <% team_request_list[:from_users].each do |team_request| %>
+        <%= render 'team_requests/team_request', name: team_request.name_for_team, team_request_id: team_request.id, can_manage: true %>
+      <% end %>
+    </div>
+  <% end %>
+  <% if team_request_list[:to_users].present? %>
+    <div id="requests_users_to_team" name="requests_users_to_team" class="block_half">
+      <h3>Приглашены в команду</h3>
+      <% team_request_list[:to_users].each do |team_request| %>
+        <%= render 'team_requests/team_request', name: team_request.name_for_team, team_request_id: team_request.id, can_manage: false %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
