@@ -4,6 +4,7 @@
 
 body {
   font-family: Arial, sans-serif;
+  font-size:  14px;
   background-color: #444444;
 }
 
@@ -13,19 +14,6 @@ div.inline {
 
 div.inline-block {
   display: inline-block;
-}
-
-header {
-  display: block;
-  min-height: 30px;
-  margin-bottom: 5px;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
-  background-color: #CCCCCC;
-  border-color: #FFFFFF;
-  border-width: 1px 1px 1px 1px;
-  border-style: solid;
 }
 
 div {
@@ -42,6 +30,7 @@ nav, section, aside {
 
 }
 
+// Game classes
 aside.aside_right {
   min-height: 220px;
   max-width: 200px;
@@ -79,6 +68,48 @@ section.main_content {
   border-color: #FFFFFF;
   border-width: 1px 1px 1px 1px;
   border-style: solid;
+}
+
+
+// Site classes
+aside.site_aside_right {
+  min-height: 220px;
+  max-width: 200px;
+  margin-right: 5px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  background-color: #CCCCCC;
+  border-color: #FFFFFF;
+  border-width: 1px 1px 1px 1px;
+  border-style: solid
+}
+
+nav#site_info_container {
+  min-height: 220px;
+  width: 250px;
+  margin-right: 5px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  background-color: #CCCCCC;
+  border-color: #FFFFFF;
+  border-width: 1px 1px 1px 1px;
+  border-style: solid;
+}
+
+section.site_main_content {
+  min-height: 220px;
+  width: 750px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  background-color: #CCCCCC;
+  border-color: #FFFFFF;
+  border-width: 1px 1px 1px 1px;
+  border-style: solid;
+  margin-right: 5px;
+  padding: 3px;
 }
 
 section.devise {
@@ -145,16 +176,12 @@ section.content {
 
 nav.menu {
   display: block;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
-  background-color: #CCCCCC;
-  border-color: #FFFFFF;
-  border-width: 2px 2px 2px 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  border-color: #777777;
+  border-width: 1px;
   border-style: solid;
-  -webkit-box-shadow: 6px 6px 8px #282b1f;
-  -moz-box-shadow: 6px 6px 8px #282b1f;
-  box-shadow: 6px 6px 8px #282b1f;
   padding: 3px;
   font-family: "Sans";
   font-style: bold;
@@ -182,11 +209,20 @@ nav.menu {
   }
 }
 
-nav#user_info {
+nav#team_info {
   font-size: 15px;
 
   li {
     height: 21px;
+  }
+}
+
+nav#user_info, nav#team_info {
+  font-size: 12px;
+
+  li {
+    height: 16px;
+    font-size: 10px;
   }
 }
 
@@ -214,6 +250,7 @@ div.blitz_info {
 }
 
 .action_button {
+  display: inline-block;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px;
@@ -228,7 +265,11 @@ div.blitz_info {
   box-shadow: 2px 2px 3px #282b1f;
   padding: 2px;
   font-weight: bold;
-  margin-top: 5px;
+  margin: 5px;
+}
+
+.action_button:hover {
+  background-color: #565656;
 }
 
 .action_button_min {
@@ -244,7 +285,7 @@ div.blitz_info {
   font-size: 12px;
   font-weight: bold;
   margin: 0px;
-  padding: 0px;
+  padding: 0 3px 0 3px;
 }
 
 span.caption, label.caption {
@@ -284,7 +325,7 @@ a.nav_link {
   display: block;
   text-align: center;
   text-decoration: none;
-  margin:  5px;
+  margin: 5px;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px;
@@ -325,3 +366,73 @@ span.time {
   font-size: 0.6em;
   font-style: italic;
 }
+
+span.info {
+  color: green;
+  font-style: italic;
+  font-size: 0.8em;
+}
+
+a.request_game {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  font-size: 1.4em;
+  font-weight: bold;
+  -webkit-box-shadow: 3px 3px 4px #282b1f;
+  -moz-box-shadow: 3px 3px 4px #282b1f;
+  box-shadow: 3px 3px 4px #282b1f;
+  color: white;
+  background-color: #D0B000;
+  border-color: black;
+  border-width: 2px;
+  border-style: solid;
+  margin-top: 2px;
+  padding: 5px;
+}
+
+a.delete_game {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  font-size: 1.4em;
+  font-weight: bold;
+  -webkit-box-shadow: 3px 3px 4px #282b1f;
+  -moz-box-shadow: 3px 3px 4px #282b1f;
+  box-shadow: 3px 3px 4px #282b1f;
+  color: white;
+  background-color: orangered;
+  border-color: black;
+  border-width: 2px;
+  border-style: solid;
+  margin-top: 2px;
+  padding: 5px;
+}
+
+a.enter_game {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  font-size: 1.4em;
+  font-weight: bold;
+  -webkit-box-shadow: 3px 3px 4px #282b1f;
+  -moz-box-shadow: 3px 3px 4px #282b1f;
+  box-shadow: 3px 3px 4px #282b1f;
+  color: white;
+  background-color: orange;
+  border-color: black;
+  border-width: 2px;
+  border-style: solid;
+  margin-top: 2px;
+  padding: 5px;
+}
+
