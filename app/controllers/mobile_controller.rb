@@ -1,7 +1,7 @@
 # encoding: UTF-8
 class MobileController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :validate_team_presence
+  load_and_authorize_resource :game
 
   def index
     # Codes processing
@@ -13,13 +13,7 @@ class MobileController < ApplicationController
       @results = nil
     end
 
-    render 'mobile/index', locals: {input_url: m_path}, layout: 'layouts/mobile'
-  end
-
-  private
-
-  def validate_team_presence
-    raise(CanCan::AccessDenied, 'В доступе отказано: пользователь не привязан ни к одному Дому.') if current_user.team.blank?
+    render 'mobile/index', locals: {input_url: game_m_path(@game)}, layout: 'layouts/mobile'
   end
 
 end
