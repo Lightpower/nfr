@@ -4,22 +4,48 @@ Nfr::Application.routes.draw do
 
   root :to => 'home#index'
 
-  match '/hint' => 'home#hint', via: :put
-  match '/stat' => 'home#stat'
-  match '/reprocess' => 'home#reprocess'
+  resources :games, only: [:index, :show] do
+    member do
+      get :stat
+    end
 
-  match '/m' => 'mobile#index'
+    match '/m' => 'mobile#index'
 
-  resources :logs,    only: [:index] do
-    collection do
-      get :results
+    resources :logs,    only: [:index] do
+      collection do
+        get :results
+      end
+    end
+
+    resources :codes, only: [:index] do
+      collection do
+        put :attach
+        put :bonus_action
+        post :pass
+      end
     end
   end
 
-  resources :codes, only: [:index] do
-    collection do
-      put :attach
-      put :bonus_action
+  resources :teams
+
+  resources :game_requests, only: [:create, :destroy]
+
+# resource :users
+  match "/users" => "users#index",          via: :get,    as: :users
+  match "/users" => "users#create",         via: :post,   as: :users
+  match "/users/new" => "users#new",        via: :get,    as: :new_user
+  match "/users/:id/edit" => "users#edit",  via: :get,    as: :edit_user
+  match "/users/:id/team_requests" => "users#team_requests",  via: :get, as: :team_requests_user
+  match "/users/:id" => "users#show",       via: :get,    as: :user
+  match "/users/:id" => "users#update",     via: :put,    as: :user
+  match "/users/:id" => "users#destroy",    via: :delete, as: :user
+  #match "/users/:id/approve_team_request" => "users#approve_team_request",  via: :get, as: :approve
+  #match "/users/:id/reject_team_request" => "users#reject_team_request",    via: :get, as: :reject
+
+  resources :team_requests, only: [] do
+    member do
+      put :accept
+      put :reject
     end
   end
 
