@@ -1,31 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Game of Thrones - DR129 - S.M.I.L.E.</title>
+  <title>NeFoRmat - необычные квесты</title>
   <link rel="shortcut icon" href="/images/favicon.ico"/>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-<section id='container' name='container'>
-  <header class="main"><%= render 'layouts/game/input_code' %></header>
-	<nav id="info_container">
-	  <%= render "layouts/game/user_info" %><br>
-	  <%= render "layouts/game/blitz_info" %>
-	  <%= render "layouts/game/log" %>
+<header class="logo"></header>
 
+<%= render 'layouts/site/header_menu' %>
+<section id="container" name='container'>
+	<nav id="site_info_container">
+	  <%= render 'layouts/site/user_info' %><br>
+	  <%= render 'layouts/site/team_info' %><br>
 	</nav>
 
-	<section class="main_content">
+	<section class="site_main_content">
 	  <%= show_flash %>
 
 	  <%= yield %>
 	</section>
 
-	<aside class="aside_right">
-		<%= render 'layouts/game/actions' %>
-	  <%= render 'layouts/game/results' %>
+	<aside class="site_aside_right">
+
 	</aside>
 </section>
 

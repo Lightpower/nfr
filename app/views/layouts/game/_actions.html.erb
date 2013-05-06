@@ -1,11 +1,11 @@
 <span class='time'>Обновлено в <%= Time.now.localtime.strftime('%H:%M:%S') %></span>
 <%= link_to 'Обновить', "javascript:document.location.reload()", class: 'nav_link refresh' %>
-<%= link_to 'Задания', root_path, class: 'nav_link' %>
-<%= link_to 'Статистика', stat_path, class: 'nav_link' %>
-<%= link_to 'Логи', logs_path, class: 'nav_link' %>
-<%= link_to 'Результаты', results_logs_path, class: 'nav_link' %>
+<%= link_to 'Задания', game_path(@game), class: 'nav_link' %>
+<%= link_to 'Статистика', stat_game_path(@game), class: 'nav_link' %>
+<%= link_to 'Логи', game_logs_path(@game), class: 'nav_link' %>
+<%= link_to 'Результаты', results_game_logs_path(@game), class: 'nav_link' %>
 <div id='team_actions' name='team_actions'>
-  <%= link_to 'Свободные коды', codes_path, class: 'action_link' if @current_user.team.codes_number_in_zone(nil) > 0 %>
+  <%= link_to 'Свободные коды', game_codes_path(@game), class: 'action_link' if @current_user.team.codes_number_in_zone(nil) > 0 %>
 
   <% @current_user.team.action_bonuses.each do |bonus| %>
 	  <% if bonus.can_new_action? %>
