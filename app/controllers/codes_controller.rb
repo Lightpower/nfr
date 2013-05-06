@@ -1,7 +1,7 @@
 # encoding: UTF-8
 class CodesController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :validate_team_presence
+  load_and_authorize_resource :game
 
   ##
   # Show all free codes with possibility of attaching them to some zone
@@ -10,6 +10,21 @@ class CodesController < ApplicationController
     @free_codes = current_user.team.team_codes.where('team_codes.zone_id is null')
     @team_zones = current_user.team.team_zones.map(&:zone)
     render 'codes/index', layout: 'layouts/game'
+  end
+
+  def pass
+    # Codes processing
+    if params[:code_string].present?
+      @results = CodeFacade.input({game: @game, code_string: params[:code_string][:code], user: current_user})
+    elsif params[:task_id].present?
+      @results = [CodeFacade.get_hint({task_id: params[:task_id], user: current_user})]
+    else
+      @results = nil
+    end
+
+    @zones = current_user.team.zones
+
+    render 'zones/index', layout: 'layouts/game'
   end
 
   ##
@@ -49,12 +64,4 @@ class CodesController < ApplicationController
     end
 
   end
-
-  private
-
-  def validate_team_presence
-    raise(CanCan::AccessDenied, 'В доступе отказано: пользователь не привязан ни к одному Дому.') if current_user.team.blank?
-  end
-
-
 end
