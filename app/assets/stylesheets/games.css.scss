@@ -1,0 +1,224 @@
+// Place all the styles related to the Games controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+div.game.nedostroy {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  background-color: #666666;
+  border-color: #000000;
+  border-width: 1px;
+  border-style: solid;
+  padding: 10px;
+  margin-top: 5px;
+  color: #FFFFFF;
+
+  A:link {
+    text-decoration: none;
+    color: #FFFFFF;
+  }
+  A:visited {
+    text-decoration: none;
+    color: #FFFFFF;
+  }
+  A:hover
+    {
+    text-decoration: none;
+    color: blue;
+  }
+
+  h1, h2, h3, h4 {
+    color: #222222;
+  }
+}
+
+div.game.neformat {
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  background-color: #444444;
+  border-color: #000000;
+  border-width: 2px;
+  border-style: solid;
+  padding: 10px;
+  margin-top: 5px;
+  color: #EEEEEE;
+
+  A:link {
+    text-decoration: none;
+    color: #FFFFFF;
+  }
+  A:visited {
+    text-decoration: none;
+    color: #FFFFFF;
+  }
+  A:hover
+    {
+    text-decoration: none;
+    color: blue;
+  }
+
+  h1, h2, h3, h4 {
+    color: #000000;
+  }
+}
+
+div.game.dozor_classic {
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  background-color: #000000;
+  border-color: #F90;
+  border-width: 2px 2px 2px 2px;
+  border-style: solid;
+  padding: 10px;
+  margin-top: 5px;
+  color: #FFFFFF;
+
+  A:link {
+    text-decoration: none;
+    color: #FFFFFF;
+  }
+  A:visited {
+    text-decoration: none;
+    color: #FFFFFF;
+  }
+  A:hover
+    {
+    text-decoration: none;
+    color: #FF8600;
+  }
+
+  h1, h2, h3, h4 {
+    color: #F90;
+  }
+}
+
+div.game.klads {
+  -webkit-border-radius: 11px;
+  -moz-border-radius: 11px;
+  border-radius: 11px;
+  background-color: #111111;
+  border-color: #F90;
+  border-width: 1px 1px 1px 1px;
+  border-style: solid;
+  padding: 10px;
+  margin-top: 5px;
+  color: #EEEEEE;
+
+  A:link {
+    text-decoration: none;
+    color: #EEEEEE;
+  }
+  A:visited {
+    text-decoration: none;
+    color: #EEEEEE;
+  }
+  A:hover
+    {
+    text-decoration: none;
+    color: #FF8600;
+  }
+
+  h1, h2, h3, h4 {
+    color: #EB0;
+  }
+}
+
+div.game.dozor_lite {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  background-color: #222222;
+  border-color: #dcc300;
+  border-width: 1px 1px 1px 1px;
+  border-style: solid;
+  padding: 10px;
+  margin-top: 5px;
+  color: #FFFFFF;
+
+  A:link
+    {
+    text-decoration: none;
+    color: #FFFFFF;
+  }
+  A:visited
+    {
+    text-decoration: none;
+    color: #FFFFFF;
+  }
+  A:hover
+    {
+    text-decoration: none;
+    color: #FF8600;
+  }
+
+  h1, h2, h3, h4 {
+    color: #F90;
+  }
+}
+
+div.game.en_tochki {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  background-color: #0D3B00;
+  border-color: lime;
+  border-width: 1px 1px 1px 1px;
+  border-style: dashed;
+  padding: 10px;
+  margin-top: 5px;
+  color: lime;
+
+  A:link
+    {
+    text-decoration: none;
+    background-color: #0D3B00;
+    color: lime;
+  }
+  A:visited
+    {
+    text-decoration: none;
+    background-color: #0D3B00;
+    color: lime;
+  }
+  A:hover
+    {
+    text-decoration: none;
+    background-color: #0D3B00;
+    color: #99ff90;
+  }
+
+  h1, h2, h3, h4 {
+    color: #FFFFFF;
+  }
+}
+
+div.game.en_cx {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  background-color: #0D3B00;
+  border-color: lime;
+  border-width: 1px 1px 1px 1px;
+  border-style: dashed;
+  padding: 10px;
+  margin-top: 5px;
+  color: lime;
+
+  h1, h2, h3, h4 {
+    color: #FFFFFF;
+  }
+}
+
+div.content {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  border-color: white;
+  border-width: 1px 1px 1px 1px;
+  border-style: solid;
+  padding: 5px;
+  margin: 5px;
+}

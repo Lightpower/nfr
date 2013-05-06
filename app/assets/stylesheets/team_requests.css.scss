@@ -1,0 +1,18 @@
+// Place all the styles related to the Game controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+div.team_request {
+  display: inline;
+  margin: 5px;
+  background-color: yellow;
+  border-color: orange;
+  border-width: 1px;
+  border-style: solid
+}
+
+div.block_half {
+  display: inline-block;
+  width: 45%;
+  border-style: none;
+}

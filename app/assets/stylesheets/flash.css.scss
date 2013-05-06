@@ -1,0 +1,26 @@
+div.notice, div.alert, div.error, div.warning {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 5px 5px 5px #282b1f;
+  -moz-box-shadow: 5px 5px 5px #282b1f;
+  box-shadow: 5px 5px 5px #282b1f;
+
+  border: solid 1px #000;
+  line-height: 1.2;
+  margin: 0 auto;
+  padding: 5px 0 7px;
+  text-align: center;
+}
+
+div.notice, div.warning {
+  background-color: #00ff32;
+  border-color: green;
+  //color: green;
+}
+
+div.alert, div.error {
+  background-color: #ff0000;
+  border-color: #880000;
+}
+

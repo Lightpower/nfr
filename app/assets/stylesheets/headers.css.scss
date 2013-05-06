@@ -1,0 +1,72 @@
+// Place all the styles related to the Games controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+header {
+  display: inline-block;
+  width: 1228px;
+  margin-bottom: 5px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  background-color: #CCCCCC;
+  border-color: #FFFFFF;
+  border-width: 1px 1px 1px 1px;
+  border-style: solid;
+}
+
+header.logo {
+  background: #444444 url(/images/logo-head.jpg) no-repeat;
+  height: 100px;
+}
+
+header.menu {
+  height: 50px;
+}
+div.header_menu {
+  width: (150 + 20 + 2)*4px; // width + margin(left+right) + border(left+right) * 4 items
+  margin: 0 auto;
+}
+
+a.header_menu_item {
+  display: inline-block;
+  width:  150px;
+  text-align: center;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 3px 3px 4px #282b1f;
+  -moz-box-shadow: 3px 3px 4px #282b1f;
+  box-shadow: 3px 3px 4px #282b1f;
+  color: #000000;
+  text-decoration: none;
+  background-color: #888888;
+  border-color: #FFFFFF;
+  border-width: 1px 1px 1px 1px;
+  border-style: solid;
+  font-size: 1.3em;
+  font-weight: bold;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin: 3px 10px 3px 10px;
+}
+a.header_menu_item:hover {
+  color: #000000;
+  text-decoration: none;
+  background-color: #444444;
+  border-color: #FFFFFF;
+}
+a.header_menu_item:active {
+  width:  148px;
+  text-align: center;
+  text-decoration: none;
+  background-color: #333333;
+  border-color: red;
+  border-width: 2px;
+  border-style: solid;
+  font-size: 1.3em;
+  font-weight: bold;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  margin: 3px 10px 3px 10px;
+}
