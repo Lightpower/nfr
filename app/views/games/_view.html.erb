@@ -1,5 +1,5 @@
 <% if game.present? %>
-	<div class="game <%= game.css_class %>">
+  <div class="game <%= game.css_class %>">
     <h1><%= game.name %></h1>
 		<h3><%= game.format %> #<%= game.number %></h3>
 	  <b>Старт: <%= game.start_date.strftime("%d.%m.%y %H:%M:%S") %></b><br>
