@@ -27,7 +27,10 @@ nav, section, aside {
   display: -moz-inline-stack;
   display: inline-block;
   vertical-align: top;
+}
 
+nav ul li a:hover {
+  font-size: 1.1em;
 }
 
 // Game classes
@@ -392,7 +395,19 @@ a.request_game {
   border-style: solid;
   margin-top: 2px;
   padding: 5px;
+
 }
+
+a.request_game:link, a.delete_game:link, a.enter_game:link {
+  color: white;
+}
+a.request_game:visited, a.delete_game:visited, a.enter_game:visited {
+  color: white;
+}
+a.request_game:hover, a.delete_game:hover, a.enter_game:hover {
+  color: blue;
+}
+
 
 a.delete_game {
   display: inline-block;
@@ -414,6 +429,7 @@ a.delete_game {
   margin-top: 2px;
   padding: 5px;
 }
+
 
 a.enter_game {
   display: inline-block;

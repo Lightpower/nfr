@@ -11,6 +11,17 @@ header {
   border-radius: 2px;
   background-color: #CCCCCC;
   border-color: #FFFFFF;
+
+  background: #CCCCCC; /* Для старых браузров */
+  background: -moz-linear-gradient(top, #EEEEEE, #AAAAAA); /* Firefox 3.6+ */
+  /* Chrome 1-9, Safari 4-5 */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#EEEEEE), color-stop(100%,#AAAAAA));
+  /* Chrome 10+, Safari 5.1+ */
+  background: -webkit-linear-gradient(top, #EEEEEE, #AAAAAA);
+  background: -o-linear-gradient(top, #EEEEEE, #AAAAAA); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #EEEEEE, #AAAAAA); /* IE10 */
+  background: linear-gradient(top, #EEEEEE, #AAAAAA); /* CSS3 */
+
   border-width: 1px 1px 1px 1px;
   border-style: solid;
 }
@@ -18,6 +29,9 @@ header {
 header.logo {
   background: #444444 url(/images/logo-head.jpg) no-repeat;
   height: 100px;
+}
+header.logo:hover {
+  background: #444444 url(/images/logo-head-c.jpg) no-repeat;
 }
 
 header.menu {
