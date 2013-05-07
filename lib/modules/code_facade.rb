@@ -9,6 +9,10 @@ module CodeFacade
     # Params:
     # - params {Hash} - hash with code string, user which sent this code and game
     #
+    # Example:
+    #
+    #  { game: game, code_string: 'DR12345', user: current_user}
+    #
     # Returns:
     # - {string} - Result
     #
