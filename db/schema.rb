@@ -14,39 +14,39 @@
 ActiveRecord::Schema.define(:version => 20130501091923) do
 
   create_table "archive_code_strings", :force => true do |t|
-    t.string  "data",            :null => false
+    t.string  "data",    :null => false
     t.string  "color"
-    t.integer "archive_code_id", :null => false
-    t.integer "game_id",         :null => false
+    t.integer "code_id", :null => false
+    t.integer "game_id", :null => false
   end
 
   create_table "archive_codes", :force => true do |t|
-    t.integer "number",                           :null => false
-    t.string  "name",                             :null => false
+    t.integer "number",                   :null => false
+    t.string  "name",                     :null => false
     t.string  "info"
-    t.string  "ko",                               :null => false
+    t.string  "ko",                       :null => false
     t.string  "color"
-    t.float   "bonus",           :default => 0.0, :null => false
-    t.integer "archive_task_id"
-    t.integer "game_id",                          :null => false
+    t.float   "bonus",   :default => 0.0, :null => false
+    t.integer "task_id"
+    t.integer "game_id",                  :null => false
   end
 
   create_table "archive_hints", :force => true do |t|
-    t.integer "number",          :null => false
+    t.integer "number",  :null => false
     t.text    "data"
     t.integer "delay"
     t.float   "cost"
-    t.integer "archive_task_id"
-    t.integer "game_id",         :null => false
+    t.integer "task_id"
+    t.integer "game_id", :null => false
   end
 
   create_table "archive_logs", :force => true do |t|
-    t.string   "login",           :null => false
-    t.string   "data",            :null => false
-    t.integer  "result_code",     :null => false
-    t.integer  "archive_team_id"
-    t.integer  "archive_code_id"
-    t.integer  "game_id",         :null => false
+    t.string   "login",       :null => false
+    t.string   "data",        :null => false
+    t.integer  "result_code", :null => false
+    t.integer  "team_id"
+    t.integer  "code_id"
+    t.integer  "game_id",     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -59,50 +59,52 @@ ActiveRecord::Schema.define(:version => 20130501091923) do
     t.integer "code_quota"
     t.float   "bonus"
     t.integer "duration"
-    t.integer "archive_zone_id"
-    t.integer "archive_task_id"
-    t.integer "archive_code_id"
-    t.integer "game_id",         :null => false
+    t.integer "zone_id"
+    t.integer "task_id"
+    t.integer "code_id"
+    t.integer "game_id",    :null => false
   end
 
   create_table "archive_team_bonus", :force => true do |t|
-    t.string  "bonus_type",      :null => false
-    t.string  "name",            :null => false
+    t.string  "bonus_type",    :null => false
+    t.string  "name",          :null => false
     t.text    "description"
     t.float   "rate"
     t.string  "ko"
     t.integer "amount"
-    t.integer "archive_team_id", :null => false
-    t.integer "game_id",         :null => false
+    t.integer "team_bonus_id"
+    t.integer "team_id",       :null => false
+    t.integer "game_id",       :null => false
   end
 
   create_table "archive_team_codes", :force => true do |t|
     t.string   "data"
     t.integer  "state"
     t.string   "color"
-    t.float    "bonus",           :default => 0.0, :null => false
-    t.integer  "archive_team_id",                  :null => false
-    t.integer  "archive_code_id",                  :null => false
-    t.integer  "archive_zone_id"
-    t.integer  "game_id",                          :null => false
+    t.float    "bonus",         :default => 0.0, :null => false
+    t.integer  "team_id",                        :null => false
+    t.integer  "code_id",                        :null => false
+    t.integer  "zone_id"
+    t.integer  "team_bonus_id"
+    t.integer  "game_id",                        :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "archive_team_hints", :force => true do |t|
     t.float    "cost"
-    t.integer  "archive_team_id"
-    t.integer  "archive_hint_id"
-    t.integer  "archive_zone_id"
-    t.integer  "game_id",         :null => false
+    t.integer  "team_id"
+    t.integer  "hint_id"
+    t.integer  "zone_id"
+    t.integer  "game_id",    :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "archive_team_zones", :force => true do |t|
-    t.integer "archive_team_id"
-    t.integer "archive_zone_id"
-    t.integer "game_id",         :null => false
+    t.integer "team_id"
+    t.integer "zone_id"
+    t.integer "game_id", :null => false
   end
 
   create_table "archive_teams", :force => true do |t|
@@ -114,12 +116,12 @@ ActiveRecord::Schema.define(:version => 20130501091923) do
   end
 
   create_table "archive_zones", :force => true do |t|
-    t.integer "number",          :null => false
-    t.string  "name",            :null => false
+    t.integer "number",    :null => false
+    t.string  "name",      :null => false
     t.string  "image_url"
     t.text    "preview"
-    t.integer "archive_code_id"
-    t.integer "game_id",         :null => false
+    t.integer "code_id"
+    t.integer "game_id",   :null => false
   end
 
   create_table "code_strings", :force => true do |t|
