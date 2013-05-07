@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe CodeFacade do
+describe 'CodeFacade' do
 
   pending context 'input' do
 
