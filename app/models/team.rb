@@ -7,7 +7,6 @@ class Team < ActiveRecord::Base
   has_many :team_bonuses, class_name: 'TeamBonus'
   has_many :team_hints
   has_many :team_zones
-  has_many :team_hints
   has_many :team_requests
   belongs_to :captain, class_name: 'User', foreign_key: 'user_id'
 
