@@ -7,10 +7,14 @@ CODE_COLORS = %w{red blue yellow white grey lightblue magenta orange green #AA88
 #
 def create_simple_game
   game = FactoryGirl.create(:game)
-  @teams = [Team.create(name: 'Boltons', alternative_name: 'DRузья',    image_url: '/images/test.png'),
-            Team.create(name: 'Trants',  alternative_name: 'DRakoshki', image_url: '/images/test2.png') ]
-  User.create(email: 'bol@ex.ua', password: '123456', password_confirmation: '123456', team: @teams.first)
-  User.create(email: 'tra@ex.ua', password: '123456', password_confirmation: '123456', team: @teams.last)
+  @users = [User.create(email: 'bol@ex.ua', password: '123456', password_confirmation: '123456'),
+            User.create(email: 'tra@ex.ua', password: '123456', password_confirmation: '123456') ]
+  @teams = [Team.create(name: 'Boltons', alternative_name: 'DRузья',    image_url: '/images/test.png', user_id: @users.first.id),
+            Team.create(name: 'Trants',  alternative_name: 'DRakoshki', image_url: '/images/test2.png', user_id: @users.last.id) ]
+  @users.first.team = @teams.first
+  @users.first.save
+  @users.last.team = @teams.last
+  @users.last.save
   # Requests to game
   @teams.each { |team| FactoryGirl.create(:game_request, game: game, team: team, is_accepted: true) }
 
@@ -93,6 +97,8 @@ def create_simple_game
     Hint.create(game: game, task: task, number: 1, cost: -1, data: '<i>Читайте задание внимательнее!</i>')
     Hint.create(game: game, task: task, number: 2, cost: -1, data: '<i>Как найти коды, выделено оранжевым.</i>')
   end
+
+  game
 end
 
 ##
@@ -111,4 +117,26 @@ def destroy_simple_game
   TeamHint.destroy_all
   Log.destroy_all
   Game.destroy_all
+end
+
+##
+# Emulate some game activity (passing the codes)
+#
+def emulate_game_activity(game=nil)
+  game ||= Game.first
+  teams = Team.all
+
+  # access all teams to all zones
+  teams.each do |team|
+    Zone.all.map(&:access_code).each do |code|
+      CodeFacade.input({game: game, code_string: code.show_code, user: team.users.first})
+    end
+  end
+
+  # pass all codes of task which doesn't have access code
+  teams.each do |team|
+    Zone.all.map(&:tasks).flatten.select {|task| task.access_code == nil}.map(&:codes).flatten do |code|
+      CodeFacade.input({game: game, code_string: code.show_code, user: team.users.first})
+    end
+  end
 end
