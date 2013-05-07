@@ -6,7 +6,7 @@ class CreateArchiveZones < ActiveRecord::Migration
       t.string  :image_url
       t.text    :preview
 
-      t.references :archive_code
+      t.references :code
       t.references :game, null: false
     end
   end

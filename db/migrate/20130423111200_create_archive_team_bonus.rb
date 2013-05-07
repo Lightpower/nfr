@@ -8,7 +8,8 @@ class CreateArchiveTeamBonus < ActiveRecord::Migration
       t.string  :ko
       t.integer :amount
 
-      t.references :archive_team, null: false
+      t.references :team_bonus
+      t.references :team, null: false
       t.references :game,         null: false
     end
 

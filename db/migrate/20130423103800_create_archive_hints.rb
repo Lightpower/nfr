@@ -6,7 +6,7 @@ class CreateArchiveHints < ActiveRecord::Migration
       t.integer :delay
       t.float   :cost
 
-      t.references :archive_task
+      t.references :task
       t.references :game, null: false
     end
 

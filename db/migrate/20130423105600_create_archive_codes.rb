@@ -8,7 +8,7 @@ class CreateArchiveCodes < ActiveRecord::Migration
       t.string  :color
       t.float   :bonus,   null:false, default: 0
 
-      t.references :archive_task
+      t.references :task
       t.references :game, null: false
     end
   end

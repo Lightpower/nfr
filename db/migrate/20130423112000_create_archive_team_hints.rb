@@ -3,9 +3,9 @@ class CreateArchiveTeamHints < ActiveRecord::Migration
     create_table :archive_team_hints do |t|
       t.float :cost
 
-      t.references :archive_team
-      t.references :archive_hint
-      t.references :archive_zone
+      t.references :team
+      t.references :hint
+      t.references :zone
       t.references :game,         null: false
 
       t.datetime :created_at

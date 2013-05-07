@@ -6,9 +6,10 @@ class CreateArchiveTeamCodes < ActiveRecord::Migration
       t.string  :color
       t.float   :bonus, null: false, default: 0
 
-      t.references :archive_team, null: false
-      t.references :archive_code, null: false
-      t.references :archive_zone
+      t.references :team, null: false
+      t.references :code, null: false
+      t.references :zone
+      t.references :team_bonus
       t.references :game,         null: false
 
       t.datetime :created_at

@@ -4,7 +4,7 @@ class CreateArchiveCodeStrings < ActiveRecord::Migration
       t.string :data,     null: false, unique: true
       t.string :color
 
-      t.references :archive_code, null: false
+      t.references :code, null: false
       t.references :game,         null: false
     end
   end

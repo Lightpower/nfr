@@ -5,8 +5,8 @@ class CreateArchiveLogs < ActiveRecord::Migration
       t.string  :data,        null: false
       t.integer :result_code, null: false
 
-      t.references :archive_team
-      t.references :archive_code
+      t.references :team
+      t.references :code
       t.references :game,         null: false
 
       t.datetime :created_at

@@ -9,9 +9,9 @@ class CreateArchiveTasks < ActiveRecord::Migration
       t.float    :bonus
       t.integer  :duration
 
-      t.references :archive_zone
-      t.references :archive_task
-      t.references :archive_code
+      t.references :zone
+      t.references :task
+      t.references :code
       t.references :game, null: false
     end
   end
