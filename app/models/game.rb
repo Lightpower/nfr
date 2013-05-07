@@ -49,7 +49,7 @@ class Game < ActiveRecord::Base
   #
   def css_class
     result = (self.format || '').downcase.gsub(' ', '_')
-    "other" unless CSS_CLASSES.include?(result)
+    CSS_CLASSES.include?(result) ? result: 'other'
   end
 
   ##
