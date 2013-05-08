@@ -2,12 +2,32 @@
 module Stat
 
   class << self
+    ##
+    # Show the intermediate statistics based on Game's game_type
+    # Please see private methods "subtotal_*" for more detailed description
+    #
+    # Params:
+    # - params {Hash} - Hash with Game and
+    #
+    def subtotal(params)
+      game = params[:game]
+      return {error: 'Game not found'} unless game
+
+      subtotal_method = "subtotal_#{game.game_type}"
+      if respond_to? subtotal_method
+        send(subtotal_method, params)
+      else
+        { error: "Game with game_type=\"#{game.game_type}\" cannot show subtotal!"}
+      end
+    end
 
     ##
     # Show the statistics by each kingdoms.
     #
     # Params:
-    # - asking_team {Team} - Team which is asking for statistics
+    # - params {Hash} - hash which contains Game and asking Team
+    #   - game {Game} - current Game
+    #   - asking_team {Team} - Team which is asking for statistics
     #
     #
     # Returns:
@@ -21,7 +41,6 @@ module Stat
     #   - Code number of asking team
     #
     # Example:
-    #
     #
     #   {
     #     1 => {
@@ -40,16 +59,18 @@ module Stat
     #         name: 'Lannisters',
     #         codes: 11,
     #         time: '03:03:17',
-    #         image: '/images/starks.png'
+    #         image: '/images/lannisters.png'
     #       },
     #     }
     #   }
     #
-    def total(asking_team)
+    def subtotal_zones(params)
+      game = params[:game]
+      asking_team = params[:team]
       return [] unless asking_team.present? && asking_team.is_a?(Team)
 
       result = {}
-      Zone.all.each do |zone|
+      Zone.where(game_id: game.id).each do |zone|
         holder = zone.holder
         if holder
           team = holder.team
