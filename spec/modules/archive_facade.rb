@@ -1,5 +1,4 @@
 require 'spec_helper'
-#load 'lib/modules/archive_facade'
 
 describe 'ArchiveFacade' do
 
