@@ -164,6 +164,7 @@ ActiveRecord::Schema.define(:version => 20130501091923) do
     t.integer  "number",                         :null => false
     t.string   "name",                           :null => false
     t.string   "format",                         :null => false
+    t.string   "game_type",                      :null => false, :default => "zones"
     t.datetime "start_date",                     :null => false
     t.datetime "finish_date"
     t.integer  "price"
