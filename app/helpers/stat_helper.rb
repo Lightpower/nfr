@@ -20,21 +20,25 @@ module StatHelper
   #     }
   #
   def show_zone_stat(params)
-    res = ''
-    res << content_tag(:span, params[:name], class: 'zone_title')
-    res << '<br>'
-    res << content_tag(:span, 'Хозяин: ', class: 'label')
-    res << content_tag(:span, params[:holder][:name], class: 'holder')
-    res << '<br>'
-    res << content_tag(:span, 'Влияние: ', class: 'label')
-    res << content_tag(:span, params[:holder][:codes], class: 'codes')
-    res << '<br>'
-    res << content_tag(:span, 'Время захвата: ', class: 'label')
-    res << content_tag(:span, params[:holder][:time], class: 'time')
-    res << '<br>'
-    res << content_tag(:span, 'Ваше влияние в зоне: ', class: 'label')
-    res << content_tag(:span, params[:team_codes], class: 'team_codes')
+    if params[:error].blank?
+      res = ''
+      res << content_tag(:span, params[:name], class: 'zone_title')
+      res << '<br>'
+      res << content_tag(:span, 'Хозяин: ', class: 'label')
+      res << content_tag(:span, params[:holder][:name], class: 'holder')
+      res << '<br>'
+      res << content_tag(:span, 'Влияние: ', class: 'label')
+      res << content_tag(:span, params[:holder][:codes], class: 'codes')
+      res << '<br>'
+      res << content_tag(:span, 'Время захвата: ', class: 'label')
+      res << content_tag(:span, params[:holder][:time], class: 'time')
+      res << '<br>'
+      res << content_tag(:span, 'Ваше влияние в зоне: ', class: 'label')
+      res << content_tag(:span, params[:team_codes], class: 'team_codes')
 
-    content_tag(:div, res.html_safe, class: params[:class]).html_safe
+      content_tag(:div, res.html_safe, class: params[:class]).html_safe
+    else
+      ("<div class=\"error\">#{params[:error]}</div>").html_safe
+    end
   end
 end
