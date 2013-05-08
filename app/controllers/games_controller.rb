@@ -23,7 +23,26 @@ class GamesController < ApplicationController
   # Get statistics
   #
   def stat
-    render 'stat/index', locals: {data: Stat.total(current_user.team)}, layout: 'layouts/game'
+    render 'stat/index', locals: {data: Stat.subtotal({ game: @game, team: current_user.team })}, layout: 'layouts/game'
+  end
+
+  ##
+  # Archive the game
+  #
+  def archive
+    flash_type = :message
+    if @game
+      if ArchiveFacade.archive(@game)
+        message = 'Игра успешно заархивирована'
+      else
+        message = 'Ошибка архивирования игры!'
+        flash_type = :error
+      end
+    else
+      message = 'Игра не найдена'
+      flash_type = :error
+    end
+    render games_path, flash_type => message
   end
 
 end
