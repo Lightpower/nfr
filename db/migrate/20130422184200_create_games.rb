@@ -4,6 +4,7 @@ class CreateGames < ActiveRecord::Migration
       t.integer  :number,     null: false, unique: true
       t.string   :name,       null: false, unique: true
       t.string   :format,     null: false
+      t.string   :game_type,  null: false, default: 'zones'
       t.datetime :start_date, null: false
       t.datetime :finish_date
       t.integer  :price
