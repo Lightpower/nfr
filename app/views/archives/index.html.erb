@@ -1,0 +1,6 @@
+<% if @games.present? %>
+	<h1>Архив игр</h1>
+  <% @games.each do |game| %>
+		<%= render 'archives/view', game: game %>
+  <% end %>
+<% end %>
