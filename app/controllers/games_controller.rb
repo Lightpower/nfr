@@ -14,7 +14,7 @@ class GamesController < ApplicationController
   # Play the Game
   #
   def show
-    @zones = current_user.team.zones
+    @zones = current_user.team.zones.where('zones.game_id=?', @game.id)
 
     render 'zones/index', layout: 'layouts/game'
   end
@@ -27,9 +27,9 @@ class GamesController < ApplicationController
   end
 
   ##
-  # Archive the game
+  # Archiving the game
   #
-  def archive
+  def archiving
     flash_type = :message
     if @game
       if ArchiveFacade.archive(@game)
