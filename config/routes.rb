@@ -7,7 +7,7 @@ Nfr::Application.routes.draw do
   resources :games, only: [:index, :show] do
     member do
       get :stat
-      get :archive
+      get :archiving
     end
 
     match '/m' => 'mobile#index'
@@ -30,6 +30,8 @@ Nfr::Application.routes.draw do
   resources :teams
 
   resources :game_requests, only: [:create, :destroy]
+
+  resources :archives, only: [:index, :show]
 
 # resource :users
   match "/users" => "users#index",          via: :get,    as: :users
