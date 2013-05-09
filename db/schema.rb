@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130501091923) do
+ActiveRecord::Schema.define(:version => 20130509001828) do
 
   create_table "archive_code_strings", :force => true do |t|
     t.string  "data",    :null => false
@@ -150,6 +150,14 @@ ActiveRecord::Schema.define(:version => 20130501091923) do
   add_index "codes", ["ko"], :name => "index_codes_on_ko"
   add_index "codes", ["number"], :name => "index_codes_on_number"
 
+  create_table "game_configs", :force => true do |t|
+    t.integer "time"
+    t.integer "bonus"
+    t.integer "game_id"
+  end
+
+  add_index "game_configs", ["game_id"], :name => "index_game_configs_on_game_id", :unique => true
+
   create_table "game_requests", :force => true do |t|
     t.boolean  "is_accepted", :default => false
     t.integer  "game_id",                        :null => false
@@ -161,11 +169,10 @@ ActiveRecord::Schema.define(:version => 20130501091923) do
   add_index "game_requests", ["game_id", "team_id"], :name => "index_game_requests_on_game_id_and_team_id", :unique => true
 
   create_table "games", :force => true do |t|
-    t.integer  "number",                         :null => false
-    t.string   "name",                           :null => false
-    t.string   "format",                         :null => false
-    t.string   "game_type",                      :null => false, :default => "zones"
-    t.datetime "start_date",                     :null => false
+    t.integer  "number",                           :null => false
+    t.string   "name",                             :null => false
+    t.string   "format",                           :null => false
+    t.datetime "start_date",                       :null => false
     t.datetime "finish_date"
     t.integer  "price"
     t.string   "area"
@@ -174,10 +181,11 @@ ActiveRecord::Schema.define(:version => 20130501091923) do
     t.text     "legend"
     t.text     "brief_place"
     t.text     "dopy_list"
-    t.boolean  "is_active",   :default => false, :null => false
-    t.boolean  "is_archived", :default => false, :null => false
+    t.boolean  "is_active",   :default => false,   :null => false
+    t.boolean  "is_archived", :default => false,   :null => false
     t.string   "prepare_url"
     t.string   "discuss_url"
+    t.string   "game_type",   :default => "zones", :null => false
   end
 
   add_index "games", ["format"], :name => "index_games_on_format"
