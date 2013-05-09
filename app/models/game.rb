@@ -14,6 +14,8 @@ class Game < ActiveRecord::Base
   has_many :team_zones
   has_many :zones
 
+  has_one  :config, class_name: "GameConfig"
+
   attr_accessible :number, :name, :format, :start_date, :finish_date, :price, :area, :image_html, :preview,
                   :legend, :brief_place, :dopy_list, :is_active, :is_archived,  :prepare_url, :discuss_url
 
@@ -64,5 +66,21 @@ class Game < ActiveRecord::Base
   #
   def is_active?
     self.is_active && (self.start_date <= Time.now)
+  end
+
+  ##
+  # For game_type='zones':
+  # Time which team should hold a zone to get the bonus
+  #
+  def hold_time
+    game_type == 'zones' ? config.time || 99999999 : nil
+  end
+
+  ##
+  # For game_type='zones':
+  # Bonus which team will get if it hold a zone during defined time
+  #
+  def hold_bonus
+    game_type == 'zones' ? config.bonus || 0 : nil
   end
 end
