@@ -2,7 +2,7 @@
   <table class='log_full'>
 	  <thead>
 	    <th>Дом</th>
-	    <% Zone.all.each do |zone| %>
+	    <% @game.zones.each do |zone| %>
 	    <th colspan="2"><%= zone.name %></th>
 		  <% end %>
 	    <th colspan="2">Всего</th>
@@ -10,12 +10,13 @@
 	  <tbody>
 	  <% @stat_result[:bonuses].each_pair do |key, val| %>
 	    <tr>
-	      <td><b><%= User.find_by_email(key).team.name %></b></td>
-	      <% (1..8).each do |zone| %>
-	        <td><%= val[zone.to_s][:sum] %></td>
-	        <td><%= Time.at(val[zone.to_s][:time_bonus]).strftime("%M:%S") %></td>
+	      <td><b><%= Team.find(key).name %></b></td>
+	      <% @game.zones.each do |zone| %>
+	        <td><%= val[zone.id][:sum] %></td>
+	        <td><%= val[zone.id][:bonus] %></td>
 	      <% end %>
-
+	      <td><%= val['total'][:sum] %></td>
+	      <td><%= val['total'][:bonus] %></td>
 	    </tr>
 		<% end %>
 	  </tbody>
@@ -30,8 +31,8 @@
     <tbody>
     <% @stat_result[:holders].each_pair do |key, val| %>
       <tr>
-        <td><b><%= Zone.all[key.to_i - 1].name %></b></td>
-        <td><%= User.find_by_email(val[:team]).team.name %></td>
+        <td><b><%= Zone.find(key).name %></b></td>
+        <td><%= Team.find_by_id(val[:team]).try(:name) || ' - ' %></td>
         <td><%= val[:sum] %></td>
       </tr>
     <% end %>
