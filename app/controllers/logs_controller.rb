@@ -5,16 +5,16 @@ class LogsController < ApplicationController
 
   def index
     if current_user.is_admin?
-      @logs = Log.where(result_code: [0, 1, 6, 9]).order('created_at DESC').all
+      @logs = @game.logs.where(result_code: [0, 1, 6, 9]).includes(:code).order('created_at DESC').all
     else
-      @logs = current_user.team.logs.order('created_at DESC')
+      @logs = @game.logs.where(team_id: current_user.team.id).includes(:code).order('created_at DESC')
     end
 
     render 'logs/index', layout: 'layouts/game'
   end
 
   def results
-    @stat_result = Stat.reprocess
+    @stat_result = Stat.total({ game: @game })
 
     render 'logs/results', layout: 'layouts/game'
   end

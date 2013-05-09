@@ -7,8 +7,8 @@ class CodesController < ApplicationController
   # Show all free codes with possibility of attaching them to some zone
   #
   def index
-    @free_codes = current_user.team.team_codes.where('team_codes.zone_id is null')
-    @team_zones = current_user.team.team_zones.map(&:zone)
+    @free_codes = current_user.team.team_codes.where('team_codes.zone_id is null and team_codes.game_id=?', @game.id)
+    @team_zones = current_user.team.team_zones.where('team_zones.game_id=?', @game.id).map(&:zone)
     render 'codes/index', layout: 'layouts/game'
   end
 
