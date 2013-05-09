@@ -29,10 +29,6 @@ nav, section, aside {
   vertical-align: top;
 }
 
-nav ul li a:hover {
-  font-size: 1.1em;
-}
-
 // Game classes
 aside.aside_right {
   min-height: 220px;
@@ -45,19 +41,6 @@ aside.aside_right {
   border-color: #FFFFFF;
   border-width: 1px 1px 1px 1px;
   border-style: solid
-}
-
-nav#info_container {
-  min-height: 220px;
-  width: 200px;
-  margin-right: 5px;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
-  background-color: #CCCCCC;
-  border-color: #FFFFFF;
-  border-width: 1px 1px 1px 1px;
-  border-style: solid;
 }
 
 section.main_content {
@@ -76,7 +59,7 @@ section.main_content {
 
 // Site classes
 aside.site_aside_right {
-  min-height: 220px;
+  min-height: 400px;
   max-width: 200px;
   margin-right: 5px;
   -webkit-border-radius: 2px;
@@ -88,21 +71,8 @@ aside.site_aside_right {
   border-style: solid
 }
 
-nav#site_info_container {
-  min-height: 220px;
-  width: 250px;
-  margin-right: 5px;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
-  background-color: #CCCCCC;
-  border-color: #FFFFFF;
-  border-width: 1px 1px 1px 1px;
-  border-style: solid;
-}
-
 section.site_main_content {
-  min-height: 220px;
+  min-height: 394px;
   width: 750px;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
@@ -174,58 +144,6 @@ section.content {
     border-style: solid;
     padding: 1px;
     margin: 1px;
-  }
-}
-
-nav.menu {
-  display: block;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
-  border-color: #777777;
-  border-width: 1px;
-  border-style: solid;
-  padding: 3px;
-  font-family: "Sans";
-  font-style: bold;
-  font-size: 20px;
-  ul {
-    margin: 0px;
-    padding: 4px;
-    list-style-type: none;
-
-  }
-
-  li {
-    margin: 0px;
-    height: 21px;
-  }
-  ul.submenu {
-    font-style: bold;
-    font-size: 14px;
-    padding: 0px 0px 0px 12px;
-    li {
-      margin: 0px;
-      height: 15px;
-    }
-
-  }
-}
-
-nav#team_info {
-  font-size: 15px;
-
-  li {
-    height: 21px;
-  }
-}
-
-nav#user_info, nav#team_info {
-  font-size: 12px;
-
-  li {
-    height: 16px;
-    font-size: 10px;
   }
 }
 
