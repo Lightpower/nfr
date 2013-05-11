@@ -20,4 +20,4 @@
 /.rspec
 
 
-/nfr.sql
+/nfr*.sql
