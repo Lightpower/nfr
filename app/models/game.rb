@@ -14,6 +14,17 @@ class Game < ActiveRecord::Base
   has_many :team_zones
   has_many :zones
 
+  has_many :archive_codes
+  has_many :archive_code_strings
+  has_many :archive_hints
+  has_many :archive_logs
+  has_many :archive_tasks
+  has_many :archive_team_bonuses
+  has_many :archive_team_codes
+  has_many :archive_team_hints
+  has_many :archive_team_zones
+  has_many :archive_zones
+
   has_one  :config, class_name: "GameConfig"
 
   attr_accessible :number, :name, :format, :start_date, :finish_date, :price, :area, :image_html, :preview,
