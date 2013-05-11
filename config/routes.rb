@@ -31,7 +31,12 @@ Nfr::Application.routes.draw do
 
   resources :game_requests, only: [:create, :destroy]
 
-  resources :archives, only: [:index, :show]
+  resources :archives, only: [:index, :show] do
+    member do
+      get :short_stat
+      get :stat
+    end
+  end
 
 # resource :users
   match "/users" => "users#index",          via: :get,    as: :users
@@ -42,8 +47,6 @@ Nfr::Application.routes.draw do
   match "/users/:id" => "users#show",       via: :get,    as: :user
   match "/users/:id" => "users#update",     via: :put,    as: :user
   match "/users/:id" => "users#destroy",    via: :delete, as: :user
-  #match "/users/:id/approve_team_request" => "users#approve_team_request",  via: :get, as: :approve
-  #match "/users/:id/reject_team_request" => "users#reject_team_request",    via: :get, as: :reject
 
   resources :team_requests, only: [] do
     member do
@@ -51,6 +54,8 @@ Nfr::Application.routes.draw do
       put :reject
     end
   end
+
+  match '/adm/action' => 'admin#action'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
