@@ -14,9 +14,17 @@ class GamesController < ApplicationController
   # Play the Game
   #
   def show
-    @zones = current_user.team.zones.where('zones.game_id=?', @game.id)
+    if @game.try(:is_active) # check if game is active
+      @zones = current_user.team.zones.where('zones.game_id=?', @game.id)
 
-    render 'zones/index', layout: 'layouts/game'
+      render 'zones/index', layout: 'layouts/game'
+    elsif @game.blank?
+      redirect_to root_path, alert: "Игра с таким номером (#{params[:id]}) не найдена!"
+    elsif @game.is_archived
+      redirect_to archive_path(@game), notice: "Выбранная игра уже в архиве"
+    else
+      redirect_to root_path, notice: 'Выбранная игра неактивна'
+    end
   end
 
   ##
@@ -31,18 +39,24 @@ class GamesController < ApplicationController
   #
   def archiving
     flash_type = :message
-    if @game
+    if @game && !@game.is_archived
       if ArchiveFacade.archive(@game)
         message = 'Игра успешно заархивирована'
       else
         message = 'Ошибка архивирования игры!'
         flash_type = :error
       end
-    else
+    elsif @game.is_archived
+      message = 'Игра уже в архиве'
+      flash_type = :notice
+    elsif @game.blank?
       message = 'Игра не найдена'
       flash_type = :error
+    else
+      message = 'Не удалось заархивировать игру!'
+      flash_type = :error
     end
-    render games_path, flash_type => message
+    redirect_to (@game? archive_path(@game) : games_path), flash_type => message
   end
 
 end
