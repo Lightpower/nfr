@@ -3,9 +3,11 @@ class ArchiveCode < ActiveRecord::Base
 
   has_one :hold_zone, class_name: 'ArchiveZone', foreign_key: 'code_id'
   has_one :hold_task, class_name: 'ArchiveTask', foreign_key: 'code_id'
+
+  has_many :archive_code_strings, class_name: 'ArchiveCodeString', foreign_key: 'code_id'
+
   belongs_to :archive_task, class_name: 'ArchiveTask', foreign_key: 'task_id'
   belongs_to :game
-  has_many :archive_code_strings
 
   attr_accessible :game, :game_id, :info, :ko, :name, :number, :parent_id, :type, :code_strings, :color, :bonus, :arcive_task, :task_id
   accepts_nested_attributes_for :archive_code_strings
