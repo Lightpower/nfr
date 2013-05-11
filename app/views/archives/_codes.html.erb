@@ -1,0 +1,15 @@
+<% if archive_task.archive_codes.present? %>
+  <div class='codes openable_holder'>
+    <%= openable_tag("#{archive_task.make_id}codes") %>
+    <%= content_tag(:span, "Коды (#{archive_task.archive_codes.size} шт.)") %>
+    <div class="openable">
+		<% archive_task.archive_codes.each do |archive_code| %>
+      <div class=code_data>
+        <%= content_tag(:b, content_tag(:span, archive_code.archive_code_strings.map(&:data).join(', '), style: archive_code.color.present? ? "color: #{archive_code.color}" : '')) %>
+        (<%= archive_code.ko %>) Бонус: <%= archive_code.bonus %>
+        <br>
+		  </div>
+	  <% end %>
+	  </div>
+	</div>
+<% end %>

@@ -1,0 +1,20 @@
+<div class='zone openable_holder'>
+  <div class='zone_header'>
+    <%= openable_tag(archive_zone.make_id) %>
+    <%= content_tag(:span, archive_zone.name, class: "caption") %>
+	  <% access_code = archive_zone.access_code %>
+	  <% if access_code.present? %>
+		  <span><b>Код доступа: </b></span>
+      <%= content_tag(:b, content_tag(:span, access_code.archive_code_strings.map(&:data).join(', '), style: access_code.color.present? ? "color: #{access_code.color}" : '')) %>
+      <span>
+        <%= "(#{access_code.ko})" %>
+        <%= "Бонус: #{access_code.bonus}" if (access_code.bonus || 0) > 0  %>
+	    </span>
+    <% end %>
+  </div>
+	<div class='openable'>
+	  <% archive_zone.archive_tasks.by_order.each do |archive_task| %>
+		  <%= render 'archives/task', archive_task: archive_task  %>
+	  <% end %>
+  </div>
+</div>

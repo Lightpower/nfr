@@ -1,0 +1,42 @@
+<% if @stat_result.present? %>
+  <table class='log_full'>
+	  <thead>
+	    <th>Дом</th>
+	    <% @game.archive_zones.each do |zone| %>
+	    <th colspan="2"><%= zone.name %></th>
+		  <% end %>
+	    <th colspan="2">Всего</th>
+	  </thead>
+	  <tbody>
+	  <% @stat_result[:bonuses].each_pair do |key, val| %>
+	    <tr>
+	      <td><b><%= Team.find(key).name %></b></td>
+	      <% @game.archive_zones.each do |zone| %>
+	        <td><%= val[zone.id][:sum] %></td>
+	        <td><%= val[zone.id][:bonus] %></td>
+	      <% end %>
+	      <td><%= val['total'][:sum] %></td>
+	      <td><%= val['total'][:bonus] %></td>
+	    </tr>
+		<% end %>
+	  </tbody>
+  </table><br><br>
+
+  <table class='log_full'>
+    <thead>
+    <th>Зона</th>
+    <th>Дом</th>
+    <th>Влияние</th>
+    </thead>
+    <tbody>
+    <% @stat_result[:holders].each_pair do |key, val| %>
+      <tr>
+        <td><b><%= Zone.find(key).name %></b></td>
+        <td><%= Team.find_by_id(val[:team]).try(:name) || ' - ' %></td>
+        <td><%= val[:sum] %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+<% end %>

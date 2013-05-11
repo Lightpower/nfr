@@ -1,0 +1,5 @@
+<%= render 'archives/view', game: @game %>
+
+<% @archive_zones.each do |archive_zone|  %>
+  <%=  render 'archives/zone', archive_zone: archive_zone %>
+<% end %>

@@ -1,0 +1,16 @@
+<div class='task openable_holder'>
+  <%= openable_tag(archive_task.make_id) %>
+  <%= content_tag(:span, archive_task.number) %>. <%= content_tag(:span, archive_task.name) %>
+
+  <div class='openable'>
+
+	  <% if archive_task.access_code.present? %>
+	    <span class='warning'>Стоимость задания - <%= archive_task.access_code.try(:bonus) %>, код доступа - <%= archive_task.access_code.show_code %></span><br>
+	  <% end %>
+
+	  <%= archive_task.data.html_safe %><br>
+		<%= render 'archives/hint',  archive_task: archive_task %>
+		<%= render 'archives/codes', archive_task: archive_task %>
+
+  </div>
+</div>
