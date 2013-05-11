@@ -18,3 +18,17 @@ a#attach_free_code {
   border-width: 1px 1px 1px 1px;
   border-style: solid;
 }
+
+div.codes {
+  display: block;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  margin: 3px;
+  padding: 2px;
+  background-color: #CCCCCC;
+  border-color: #000000;
+  border-width: 1px;
+  border-style: solid
+}
+
