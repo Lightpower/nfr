@@ -186,9 +186,7 @@ module StatZone
 
         # Total bonuses
         total[team] = result[team]["total"][:bonus] +
-            zone_holders.values.select{|i| i[:team] == team}.size * game.config.total_bonus
-        debugger
-        1+1
+            zone_holders.values.select{|i| i[:team] == team}.size * (game.config.try(:total_bonus) || 0)
       end
 
       # Total places sorting
@@ -278,7 +276,7 @@ module StatZone
 
         # Total bonuses
         total[team] = result[team]["total"][:bonus] +
-            zone_holders.values.select{|i| i[:team] == team}.size * game.config.total_bonus
+            zone_holders.values.select{|i| i[:team] == team}.size * (game.config.try(:total_bonus) || 0)
       end
 
       # Total places sorting
