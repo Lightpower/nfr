@@ -127,9 +127,8 @@ module StatZone
 
       log.each do |l|
         new_team = l.team_id
-        debugger
         amount = l.team_code.bonus
-        new_zone = l.team_code.zones.try(:id)
+        new_zone = l.team_code.zone.try(:id)
         time = l.created_at
         next if (new_team[0] == 'a') || (new_zone.blank?) || (amount == 0) || (time > finish_time)
 
@@ -164,15 +163,18 @@ module StatZone
       zones.each do |zone|
         begin
           old_team = zone_holders[zone][:team]
-          old_bonus = 0
-          old_bonus = ((finish_time - zone_holders[zone][:time]).to_i / game.hold_time) * game.hold_bonus if zone_holders[zone][:time].present?
-          result[old_team][zone][:bonus] += old_bonus
+          if result[old_team].present?
+            old_bonus = 0
+            old_bonus = ((finish_time - zone_holders[zone][:time]).to_i / game.hold_time) * game.hold_bonus if zone_holders[zone][:time].present?
+            result[old_team][zone][:bonus] += old_bonus
+          end
         rescue Exception => e
           puts ["#{zone.class.name}.id=#{zone.id}", 'Exception:', e].join(' ')
         end
       end
 
-      # total
+      # total control time and bonus
+      total = {}
       teams.each do |team|
         sum = 0
         bonus = 0
@@ -181,9 +183,18 @@ module StatZone
           bonus += result[team][zone][:bonus] || 0
         end
         result[team]["total"] = {sum: sum, bonus: bonus}
+
+        # Total bonuses
+        total[team] = result[team]["total"][:bonus] +
+            zone_holders.values.select{|i| i[:team] == team}.size * game.config.total_bonus
+        debugger
+        1+1
       end
 
-      {bonuses: result, holders: zone_holders}
+      # Total places sorting
+      total = Hash[total.sort {|a, b| b[1] <=> a[1]}]
+
+      {bonuses: result, holders: zone_holders, total: total}
     end
 
     ##
@@ -210,9 +221,8 @@ module StatZone
 
       log.each do |l|
         new_team = l.team_id
-        debugger
         amount = l.team_code.bonus
-        new_zone = l.team_code.zones.try(:id)
+        new_zone = l.team_code.archive_zone.try(:id)
         time = l.created_at
         next if (new_team[0] == 'a') || (new_zone.blank?) || (amount == 0) || (time > finish_time)
 
@@ -249,13 +259,14 @@ module StatZone
           old_team = zone_holders[zone][:team]
           old_bonus = 0
           old_bonus = ((finish_time - zone_holders[zone][:time]).to_i / game.hold_time) * game.hold_bonus if zone_holders[zone][:time].present?
-          result[old_team][zone][:bonus] += old_bonus
+          result[old_team][zone][:bonus] += old_bonus if result[old_team].present?
         rescue Exception => e
           puts ["#{zone.class.name}.id=#{zone.id}", 'Exception:', e].join(' ')
         end
       end
 
       # total
+      total = {}
       teams.each do |team|
         sum = 0
         bonus = 0
@@ -264,9 +275,16 @@ module StatZone
           bonus += result[team][zone][:bonus] || 0
         end
         result[team]["total"] = {sum: sum, bonus: bonus}
+
+        # Total bonuses
+        total[team] = result[team]["total"][:bonus] +
+            zone_holders.values.select{|i| i[:team] == team}.size * game.config.total_bonus
       end
 
-      {bonuses: result, holders: zone_holders}
+      # Total places sorting
+      total = Hash[total.sort {|a, b| b[1] <=> a[1]}]
+
+      {bonuses: result, holders: zone_holders, total: total}
     end
   end
 end
