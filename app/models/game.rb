@@ -24,6 +24,7 @@ class Game < ActiveRecord::Base
   has_many :archive_team_hints
   has_many :archive_team_zones
   has_many :archive_zones
+  has_many :archive_teams
 
   has_one  :config, class_name: "GameConfig"
 
