@@ -7,6 +7,9 @@ CODE_COLORS = %w{red blue yellow white grey lightblue magenta orange green #AA88
 #
 def create_simple_game
   game = FactoryGirl.create(:game)
+  FactoryGirl.create(:game_config, game: game)
+  game.reload
+
   @users = [User.create(email: 'bol@ex.ua', password: '123456', password_confirmation: '123456'),
             User.create(email: 'tra@ex.ua', password: '123456', password_confirmation: '123456') ]
   @teams = [Team.create(name: 'Boltons', alternative_name: 'DRузья',    image_url: '/images/test.png', user_id: @users.first.id),
