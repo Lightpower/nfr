@@ -11,6 +11,7 @@ module ArchiveFacade
         archive_team = ArchiveTeam.create(name: team.name, alternative_name: team.alternative_name,
           image_url: team.image_url, team_id: team.id, game_id: game.id)
         team_table.merge!({team.id => archive_team.id})
+        GameRequest.where(game_id: game.id).map(&:delete)
       end
       # Copying the tables and clear them
       %w(Zone Task Code CodeString Hint TeamBonus TeamCode TeamHint TeamZone).each do |table|
@@ -38,6 +39,9 @@ module ArchiveFacade
       new_game.is_active = false
       new_game.is_archived = false
       new_game.save
+      # Copy game config
+      new_game.config = game.config.dup
+      new_game.config.save
 
       # Zones with ALL stuff
       game.archive_zones.each do |archive_zone|
