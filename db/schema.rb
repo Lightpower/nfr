@@ -153,6 +153,7 @@ ActiveRecord::Schema.define(:version => 20130509001828) do
   create_table "game_configs", :force => true do |t|
     t.integer "time"
     t.integer "bonus"
+    t.integer "total_bonus"
     t.integer "game_id"
   end
 
