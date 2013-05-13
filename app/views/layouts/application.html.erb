@@ -8,26 +8,28 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<header class="logo"></header>
+<div id="center">
+	<header class="logo"></header>
 
-<%= render 'layouts/site/header_menu' %>
-<section id="container" name='container'>
-	<nav id="site_info_container">
-	  <%= render 'layouts/site/user_info' %><br>
-	  <%= render 'layouts/site/team_info' %><br>
-	  <%= render 'layouts/site/navigation' %>
-	</nav>
+	<%= render 'layouts/site/header_menu' %>
+	<section id="container" name='container'>
+		<nav id="site_info_container">
+		  <%= render 'layouts/site/user_info' %><br>
+		  <%= render 'layouts/site/team_info' %><br>
+		  <%= render 'layouts/site/navigation' %>
+		</nav>
 
-	<section class="site_main_content">
-	  <%= show_flash %>
+		<section class="site_main_content">
+		  <%= show_flash %>
 
-	  <%= yield %>
+		  <%= yield %>
+		</section>
+
+		<aside class="site_aside_right">
+
+		</aside>
 	</section>
-
-	<aside class="site_aside_right">
-
-	</aside>
-</section>
+</div>
 
 </body>
 </html>

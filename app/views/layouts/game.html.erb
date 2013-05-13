@@ -8,26 +8,27 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<header class="main"><%= render 'layouts/game/input_code' %></header>
-<section id='container' name='container'>
-	<nav id="info_container">
-	  <%= render 'layouts/game/user_info' %><br>
-	  <%= render 'layouts/game/blitz_info' %>
-	  <%= render 'layouts/game/log' %>
+<div id="center">
+	<header class="main"><%= render 'layouts/game/input_code' %></header>
+	<section id='container' name='container'>
+		<nav id="info_container">
+		  <%= render 'layouts/game/user_info' %><br>
+		  <%= render 'layouts/game/blitz_info' %>
+		  <%= render 'layouts/game/log' %>
 
-	</nav>
+		</nav>
 
-	<section class="main_content">
-	  <%= show_flash %>
+		<section class="main_content">
+		  <%= show_flash %>
 
-	  <%= yield %>
+		  <%= yield %>
+		</section>
+
+		<aside class="aside_right">
+			<%= render 'layouts/game/actions' %>
+		  <%= render 'layouts/game/results' %>
+		</aside>
 	</section>
-
-	<aside class="aside_right">
-		<%= render 'layouts/game/actions' %>
-	  <%= render 'layouts/game/results' %>
-	</aside>
-</section>
-
+</div>
 </body>
 </html>
