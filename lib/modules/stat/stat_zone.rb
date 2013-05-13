@@ -219,8 +219,8 @@ module StatZone
 
       log.each do |l|
         new_team = l.team_id
-        amount = l.team_code.bonus
-        new_zone = l.team_code.archive_zone.try(:id)
+        amount = l.bonus
+        new_zone = l.zone.try(:id)
         time = l.created_at
         next if (new_team[0] == 'a') || (new_zone.blank?) || (amount == 0) || (time > finish_time)
 
@@ -243,7 +243,7 @@ module StatZone
               # change holders data
               zone_holders[new_zone][:time] = time
               zone_holders[new_zone][:team] = new_team
-              zone_holders[new_zone][:sum] = result[ new_team ][new_zone][:sum]
+              zone_holders[new_zone][:sum]  = result[ new_team ][new_zone][:sum]
             end
 
           end
@@ -272,7 +272,7 @@ module StatZone
           sum += result[team][zone][:sum] || 0
           bonus += result[team][zone][:bonus] || 0
         end
-        result[team]["total"] = {sum: sum, bonus: bonus}
+        result[team]["total"] = {sum: sum.round(3), bonus: bonus.round(3)}
 
         # Total bonuses
         total[team] = result[team]["total"][:bonus] +
