@@ -41,4 +41,17 @@ module StatHelper
       ("<div class=\"error\">#{params[:error]}</div>").html_safe
     end
   end
+
+  ##
+  # Create <td> or <th> cell by hash data
+  #
+  def create_cell(params)
+    result = params[:data]
+    result = content_tag(:b, result) if params[:b]
+    options = {}
+    options.merge!(colspan: params[:colspan]) if params[:colspan]
+    options.merge!(rowspan: params[:rowspan]) if params[:rowspan]
+    tag = params[:tag]
+    content_tag(tag, result, options)
+  end
 end
