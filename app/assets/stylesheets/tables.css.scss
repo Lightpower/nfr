@@ -30,3 +30,26 @@ table.log_full, table.free_code {
     }
   }
 }
+
+table.white {
+  margin: 5px;
+  border-spacing: 0px;
+  border-style: none;
+  background-color: white;
+
+  th {
+    border: 2px;
+    border-color: black;
+    border-style: solid;
+    margin-right: 10px;
+  }
+
+  tr {
+    font-size: 14px;
+    td {
+      border: 1px;
+      border-style: solid;
+      margin-right: 0px;
+    }
+  }
+}
