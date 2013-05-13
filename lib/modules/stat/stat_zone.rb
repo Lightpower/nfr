@@ -284,5 +284,43 @@ module StatZone
 
       {bonuses: result, holders: zone_holders, total: total}
     end
+
+    ##
+    # Wide statistics by all tasks and codes
+    #
+    def wide(params)
+      result = {header: [], rows: []}
+      game = params[:game]
+      # column headers
+      # zones
+      z_row = [{rowspan: 3}] # zones row
+      t_row = [] # tasks row
+      c_row = [] # codes row
+      game.archive_zones.sort_by{|a| a.number }.each do |zone|
+        z_row << { colspan: zone.archive_tasks.map(&:archive_codes).flatten.size, data: zone.name}
+        zone.archive_tasks.sort_by{|a| a.number }.each do |task|
+          t_row << { colspan: task.archive_codes.size, data: task.name}
+          task.archive_codes.sort_by{|a| a.number }.each do |code|
+            c_row << { data: code.show_code}
+          end
+        end
+      end
+      result[:header] << z_row << t_row << c_row
+
+      # body
+      code_list = game.archive_zones.map(&:archive_tasks).flatten.map(&:archive_codes).flatten.sort_by do |code|
+        [code.archive_zone.try(:id), code.archive_task.try(:id), code.number]
+      end
+
+      game.archive_teams.each do |team|
+        row = [{data:team.name, b: true}]
+        code_list.each do |code|
+          team_code = ArchiveTeamCode.where(team_id: team.id, code_id: code.id).try(:first)
+          row << {data: team_code ? team_code.created_at.localtime.strftime('%H:%M:%S') : nil }
+        end
+        result[:rows] << row
+      end
+      result
+    end
   end
 end

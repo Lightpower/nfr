@@ -31,7 +31,10 @@ class ArchivesController < ApplicationController
   ##
   # Show the statistics of the game
   #
-  def stat
+  def wide_stat
+    @game = Game.where(id: params[:id], is_archived: true).first
+    @stat_result = Stat.wide({ game: @game })
 
+    render 'archives/stats/wide', layout: 'stat'
   end
 end

@@ -8,7 +8,7 @@ module ArchivesHelper
     return '' unless game
     res = link_to('Описание', archive_path(game), class: 'archive_link')
     res << link_to('Результаты', short_stat_archive_path(game), class: 'archive_link')
-    res << link_to('Статистика', stat_archive_path(game), class: 'archive_link')
+    res << link_to('Статистика', wide_stat_archive_path(game), class: 'archive_link')
     if game.discuss_url.present?
       res << link_to('Обсудить', game.discuss_url, class: 'archive_link')
     else

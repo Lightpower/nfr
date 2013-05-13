@@ -1,0 +1,28 @@
+<div> <%= links(@game) %> </div>
+
+<% if @stat_result.present? %>
+  <% if @stat_result[:error].blank? %>
+	  <table class='white'>
+		  <thead>
+		    <% @stat_result[:header].each do |row| %>
+		      <tr>
+		        <% row.each do |hash| %>
+			        <%= create_cell(hash.merge(tag: :th)) %>
+			      <% end %>
+		      </tr>
+  		  <% end %>
+		  </thead>
+		  <tbody>
+		  <% @stat_result[:rows].each do |row| %>
+		    <tr>
+		      <% row.each do |hash| %>
+		        <%= create_cell(hash.merge(tag: :td)) %>
+		      <% end %>
+		    </tr>
+		  <% end %>
+		  </tbody>
+	  </table>
+  <% else %>
+    <div class="error"><%= @stat_result[:error] %></div>
+  <% end %>
+<% end %>
