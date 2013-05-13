@@ -3,4 +3,6 @@
   <% @games.each do |game| %>
 		<%= render 'games/view', game: game %>
   <% end %>
+<% else %>
+	<h1>Нет запланированных игр</h1>
 <% end %>
