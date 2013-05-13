@@ -34,7 +34,7 @@ Nfr::Application.routes.draw do
   resources :archives, only: [:index, :show] do
     member do
       get :short_stat
-      get :stat
+      get :wide_stat
     end
   end
 
