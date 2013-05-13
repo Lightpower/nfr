@@ -20,6 +20,17 @@ class Zone < ActiveRecord::Base
       'Соль и Камень' => 'salt',
       'Долина Аррен' => 'arren'
   }
+
+  class << self
+
+    ##
+    # Ordering by number
+    #
+    def by_order
+      order('zones.number')
+    end
+  end
+
   ##
   # Define the holder of this zone and the time of capturing
   #

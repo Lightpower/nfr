@@ -11,6 +11,16 @@ class ArchiveZone < ActiveRecord::Base
 
   attr_accessible :game, :game_id, :name, :number, :image_url, :access_code, :code_id
 
+  class << self
+
+    ##
+    # Ordering by number
+    #
+    def by_order
+      order('archive_zones.number')
+    end
+  end
+
   ##
   # Generate autoincrement task number
   #
