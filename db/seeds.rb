@@ -8,7 +8,6 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-# Team and User
 #require_relative 'seeds_develop_world'
 #require_relative 'seeds_teams'
 #require_relative 'seeds_zone1'
