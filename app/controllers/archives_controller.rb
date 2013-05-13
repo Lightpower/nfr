@@ -25,7 +25,7 @@ class ArchivesController < ApplicationController
     @game = Game.where(id: params[:id], is_archived: true).first
     @stat_result = Stat.total({ game: @game })
 
-    render 'archives/stats/results'
+    render 'archives/stats/results', layout: 'stat'
   end
 
   ##
