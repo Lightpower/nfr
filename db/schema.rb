@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130509001828) do
+ActiveRecord::Schema.define(:version => 20130714094325) do
 
   create_table "archive_code_strings", :force => true do |t|
     t.string  "data",    :null => false
@@ -150,6 +150,31 @@ ActiveRecord::Schema.define(:version => 20130509001828) do
   add_index "codes", ["ko"], :name => "index_codes_on_ko"
   add_index "codes", ["number"], :name => "index_codes_on_number"
 
+  create_table "experiences", :force => true do |t|
+    t.integer "null"
+    t.integer "one"
+    t.integer "one_p"
+    t.integer "two"
+    t.integer "two_p"
+    t.integer "three"
+    t.integer "tree_p"
+    t.integer "nonstandard"
+    t.integer "author"
+    t.integer "user_id",     :null => false
+    t.integer "format_id",   :null => false
+  end
+
+  add_index "experiences", ["user_id", "format_id"], :name => "index_experiences_on_user_id_and_format_id"
+
+  create_table "formats", :force => true do |t|
+    t.string  "name",                               :null => false
+    t.string  "organizer"
+    t.boolean "show_in_archives", :default => true, :null => false
+    t.integer "project_id"
+  end
+
+  add_index "formats", ["name"], :name => "index_formats_on_name", :unique => true
+
   create_table "game_configs", :force => true do |t|
     t.integer "time"
     t.integer "bonus"
@@ -170,9 +195,8 @@ ActiveRecord::Schema.define(:version => 20130509001828) do
   add_index "game_requests", ["game_id", "team_id"], :name => "index_game_requests_on_game_id_and_team_id", :unique => true
 
   create_table "games", :force => true do |t|
-    t.integer  "number",                           :null => false
+    t.string   "number",                           :null => false
     t.string   "name",                             :null => false
-    t.string   "format",                           :null => false
     t.datetime "start_date",                       :null => false
     t.datetime "finish_date"
     t.integer  "price"
@@ -187,11 +211,11 @@ ActiveRecord::Schema.define(:version => 20130509001828) do
     t.string   "prepare_url"
     t.string   "discuss_url"
     t.string   "game_type",   :default => "zones", :null => false
+    t.integer  "format_id"
   end
 
-  add_index "games", ["format"], :name => "index_games_on_format"
+  add_index "games", ["format_id"], :name => "index_games_on_format_id"
   add_index "games", ["name"], :name => "index_games_on_name", :unique => true
-  add_index "games", ["number"], :name => "index_games_on_number", :unique => true
   add_index "games", ["start_date"], :name => "index_games_on_start_date"
 
   create_table "hints", :force => true do |t|
@@ -221,6 +245,13 @@ ActiveRecord::Schema.define(:version => 20130509001828) do
 
   add_index "logs", ["game_id"], :name => "index_logs_on_game_id"
   add_index "logs", ["team_id"], :name => "index_logs_on_team_id"
+
+  create_table "projects", :force => true do |t|
+    t.string "name",  :null => false
+    t.string "owner"
+  end
+
+  add_index "projects", ["name"], :name => "index_projects_on_name", :unique => true
 
   create_table "tasks", :force => true do |t|
     t.integer "number"
