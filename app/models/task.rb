@@ -21,6 +21,13 @@ class Task < ActiveRecord::Base
     def by_order
       order('tasks.number')
     end
+
+    ##
+    # Free tasks
+    #
+    def unzoned
+      where(zone_id: nil)
+    end
   end
 
   ##
