@@ -7,7 +7,12 @@ class Log < ActiveRecord::Base
   attr_accessible :game, :game_id, :data, :team, :team_id, :login, :result_code, :code, :code_id
 
   def can_show_info?
-    ! [Code::STATES.index(:not_found), Code::STATES.index(:not_available)].include?(self.result_code)
+    ! [
+        Code::STATES.index(:not_found),
+        Code::STATES.index(:not_available),
+        Code::STATES.index(:not_enough_costs),
+        Code::STATES.index(:hint_not_enough_costs)
+      ].include?(self.result_code)
   end
 
   ##
