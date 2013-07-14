@@ -1,6 +1,8 @@
 # encoding: UTF-8
 class Game < ActiveRecord::Base
 
+  belongs_to :format
+
   has_many :codes
   has_many :code_strings
   has_many :requests, class_name: "GameRequest"
@@ -28,7 +30,7 @@ class Game < ActiveRecord::Base
 
   has_one  :config, class_name: "GameConfig"
 
-  attr_accessible :number, :name, :format, :start_date, :finish_date, :price, :area, :image_html, :preview,
+  attr_accessible :number, :name, :format_id, :game_type, :start_date, :finish_date, :price, :area, :image_html, :preview,
                   :legend, :brief_place, :dopy_list, :is_active, :is_archived,  :prepare_url, :discuss_url
 
   CSS_CLASSES = %w(nedostroy neformat klads dozor_classic dozor_lite en_tochki en_cx)
@@ -95,4 +97,12 @@ class Game < ActiveRecord::Base
   def hold_bonus
     game_type == 'zones' ? config.bonus || 0 : nil
   end
+
+  ##
+  # Project of game by Format
+  #
+  def project
+    self.format.project
+  end
+
 end
