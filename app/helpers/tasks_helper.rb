@@ -7,10 +7,10 @@ module TasksHelper
   def show_preview(task)
     result = task.preview || ''
     result << "<br>Код доступа к заданию: #{task.access_code.show_code}"
-    result << "<br>Стоимость задания: #{- task.access_code.try(:bonus)} людей. В задании есть:"
-    result << "<br>- реальных кодов: #{task.codes.where("ko != 'null'").size}"
+    result << "<br>Стоимость задания: #{- task.access_code.try(:bonus)} очков. В задании есть:"
+    #result << "<br>- реальных кодов: #{task.codes.where("ko != 'null'").size}"
     result << "<br>- виртуальных кодов: #{task.codes.where(ko: 'null').size}"
-    result << "<br>- вложенных заданий: #{task.tasks.size}"
+    #result << "<br>- вложенных заданий: #{task.tasks.size}"
     result
   end
 end
