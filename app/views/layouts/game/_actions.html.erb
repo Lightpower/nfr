@@ -3,7 +3,7 @@
 <%= link_to 'Задания', game_path(@game), class: 'nav_link' %>
 <%= link_to 'Статистика', stat_game_path(@game), class: 'nav_link' %>
 <%= link_to 'Логи', game_logs_path(@game), class: 'nav_link' %>
-<%= link_to 'Результаты', results_game_logs_path(@game), class: 'nav_link' %>
+<%#= link_to 'Результаты', results_game_logs_path(@game), class: 'nav_link' %>
 <div id='team_actions' name='team_actions'>
   <%= link_to 'Свободные коды', game_codes_path(@game), class: 'action_link' if @current_user.team.codes_number_in_zone(nil) > 0 %>
 
