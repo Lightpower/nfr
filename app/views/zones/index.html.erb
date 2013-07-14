@@ -2,6 +2,7 @@
   <% @zones.each do |zone|  %>
     <%=  render 'zones/item', zone: zone %>
 	<% end %>
+  <%=  render 'zones/item', zone: nil %>
 <% else %>
-	 <div class='zone'>Нет доступных королевств</div>
+	 <div class='zone'>Нет доступных зон</div>
 <% end %>
