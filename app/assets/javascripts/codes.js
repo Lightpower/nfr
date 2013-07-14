@@ -24,10 +24,10 @@ NFR.codes = {
       data: data_string
     }).done(function(message){
       if(message.result == "ok") {
-        alert("Средства успешно распределены!");
+        alert("Код зачислен в зону!");
         location.reload();
       }else{
-        alert("Ошибка распределения средств!");
+        alert("Ошибка зачисления кода!");
       }
     });
 
