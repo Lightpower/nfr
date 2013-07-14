@@ -24,7 +24,9 @@ class TeamsController < ApplicationController
   def create
     # Current user will be the captain of new team
     @team.captain = current_user
-    if @team.save
+    if @team.save!
+      current_user.team = @team
+      current_user.save!
       redirect_to @team, notice: 'Команда успешно создана!.'
     else
       render action: "new"
