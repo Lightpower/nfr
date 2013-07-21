@@ -10,12 +10,12 @@ class LogsController < ApplicationController
       @logs = @game.logs.where(team_id: current_user.team.id).includes(:code).order('created_at DESC')
     end
 
-    render 'logs/index', layout: 'layouts/game'
+    render *GameStrategy::Context.logs_block({game_type: @game.game_type})
   end
 
   def results
     @stat_result = Stat.total({ game: @game })
-
-    render 'logs/results', layout: 'layouts/game'
+    
+    render *GameStrategy::Context.logs_result({game_type: @game.game_type})
   end
 end

@@ -19,7 +19,7 @@ describe Task do
       @zone = Zone.first
       @user = User.first
       # Access to zone
-      CodeFacade.input({game: @zone.game, code_string: @zone.access_code.show_code, user: @user})
+      GameStrategy::Context.send_code({game: @zone.game, code_string: @zone.access_code.show_code, user: @user})
     end
 
     it 'success' do
@@ -28,7 +28,7 @@ describe Task do
       task.is_available?(@user.team).should be_false
 
       # Access to zone
-      CodeFacade.input({game: task.game, code_string: task.zone.access_code.show_code, user: @user})
+      GameStrategy::Context.send_code({game: task.game, code_string: task.zone.access_code.show_code, user: @user})
       task.is_available?(@user.team).should be_true
 
       # Task is secured by access code
@@ -37,10 +37,10 @@ describe Task do
 
       # Enter the codes from this zone to get costs for getting task
       task_2 = Task.where(zone_id: @zone.id).where(code_id: nil).first
-      task_2.codes.each {|code| CodeFacade.input({game: task_2.game, code_string: code.show_code, user: @user}) }
+      task_2.codes.each {|code| GameStrategy::Context.send_code({game: task_2.game, code_string: code.show_code, user: @user}) }
 
       # Enter access code of task
-      CodeFacade.input({game: task.game, code_string: task.access_code.show_code, user: @user})
+      GameStrategy::Context.send_code({game: task.game, code_string: task.access_code.show_code, user: @user})
       task.is_available?(@user.team).should be_true
     end
   end
@@ -51,16 +51,16 @@ describe Task do
       zone = Zone.first
       @user = User.first
       # Access to zone
-      CodeFacade.input({game: zone.game, code_string: zone.access_code.show_code, user: @user})
+      GameStrategy::Context.send_code({game: zone.game, code_string: zone.access_code.show_code, user: @user})
       # get some codes to get costs for hints
       @task = Task.where(zone_id: zone.id).where(code_id: nil).first
-      @task.codes.each {|code| CodeFacade.input({game: @task.game, code_string: code.show_code, user: @user}) }
+      @task.codes.each {|code| GameStrategy::Context.send_code({game: @task.game, code_string: code.show_code, user: @user}) }
     end
 
     it 'success' do
       @task.hints_of(@user.team).should be_blank
       # Get the first hint
-      CodeFacade.get_hint({task: @task, user: @user})
+      GameStrategy::Context.get_hint({game: @task.game, task: @task, user: @user})
       @task.hints_of(@user.team).should == [@task.hints.by_order.first]
     end
   end

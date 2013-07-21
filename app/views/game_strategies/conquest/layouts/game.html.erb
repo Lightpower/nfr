@@ -9,12 +9,12 @@
 </head>
 <body>
 <div id="center">
-	<header class="main"><%= render 'layouts/game/input_code' %></header>
+	<header class="main"><%= render 'game_strategies/conquest/layouts/input_code' %></header>
 	<section id='container' name='container'>
 		<nav id="info_container">
-		  <%= render 'layouts/game/user_info' %><br>
-		  <%= render 'layouts/game/blitz_info' %>
-		  <%= render 'layouts/game/log' %>
+		  <%= render 'game_strategies/conquest/layouts/user_info' %><br>
+		  <%= render 'game_strategies/conquest/layouts/blitz_info' %>
+		  <%= render 'game_strategies/conquest/layouts/log' %>
 
 		</nav>
 
@@ -25,8 +25,8 @@
 		</section>
 
 		<aside class="aside_right">
-			<%= render 'layouts/game/actions' %>
-		  <%= render 'layouts/game/results' %>
+			<%= render 'game_strategies/conquest/layouts/actions' %>
+		  <%= render 'game_strategies/conquest/layouts/results' %>
 		</aside>
 	</section>
 </div>

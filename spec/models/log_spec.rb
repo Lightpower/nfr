@@ -28,7 +28,7 @@ describe Log do
       Log.all.should be_blank
 
       # Try to pass code from not available zone
-      Team.all.each { |team| CodeFacade.input({game: @free_tasks_codes.first.game, code_string: @free_tasks_codes.first.show_code, user: team.users.first}) }
+      Team.all.each { |team| GameStrategy::Context.send_code({game: @free_tasks_codes.first.game, code_string: @free_tasks_codes.first.show_code, user: team.users.first}) }
 
       log_number = 0
       compare_logs(Log.all[log_number],
@@ -46,7 +46,7 @@ describe Log do
                    })
 
       # Pass code to zone
-      Team.all.each { |team| CodeFacade.input({game: @zone_access_codes.first.game, code_string: @zone_access_codes.first.show_code, user: team.users.first}) }
+      Team.all.each { |team| GameStrategy::Context.send_code({game: @zone_access_codes.first.game, code_string: @zone_access_codes.first.show_code, user: team.users.first}) }
 
       log_number += 1
       compare_logs(Log.all[log_number],
@@ -66,7 +66,7 @@ describe Log do
 
       # Repeat first code
       Team.all.each do |team|
-        CodeFacade.input({game: @free_tasks_codes.first.game, code_string: @free_tasks_codes.first.show_code, user: team.users.first})
+        GameStrategy::Context.send_code({game: @free_tasks_codes.first.game, code_string: @free_tasks_codes.first.show_code, user: team.users.first})
       end
 
       log_number += 1
@@ -86,10 +86,10 @@ describe Log do
 
       # Get different hints for each team
       hints = [Task.first.hints.by_order.first, Task.last.hints.by_order.first]
-      res = CodeFacade.get_hint({task: hints.first.task, user: @user_boltons})
+      res = GameStrategy::Context.get_hint({game: hints.first.game, task: hints.first.task, user: @user_boltons})
       res[:result].should == :hint_accessed
       # the next one hint costs more than Trants have
-      res = CodeFacade.get_hint({task: hints.last.task, user: @user_trants})
+      res = GameStrategy::Context.get_hint({game: hints.first.game, task: hints.last.task, user: @user_trants})
       res[:result].should == :hint_not_enough_costs
 
       log_number += 1

@@ -132,14 +132,14 @@ def emulate_game_activity(game=nil)
   # access all teams to all zones
   teams.each do |team|
     Zone.all.map(&:access_code).each do |code|
-      CodeFacade.input({game: game, code_string: code.show_code, user: team.users.first})
+      GameStrategy::Context.send_code({game: game, code_string: code.show_code, user: team.users.first})
     end
   end
 
   # pass all codes of task which doesn't have access code
   teams.each do |team|
     Zone.all.map(&:tasks).flatten.select {|task| task.access_code == nil}.map(&:codes).flatten do |code|
-      CodeFacade.input({game: game, code_string: code.show_code, user: team.users.first})
+      GameStrategy::Context.send_code({game: game, code_string: code.show_code, user: team.users.first})
     end
   end
 end

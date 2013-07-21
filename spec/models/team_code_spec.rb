@@ -15,21 +15,21 @@ describe TeamCode do
 
     it 'success' do
       # Try to pass code from not available zone
-      CodeFacade.input({game: @zone.game, code_string: @codes.first.show_code, user: @user})
+      GameStrategy::Context.send_code({game: @zone.game, code_string: @codes.first.show_code, user: @user})
       TeamCode.codes_number_of_team(@team, @codes.first.zone).should == 0
 
       # Pass code to zone - codes_number_in_zone is still 0
-      CodeFacade.input({game: @zone.game, code_string: @zone.access_code.show_code, user: @user})
+      GameStrategy::Context.send_code({game: @zone.game, code_string: @zone.access_code.show_code, user: @user})
       TeamCode.codes_number_of_team(@team, @zone.access_code.zone).should == 0
 
       # Repeat the first code
       codes_number = @codes.first.bonus
-      CodeFacade.input({game: @zone.game, code_string: @codes.first.show_code, user: @user})
+      GameStrategy::Context.send_code({game: @zone.game, code_string: @codes.first.show_code, user: @user})
       TeamCode.codes_number_of_team(@team, @codes.first.zone).should == codes_number
 
       # Get different hints for each team
       hint = @zone.tasks.first.hints.by_order.first
-      res = CodeFacade.get_hint({task: hint.task, user: @user})
+      res = GameStrategy::Context.get_hint({game: @zone.game, task: hint.task, user: @user})
       res[:result].should == :hint_accessed
       codes_number += hint.cost
       TeamCode.codes_number_of_team(@team, @codes.first.zone).should == codes_number

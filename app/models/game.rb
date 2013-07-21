@@ -5,7 +5,7 @@ class Game < ActiveRecord::Base
 
   has_many :codes
   has_many :code_strings
-  has_many :requests, class_name: "GameRequest"
+  has_many :requests, class_name: 'GameRequest'
   has_many :hints
   has_many :logs
   has_many :tasks
@@ -64,7 +64,7 @@ class Game < ActiveRecord::Base
   # Get cass class by game format
   #
   def css_class
-    result = (self.format || '').downcase.gsub(' ', '_')
+    result = (self.project.name || '').downcase.gsub(' ', '_')
     CSS_CLASSES.include?(result) ? result: 'other'
   end
 

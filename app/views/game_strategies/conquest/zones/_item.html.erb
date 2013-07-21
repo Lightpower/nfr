@@ -6,7 +6,7 @@
     </div>
   	<div class='openable'>
   	  <% zone.tasks.by_order.each do |task| %>
-  		  <%= render 'tasks/item', task: task  %>
+  		  <%= render 'game_strategies/conquest/tasks/item', task: task  %>
   	  <% end %>
     </div>
 	<% else %>
@@ -16,7 +16,7 @@
     </div>
     <div class='openable'>
       <% @game.tasks.unzoned.by_order.each do |task| %>
-        <%= render 'tasks/item', task: task %>
+        <%= render 'game_strategies/conquest/tasks/item', task: task %>
       <% end %>
     </div>
 	<% end %>

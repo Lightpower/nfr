@@ -1,5 +1,5 @@
 <span class='time'>Обновлено в <%= Time.now.localtime.strftime('%H:%M:%S') %></span>
-<%= link_to 'Обновить', "javascript:document.location.reload()", class: 'nav_link refresh' %>
+<%= link_to 'Обновить', 'javascript:document.location.reload()', class: 'nav_link refresh' %>
 <%= link_to 'Задания', game_path(@game), class: 'nav_link' %>
 <%= link_to 'Статистика', stat_game_path(@game), class: 'nav_link' %>
 <%= link_to 'Логи', game_logs_path(@game), class: 'nav_link' %>

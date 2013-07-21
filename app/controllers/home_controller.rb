@@ -5,12 +5,13 @@ class HomeController < ApplicationController
     @games = Game.actual
     if params[:games]
       # game format
-      case params[:games][:format]
+      case params[:games][:project]
         when "other"
-          @games = @games.where("lower(format) NOT IN (?)", Game::CSS_CLASSES)
+          @games = @games.where(format_id: Format.where(project_id: nil).map(&:id))
         when nil
         else
-          @games = @games.where("lower(format) = ?", params[:games][:format].downcase)
+          project = Project.find_by_name(params[:games][:project])
+          @games = @games.where(format_id: project.formats.map(&:id))
       end
     end
   end

@@ -1,4 +1,4 @@
-class CreateGameConfig < ActiveRecord::Migration
+class CreateGameConfigs < ActiveRecord::Migration
   def change
     create_table :game_configs do |t|
       t.integer :time

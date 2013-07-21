@@ -21,7 +21,7 @@ describe Hint do
       task = FactoryGirl.create(:task, zone: zone)
       @hints = [FactoryGirl.create(:hint, task: task, number: 1), FactoryGirl.create(:hint, task: task, number: 2)]
 
-      CodeFacade.get_hint({task_id: task.id, user: @team.users.first})
+      GameStrategy::Context.get_hint({game: zone.game, task_id: task.id, user: @team.users.first})
     end
 
     it 'success' do

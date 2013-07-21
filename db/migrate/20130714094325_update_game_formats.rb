@@ -12,7 +12,7 @@ class UpdateGameFormats < ActiveRecord::Migration
     end
 
     unless Rails.env.test?
-      Project.create(id: 1, name: 'NeFoRmat', owner: 'Виталий Lightpower Бескровный')
+      Project.create(id: 1, name: 'NeFoRmat', owner: 'Виталий Lightpower Бескровный', css_class: '')
       Project.create(id: 2, name: 'DozoR', owner: 'Алесь Жук')
 
       Format.create(id: 1,  project_id: 1, name: 'NeDostRoy', organizer: 'Lightpower', show_in_archives: true)
@@ -24,6 +24,7 @@ class UpdateGameFormats < ActiveRecord::Migration
 
       Game.all.each do |game|
         game.format_id = 11
+        game.game_type = 'conquest'
         game.save!
       end
     else

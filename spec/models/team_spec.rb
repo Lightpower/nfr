@@ -15,10 +15,10 @@ describe Team do
       # pass some codes
       @user = User.first
       @zone = Zone.first
-      CodeFacade.input({game: @zone.game, code_string: @zone.access_code.code_strings.first.data, user: @user})
+      GameStrategy::Context.send_code({game: @zone.game, code_string: @zone.access_code.code_strings.first.data, user: @user})
       @codes = @zone.tasks.select{ |i| i.is_available?(@user.team) }.first.codes
       code_strings = @codes.map {|code| code.code_strings.first.data}
-      CodeFacade.input({game: @zone.game, code_string: code_strings.join(' '), user: @user})
+      GameStrategy::Context.send_code({game: @zone.game, code_string: code_strings.join(' '), user: @user})
     end
 
     it 'success' do
@@ -28,7 +28,7 @@ describe Team do
       time = []
       time << Time.now
       # take a hint
-      code_res = CodeFacade.get_hint({task_id: @zone.tasks.first.id, user: @user})
+      code_res = GameStrategy::Context.get_hint({game: @zone.game, task_id: @zone.tasks.first.id, user: @user})
       codes_number_hint = @zone.tasks.first.hints.by_order.first.cost
       @user.team.codes_number_in_zone(@zone).should == codes_number + codes_number_hint
 
@@ -36,10 +36,10 @@ describe Team do
       # more codes
       next_task = @zone.tasks[1]
       # enter accept code if need
-      code_res = CodeFacade.input({game: @zone.game, code_string: next_task.access_code.show_code, user: @user}) if next_task.access_code.present?
+      code_res = GameStrategy::Context.send_code({game: @zone.game, code_string: next_task.access_code.show_code, user: @user}) if next_task.access_code.present?
       codes_2 = next_task.codes
       code_strings = codes_2.map {|code| code.code_strings.first.data}
-      code_res = CodeFacade.input({game: @zone.game, code_string: code_strings.join(' '), user: @user})
+      code_res = GameStrategy::Context.send_code({game: @zone.game, code_string: code_strings.join(' '), user: @user})
       codes_number_2 = codes_2.inject(0) { |res, item| res + item.bonus }
       @user.team.codes_number_in_zone(@zone).should == codes_number +
           codes_number_hint +
@@ -59,10 +59,10 @@ describe Team do
       # pass some codes
       @user = User.first
       @zone = Zone.first
-      CodeFacade.input({game: @zone.game, code_string: @zone.access_code.code_strings.first.data, user: @user})
+      GameStrategy::Context.send_code({game: @zone.game, code_string: @zone.access_code.code_strings.first.data, user: @user})
       @codes = @zone.tasks.first.codes
       code_strings = @codes.map {|code| code.code_strings.first.data}
-      CodeFacade.input({game: @zone.game, code_string: code_strings.join(' '), user: @user})
+      GameStrategy::Context.send_code({game: @zone.game, code_string: code_strings.join(' '), user: @user})
     end
 
     it 'success' do
@@ -71,10 +71,10 @@ describe Team do
       # more codes
       next_task = @zone.tasks[1]
       # enter accept code if need
-      CodeFacade.input({game: @zone.game, code_string: next_task.access_code.show_code, user: @user}) if next_task.access_code.present?
+      GameStrategy::Context.send_code({game: @zone.game, code_string: next_task.access_code.show_code, user: @user}) if next_task.access_code.present?
       codes_2 = next_task.codes
       code_strings = codes_2.map {|code| code.code_strings.first.data}
-      CodeFacade.input({game: @zone.game, code_string: code_strings.join(' '), user: @user})
+      GameStrategy::Context.send_code({game: @zone.game, code_string: code_strings.join(' '), user: @user})
       @user.team.codes_in_zone(@zone).map(&:code).should =~ [@zone.access_code] + @codes + [next_task.access_code] + codes_2
     end
   end
@@ -84,17 +84,17 @@ describe Team do
       # pass some codes
       @user = User.first
       @zone = Zone.first
-      CodeFacade.input({game: @zone.game, code_string: @zone.access_code.code_strings.first.data, user: @user})
+      GameStrategy::Context.send_code({game: @zone.game, code_string: @zone.access_code.code_strings.first.data, user: @user})
       @codes = @zone.tasks.first.codes
       code_strings = @codes.map {|code| code.code_strings.first.data}
-      CodeFacade.input({game: @zone.game, code_string: code_strings.join(' '), user: @user})
+      GameStrategy::Context.send_code({game: @zone.game, code_string: code_strings.join(' '), user: @user})
     end
 
     it 'success' do
       @user.team.last_code_in_zone(@zone).should == { time: @user.team.team_codes.last.created_at, state: Code::STATES[@user.team.team_codes.last.state] }
 
       # take a hint
-      CodeFacade.get_hint({task_id: @zone.tasks.first.id, user: @user})
+      GameStrategy::Context.get_hint({game: @zone.game, task_id: @zone.tasks.first.id, user: @user})
       @user.reload
       @user.team.last_code_in_zone(@zone).should == { time: @user.team.team_hints.last.created_at, state: :hint }
     end

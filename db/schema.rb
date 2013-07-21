@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130714094325) do
+ActiveRecord::Schema.define(:version => 20130716021139) do
 
   create_table "archive_code_strings", :force => true do |t|
     t.string  "data",    :null => false
@@ -150,27 +150,20 @@ ActiveRecord::Schema.define(:version => 20130714094325) do
   add_index "codes", ["ko"], :name => "index_codes_on_ko"
   add_index "codes", ["number"], :name => "index_codes_on_number"
 
-  create_table "experiences", :force => true do |t|
-    t.integer "null"
-    t.integer "one"
-    t.integer "one_p"
-    t.integer "two"
-    t.integer "two_p"
-    t.integer "three"
-    t.integer "tree_p"
-    t.integer "nonstandard"
-    t.integer "author"
-    t.integer "user_id",     :null => false
-    t.integer "format_id",   :null => false
+  create_table "experience_format_ratios", :force => true do |t|
+    t.integer "format_id",                        :null => false
+    t.integer "outer_format_id",                  :null => false
+    t.float   "ratio",           :default => 0.1, :null => false
   end
 
-  add_index "experiences", ["user_id", "format_id"], :name => "index_experiences_on_user_id_and_format_id"
+  add_index "experience_format_ratios", ["outer_format_id", "format_id"], :name => "index_experience_format_ratios_on_outer_format_id_and_format_id", :unique => true
 
   create_table "formats", :force => true do |t|
     t.string  "name",                               :null => false
     t.string  "organizer"
     t.boolean "show_in_archives", :default => true, :null => false
     t.integer "project_id"
+    t.string  "css_class"
   end
 
   add_index "formats", ["name"], :name => "index_formats_on_name", :unique => true
@@ -232,6 +225,16 @@ ActiveRecord::Schema.define(:version => 20130714094325) do
   add_index "hints", ["number"], :name => "index_hints_on_number"
   add_index "hints", ["task_id"], :name => "index_hints_on_task_id"
 
+  create_table "levels", :force => true do |t|
+    t.integer "number",    :null => false
+    t.integer "scores",    :null => false
+    t.string  "name"
+    t.string  "desc"
+    t.integer "format_id", :null => false
+  end
+
+  add_index "levels", ["number", "format_id"], :name => "index_levels_on_number_and_format_id", :unique => true
+
   create_table "logs", :force => true do |t|
     t.string   "login",       :null => false
     t.string   "data",        :null => false
@@ -247,8 +250,9 @@ ActiveRecord::Schema.define(:version => 20130714094325) do
   add_index "logs", ["team_id"], :name => "index_logs_on_team_id"
 
   create_table "projects", :force => true do |t|
-    t.string "name",  :null => false
+    t.string "name",      :null => false
     t.string "owner"
+    t.string "css_class"
   end
 
   add_index "projects", ["name"], :name => "index_projects_on_name", :unique => true
@@ -362,12 +366,29 @@ ActiveRecord::Schema.define(:version => 20130714094325) do
   add_index "teams", ["name"], :name => "index_teams_on_name"
   add_index "teams", ["user_id"], :name => "index_teams_on_user_id"
 
+  create_table "user_experiences", :force => true do |t|
+    t.integer "null"
+    t.integer "one"
+    t.integer "one_p"
+    t.integer "two"
+    t.integer "two_p"
+    t.integer "three"
+    t.integer "tree_p"
+    t.integer "nonstandard"
+    t.integer "author"
+    t.integer "level",       :default => 0
+    t.integer "user_id",                    :null => false
+    t.integer "format_id",                  :null => false
+  end
+
+  add_index "user_experiences", ["user_id", "format_id"], :name => "index_user_experiences_on_user_id_and_format_id"
+
   create_table "users", :force => true do |t|
     t.integer  "team_id"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
+    t.string   "email",                  :default => "",  :null => false
+    t.string   "encrypted_password",     :default => "",  :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -378,6 +399,8 @@ ActiveRecord::Schema.define(:version => 20130714094325) do
     t.string   "last_sign_in_ip"
     t.string   "username"
     t.string   "role"
+    t.float    "account",                :default => 0.0
+    t.integer  "level"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

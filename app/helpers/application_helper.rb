@@ -92,39 +92,4 @@ module ApplicationHelper
     params.merge!(id: id) if id.present?
     content_tag(:a, caption, params).html_safe
   end
-
-  ##################################
-  # Site helpers ###################
-  ##################################
-
-  def header_menu
-    menu_items = [
-        {
-            name: 'Всё',
-            url: '/'
-        },
-        {
-            name: 'NеDостRой',
-            url: '/?games[format]=nedostroy'
-        },
-        {
-            name: 'NеFоRмат',
-            url: '/?games[format]=neformat'
-        },
-        {
-            name: 'Клады',
-            url: '/?games[format]=klads'
-        },
-        {
-            name: 'Другие',
-            url: '/?games[format]=other'
-        }
-    ]
-    result = ''
-    menu_items.each do |item|
-      result << link_to(item[:name], item[:url], class: 'header_menu_item').html_safe
-    end
-    result.html_safe
-  end
-
 end
