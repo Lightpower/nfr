@@ -1,8 +1,0 @@
-<% if current_user.present? && current_user.team.present? %>
-  <%= form_for :code_string, url: '/', html: {class: 'button_to'} do |f| %>
-		<%= f.label :code, 'Введите код:' %><br>
-		<%= f.text_field :code %><br>
-		<%= f.submit 'OK' %><br>
-    <%= link_to 'Мобильная версия', p_path %>
-  <% end %>
-<% end %>
