@@ -13,7 +13,7 @@ class MobileController < ApplicationController
       @results = nil
     end
 
-    render *GameStrategy::Context.mobile_block({game_type: @game.game_type, input_url: game_m_path(@game)})
+    render *GameStrategy::Context.mobile_block({game: @game, user: current_user, input_url: game_m_path(@game)})
   end
 
 end

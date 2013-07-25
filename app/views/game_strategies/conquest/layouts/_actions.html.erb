@@ -1,17 +1,11 @@
 <span class='time'>Обновлено в <%= Time.now.localtime.strftime('%H:%M:%S') %></span>
-<%= link_to 'Обновить', 'javascript:document.location.reload()', class: 'nav_link refresh' %>
-<%= link_to 'Задания', game_path(@game), class: 'nav_link' %>
-<%= link_to 'Статистика', stat_game_path(@game), class: 'nav_link' %>
-<%= link_to 'Логи', game_logs_path(@game), class: 'nav_link' %>
-<%#= link_to 'Результаты', results_game_logs_path(@game), class: 'nav_link' %>
+<%= link_to_refresh %>
+<%= link_to_tasks %>
+<%= link_to_stats %>
+<%= link_to_logs %>
+<%= link_to_results %>
 <div id='team_actions' name='team_actions'>
-  <%= link_to 'Свободные коды', game_codes_path(@game), class: 'action_link' if @current_user.team.codes_number_in_zone(nil) > 0 %>
+  <%= link_to_free_codes %>
 
-  <% @current_user.team.action_bonuses.each do |bonus| %>
-	  <% if bonus.can_new_action? %>
-      <%= link_to bonus.name, '#', class: "action_link action_bonus", 'data-id' => bonus.id  %>
-		<% else %>
-      <%= link_to "#{bonus.name} (#{(bonus.rate.minutes - (Time.now - bonus.last_action_time)).round} c)", '#', class: "action_link_wait" %>
-    <% end %>
-<% end %>
+  <%= links_to_action_bonuses %>
 </div>

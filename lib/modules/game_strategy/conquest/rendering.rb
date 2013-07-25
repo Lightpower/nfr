@@ -19,22 +19,28 @@ module GameStrategy
       #
       # 'game_strategies/conquest/zones/item', layout: 'game_strategies/conquest/layouts/game'
       #
-      def main_block(params=nil)
-        return "#{TEMPLATE_PREFIX}zones/index", layout: LAYOUT
+      def main_block(params)
+        zones = params[:user].team.zones.where('zones.game_id=?', params[:game].id)
+        return "#{TEMPLATE_PREFIX}zones/index", locals: {zones: zones}, layout: LAYOUT
       end
 
       ##
       # Prepare parameters for free codes managing page
       #
       # Params:
-      # - params {Hash} - is not used
+      # - params {Hash} - hash with game and current user
       #
       # Returns:
       #
       # 'game_strategies/conquest/codes/item', layout: 'game_strategies/conquest/layouts/game'
       #
-      def free_codes(params=nil)
-        return "#{TEMPLATE_PREFIX}codes/index", layout: LAYOUT
+      def free_codes(params)
+        game = params[:game]
+        user = params[:user]
+
+        free_codes = user.team.team_codes.where('team_codes.zone_id is null and team_codes.game_id=?', game.id)
+        team_zones = user.team.team_zones.where('team_zones.game_id=?', game.id).map(&:zone)
+        return "#{TEMPLATE_PREFIX}codes/index", locals: {free_codes: free_codes, team_zones: team_zones}, layout: LAYOUT
       end
 
       ##
@@ -48,7 +54,8 @@ module GameStrategy
       # 'game_strategies/conquest/stat/item', locals: { data: {...} }, layout: 'game_strategies/conquest/layouts/game'
       #
       def stat_block(params)
-        return "#{TEMPLATE_PREFIX}stat/index", locals: params, layout: LAYOUT
+        data = Stat.subtotal({ game: params[:game], team: params[:user].team })
+        return "#{TEMPLATE_PREFIX}stat/index", locals: {data: data}, layout: LAYOUT
       end
 
       ##
@@ -61,8 +68,17 @@ module GameStrategy
       #
       # 'game_strategies/conquest/logs/item', layout: 'game_strategies/conquest/layouts/game'
       #
-      def logs_block(params=nil)
-        return "#{TEMPLATE_PREFIX}logs/index", layout: LAYOUT
+      def logs_block(params)
+        game = params[:game]
+        user = params[:user]
+
+        if user.is_admin?
+          logs = game.logs.where(result_code: [0, 1, 6, 9]).includes(:code).order('created_at DESC').all
+        else
+          logs = game.logs.where(team_id: user.team.id).includes(:code).order('created_at DESC')
+        end
+
+        return "#{TEMPLATE_PREFIX}logs/index", locals: {logs: logs}, layout: LAYOUT
       end
 
       ##
@@ -75,8 +91,10 @@ module GameStrategy
       #
       # 'game_strategies/conquest/logs/results', layout: 'game_strategies/conquest/layouts/game'
       #
-      def logs_result(params=nil)
-        return "#{TEMPLATE_PREFIX}logs/results", layout: LAYOUT
+      def logs_result(params)
+        stat_result = Stat.total({ game: params[:game] })
+
+        return "#{TEMPLATE_PREFIX}logs/results", locals: {stat_result: stat_result}, layout: LAYOUT
       end
 
       ##

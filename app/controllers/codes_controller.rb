@@ -7,9 +7,7 @@ class CodesController < ApplicationController
   # Show all free codes with possibility of attaching them to some zone
   #
   def index
-    @free_codes = current_user.team.team_codes.where('team_codes.zone_id is null and team_codes.game_id=?', @game.id)
-    @team_zones = current_user.team.team_zones.where('team_zones.game_id=?', @game.id).map(&:zone)
-    render *GameStrategy::Context.free_codes({game_type: @game.game_type})
+    render *GameStrategy::Context.free_codes({game: @game, user: current_user})
   end
 
   def pass
@@ -22,9 +20,7 @@ class CodesController < ApplicationController
       @results = nil
     end
 
-    @zones = current_user.team.zones
-
-    render *GameStrategy::Context.main_block({game_type: @game.game_type})
+    render *GameStrategy::Context.main_block({game: @game, user: current_user})
   end
 
   ##

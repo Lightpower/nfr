@@ -1,5 +1,5 @@
-<% if @stat_result.present? %>
-	<% if @stat_result[:error].blank? %>
+<% if stat_result.present? %>
+	<% if stat_result[:error].blank? %>
 	  <table class='log_full'>
 		  <thead>
 		    <th>Команда</th>
@@ -9,7 +9,7 @@
 		    <th colspan="2">Всего</th>
 		  </thead>
 		  <tbody>
-		  <% @stat_result[:bonuses].each_pair do |key, val| %>
+		  <% stat_result[:bonuses].each_pair do |key, val| %>
 		    <tr>
 		      <td><b><%= Team.find(key).name %></b></td>
 		      <% @game.zones.each do |zone| %>
@@ -27,11 +27,11 @@
 		  <table class='log_full'>
 		    <thead>
 		    <th>Зона</th>
-		    <th>Дом</th>
-		    <th>Влияние</th>
+		    <th>Команда</th>
+		    <th>Очки</th>
 		    </thead>
 		    <tbody>
-		    <% @stat_result[:holders].each_pair do |key, val| %>
+		    <% stat_result[:holders].each_pair do |key, val| %>
 		      <tr>
 		        <td><b><%= Zone.find(key).name %></b></td>
 		        <td><%= Team.find_by_id(val[:team]).try(:name) || ' - ' %></td>
@@ -51,7 +51,7 @@
         </thead>
         <tbody>
         <% num = 1 %>
-        <% @stat_result[:total].each_pair do |key, val| %>
+        <% stat_result[:total].each_pair do |key, val| %>
           <tr>
             <td><b><%= num %></b></td>
             <td><%= Team.find_by_id(key).try(:name) %></td>
@@ -63,6 +63,6 @@
       </table>
     </div>
   <% else %>
-		<div class="error"><%= @stat_result[:error] %></div>
+		<div class="error"><%= stat_result[:error] %></div>
   <% end %>
 <% end %>

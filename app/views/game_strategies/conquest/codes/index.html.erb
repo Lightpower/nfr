@@ -1,4 +1,4 @@
-<% if @free_codes.present? %>
+<% if free_codes.present? %>
   <table class='free_code'>
 	  <thead>
 	    <th>Код</th>
@@ -8,14 +8,14 @@
 	    <th>Зона</th>
 	  </thead>
 	  <tbody>
-  	  <% @free_codes.each do |team_code| %>
+  	  <% free_codes.each do |team_code| %>
 	    <tr data-id="<%= team_code.id %>">
 	      <%= content_tag(:td, team_code.code.show_code) %>
 	      <%= content_tag(:td, team_code.code.ko) %>
 	      <%= content_tag(:td, team_code.code.bonus) %>
 	      <%= content_tag(:td, team_code.created_at.localtime.strftime('%H:%M:%S')) %>
 	      <td>
-		      <%= select_tag(:zones, options_from_collection_for_select(@team_zones, "id", "name"), include_blank: true) %>
+		      <%= select_tag(:zones, options_from_collection_for_select(team_zones, "id", "name"), include_blank: true) %>
 	      </td>
 	    </tr>
 	    <% end %>

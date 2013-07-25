@@ -1,5 +1,5 @@
-<% if @zones.present? || @game.tasks.unzoned.present? %>
-  <% @zones.each do |zone|  %>
+<% if zones.present? || @game.tasks.unzoned.present? %>
+  <% zones.each do |zone|  %>
     <%=  render 'game_strategies/conquest/zones/item', zone: zone %>
 	<% end %>
   <%=  render 'game_strategies/conquest/zones/item', zone: nil %>

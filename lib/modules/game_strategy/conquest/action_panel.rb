@@ -1,3 +1,4 @@
+# encoding: UTF-8
 ##
 # Process the data for Action panel
 #
@@ -38,28 +39,39 @@ module GameStrategy
       # Returns:
       # - caption, reference, class
       #
-      def data_for_tasks
-
+      def data_for_tasks(params)
+        ['Задания', params[:url], class: 'nav_link']
       end
 
-      def data_for_stats
-
+      def data_for_stats(params)
+        ['Статистика', params[:url], class: 'nav_link']
       end
 
-      def data_for_logs
-
+      def data_for_logs(params)
+        ['Логи', params[:url], class: 'nav_link']
       end
 
-      def data_for_results
-
+      def data_for_results(params)
+        game = params[:game]
+        game.is_active ? nil : ['Результаты', params[:url], class: 'nav_link']
       end
 
-      def data_for_free_codes
-
+      def data_for_free_codes(params)
+        user = params[:user]
+        user.team.codes_number_in_zone(nil) > 0 ? ['Свободные коды', params[:url], class: 'action_link'] : nil
       end
 
-      def data_for_action_bonuses
+      def data_for_action_bonuses(params)
+        result = []
+        params[:user].team.action_bonuses.each do |bonus|
+	        if bonus.can_new_action?
+            result << [bonus.name, '#', class: 'action_link action_bonus', 'data-id' => bonus.id]
+		      else
+            result << ["#{bonus.name} (#{(bonus.rate.minutes - (Time.now - bonus.last_action_time)).round} c)", '#', class: 'action_link_wait']
+          end
+        end
 
+        result
       end
     end
   end

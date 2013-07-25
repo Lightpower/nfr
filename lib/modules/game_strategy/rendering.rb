@@ -17,10 +17,14 @@ module GameStrategy
     #
     %w(main_block free_codes stat_block logs_block logs_result mobile_block).each do |method_name|
       define_method method_name do |params|
-        raise ArgumentError.new("#{method_name}: params[:game_type] is missing") unless params[:game_type]
-        debugger
-        "GameStrategy::#{params[:game_type].classify}".constantize.send(method_name.to_sym, params.except(:game_type))
+        raise ArgumentError.new("#{method_name}: unresolved params - #{params.inspect}") unless verify_data(params)
+
+        "GameStrategy::#{params[:game].game_type.classify}".constantize.send(method_name.to_sym, params)
       end
+    end
+
+    def verify_data(params)
+      params[:game].is_a?(Game) && params[:user].is_a?(User)
     end
   end
 end

@@ -1,4 +1,4 @@
-<% if @logs.present? %>
+<% if logs.present? %>
   <table class='log_full'>
 	  <thead>
 	    <th>Время</th>
@@ -12,7 +12,7 @@
 	    <th>Отправитель</th>
 	  </thead>
 	  <tbody>
-  <% @logs.each do |log|  %>
+  <% logs.each do |log|  %>
     <tr>
 	    <%= content_tag(:td, log.created_at.localtime.strftime('%H:%M:%S')) %>
 	    <%= content_tag(:td, log.data[0..31], style: "font-weight: bold; color: #{Code::STATE_COLORS[Code::STATES[log.result_code]]}") %>

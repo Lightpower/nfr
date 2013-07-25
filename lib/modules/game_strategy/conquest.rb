@@ -6,6 +6,6 @@ module GameStrategy
   module Conquest
     extend GameStrategy::Conquest::Actions
     extend GameStrategy::Conquest::Rendering
-    #extend GameStrategy::Conquest::ActionPanel
+    extend GameStrategy::Conquest::ActionPanel
   end
 end

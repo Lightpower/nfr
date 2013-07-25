@@ -15,9 +15,8 @@ class GamesController < ApplicationController
   #
   def show
     if @game.try(:is_active) # check if game is active
-      @zones = current_user.team.zones.where('zones.game_id=?', @game.id)
 
-      render *GameStrategy::Context.main_block({game_type: @game.game_type})
+      render *GameStrategy::Context.main_block({game: @game, user: current_user})
     elsif @game.blank?
       redirect_to root_path, alert: "Игра с таким номером (#{params[:id]}) не найдена!"
     elsif @game.is_archived
@@ -31,8 +30,7 @@ class GamesController < ApplicationController
   # Get statistics
   #
   def stat
-    data = Stat.subtotal({ game: @game, team: current_user.team })
-    render *GameStrategy::Context.stat_block( {game_type: @game.game_type, data: data} )
+    render *GameStrategy::Context.stat_block( {game: @game, user: current_user} )
   end
 
   ##
