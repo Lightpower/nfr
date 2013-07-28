@@ -160,10 +160,10 @@ ActiveRecord::Schema.define(:version => 20130716021139) do
 
   create_table "formats", :force => true do |t|
     t.string  "name",                               :null => false
+    t.string  "css_class"
     t.string  "organizer"
     t.boolean "show_in_archives", :default => true, :null => false
     t.integer "project_id"
-    t.string  "css_class"
   end
 
   add_index "formats", ["name"], :name => "index_formats_on_name", :unique => true
@@ -178,7 +178,7 @@ ActiveRecord::Schema.define(:version => 20130716021139) do
   add_index "game_configs", ["game_id"], :name => "index_game_configs_on_game_id", :unique => true
 
   create_table "game_requests", :force => true do |t|
-    t.boolean  "is_accepted", :default => false
+    t.boolean  "is_accepted", :default => false, :null => false
     t.integer  "game_id",                        :null => false
     t.integer  "team_id",                        :null => false
     t.datetime "created_at",                     :null => false
@@ -190,6 +190,7 @@ ActiveRecord::Schema.define(:version => 20130716021139) do
   create_table "games", :force => true do |t|
     t.string   "number",                           :null => false
     t.string   "name",                             :null => false
+    t.string   "game_type",   :default => "zones", :null => false
     t.datetime "start_date",                       :null => false
     t.datetime "finish_date"
     t.integer  "price"
@@ -203,7 +204,6 @@ ActiveRecord::Schema.define(:version => 20130716021139) do
     t.boolean  "is_archived", :default => false,   :null => false
     t.string   "prepare_url"
     t.string   "discuss_url"
-    t.string   "game_type",   :default => "zones", :null => false
     t.integer  "format_id"
   end
 
@@ -251,8 +251,8 @@ ActiveRecord::Schema.define(:version => 20130716021139) do
 
   create_table "projects", :force => true do |t|
     t.string "name",      :null => false
-    t.string "owner"
     t.string "css_class"
+    t.string "owner"
   end
 
   add_index "projects", ["name"], :name => "index_projects_on_name", :unique => true
