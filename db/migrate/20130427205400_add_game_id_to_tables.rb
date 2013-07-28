@@ -2,11 +2,13 @@
 class AddGameIdToTables < ActiveRecord::Migration
   def up
     # Create new game
-    game = Game.create(number: 1, name: 'Игра престолов', format: 'DozoR Classic',
+    game = Game.new(number: 1, name: 'Игра престолов',
       start_date: Time.parse('13.04.2013 22:00'), is_active: false, is_archived: false,
       image_html: '<img src="http://classic.dzzzr.ru/kiev/uploaded/kiev/Night/afisha/244.jpg">',
       discuss_url: 'http://www.dzzzr.ru/forum/showthread.php?t=124780'
     )
+    game.format = 'DozoR Classic'
+    game.save!
 
     raise Exception, 'Game is not created' unless game.valid?
 
