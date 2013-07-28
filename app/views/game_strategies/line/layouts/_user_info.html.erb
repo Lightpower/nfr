@@ -1,0 +1,9 @@
+<% if current_user.try(:team).present? %>
+  <nav id="team_info" class="menu">
+    Дом: <%= content_tag(:b, current_user.team.name) %><br><br>
+    <ul>
+      <%= content_tag(:li, link_to("Выйти", destroy_user_session_path, method: :delete)) %>
+    </ul>
+    <%= team_bonus_div(current_user.team) %>
+  </nav>
+<% end %>

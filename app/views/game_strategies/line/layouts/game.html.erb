@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Game of Thrones - DR129 - S.M.I.L.E.</title>
+  <link rel="shortcut icon" href="/images/favicon.ico"/>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div id="center">
+	<header class="main"><%= render 'game_strategies/conquest/layouts/input_code' %></header>
+	<section id='container' name='container'>
+		<nav id="info_container">
+		  <%= render 'game_strategies/conquest/layouts/user_info' %><br>
+		  <%= render 'game_strategies/conquest/layouts/blitz_info' %>
+		  <%= render 'game_strategies/conquest/layouts/log' %>
+
+		</nav>
+
+		<section class="main_content">
+		  <%= show_flash %>
+
+		  <%= yield %>
+		</section>
+
+		<aside class="aside_right">
+			<%= render 'game_strategies/conquest/layouts/actions' %>
+		  <%= render 'game_strategies/conquest/layouts/results' %>
+		</aside>
+	</section>
+</div>
+</body>
+</html>
