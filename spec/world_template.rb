@@ -149,26 +149,27 @@ end
 # 2 teams with user
 #
 def create_line_game
-  debugger
   project = Project.where(name: 'DozoR').first || Project.create(name: 'DozoR', owner: 'Алесь Жук', css_class: 'dozor')
   format = Format.where(name: 'Klad').first || Format.create(name: "Klad", organizer: "Lightpower", show_in_archives: true, project: project, css_class: nil)
-  game = Game.find(50) || Game.create(number: "1", name: "Тестовая игра", game_type: "line", start_date: "2013-07-28 15:00:00", finish_date: "2013-07-31 15:00:00", price: 0, area: nil, image_html: "<img src=\"http://neobychnye-zaprosy.ru/pict/box.png\">", preview: nil, legend: 'Тестовая игра и, соответственно, тестовая игра.', brief_place: 'Дома', dopy_list: '- Хорошее настроение', is_active: true, is_archived: false, prepare_url: nil, discuss_url: nil, format: format)
+  game =  Game.where(game_type: 'line').last || Game.create(number: "1", name: "Тестовая игра", game_type: "line", start_date: "2013-07-28 15:00:00", finish_date: "2013-07-31 15:00:00", price: 0, area: nil, image_html: "<img src=\"http://neobychnye-zaprosy.ru/pict/box.png\">", preview: nil, legend: 'Тестовая игра и, соответственно, тестовая игра.', brief_place: 'Дома', dopy_list: '- Хорошее настроение', is_active: true, is_archived: false, prepare_url: nil, discuss_url: nil, format: format)
   GameConfig.create(time: 0, bonus: 0, total_bonus: 0, game: game) if game.config.blank?
   game.reload
 
-  @users = User.where('email ILIKE ?', 'u_@ex.ua') ||
-      [User.create(email: 'u1@ex.ua', password: '123456', password_confirmation: '123456'),
-       User.create(email: 'u2@ex.ua', password: '123456', password_confirmation: '123456') ]
-  @teams = Team.where('name LIKE ?', 'Team_') ||
-      [Team.create(name: 'Team1', alternative_name: 'Team 1',    image_url: '/images/test.png', user_id: @users.first.id),
-       Team.create(name: 'Team2',  alternative_name: 'Team 2', image_url: '/images/test2.png', user_id: @users.last.id) ]
+  @users = User.where('email ILIKE ?', 'u_@ex.ua')
+  @users = [User.create(email: 'u1@ex.ua', password: '123456', password_confirmation: '123456'),
+            User.create(email: 'u2@ex.ua', password: '123456', password_confirmation: '123456') ] if @users.blank?
+  @teams = Team.where('name LIKE ?', 'Team_')
+  @teams = [Team.create(name: 'Team1', alternative_name: 'Team 1',    image_url: '/images/test.png', user_id: @users.first.id),
+            Team.create(name: 'Team2',  alternative_name: 'Team 2', image_url: '/images/test2.png', user_id: @users.last.id) ] if @teams.blank?
   @users.first.team = @teams.first
   @users.first.save
   @users.last.team = @teams.last
   @users.last.save
+
+  debugger
   # Requests to game
   GameRequest.where(game_id: game.id, team_id: @teams.map(&:id)).map(&:delete) # delete just in case
-  @teams.each { |team| Team.create(game: game, team: team, is_accepted: true) }
+  @teams.each { |team| GameRequest.create(game: game, team: team, is_accepted: true) }
 
   if game.zones.blank?
     Zone.create(game: game, number: 1, name: 'Зона 1', image_url: '/image/test1.png')
