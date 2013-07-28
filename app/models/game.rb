@@ -30,8 +30,8 @@ class Game < ActiveRecord::Base
 
   has_one  :config, class_name: "GameConfig"
 
-  attr_accessible :number, :name, :format_id, :game_type, :start_date, :finish_date, :price, :area, :image_html, :preview,
-                  :legend, :brief_place, :dopy_list, :is_active, :is_archived,  :prepare_url, :discuss_url
+  attr_accessible :number, :name, :format, :format_id, :game_type, :start_date, :finish_date, :price, :area, :image_html, :preview,
+                  :legend, :brief_place, :dopy_list, :is_active, :is_archived, :prepare_url, :discuss_url
 
   CSS_CLASSES = %w(nedostroy neformat klads dozor_classic dozor_lite en_tochki en_cx)
 
