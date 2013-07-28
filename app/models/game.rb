@@ -28,7 +28,7 @@ class Game < ActiveRecord::Base
   has_many :archive_zones
   has_many :archive_teams
 
-  has_one  :config, class_name: "GameConfig"
+  has_one  :config, class_name: 'GameConfig'
 
   attr_accessible :number, :name, :format_id, :game_type, :start_date, :finish_date, :price, :area, :image_html, :preview,
                   :legend, :brief_place, :dopy_list, :is_active, :is_archived,  :prepare_url, :discuss_url
