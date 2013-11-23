@@ -64,7 +64,7 @@ class Game < ActiveRecord::Base
   # Get cass class by game format
   #
   def css_class
-    result = (self.project.name || '').downcase.gsub(' ', '_')
+    result = (self.project.try(:name) || '').downcase.gsub(' ', '_')
     CSS_CLASSES.include?(result) ? result: 'other'
   end
 
@@ -102,7 +102,7 @@ class Game < ActiveRecord::Base
   # Project of game by Format
   #
   def project
-    self.format.project
+    self.format.try(:project)
   end
 
 end

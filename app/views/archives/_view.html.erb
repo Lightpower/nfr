@@ -1,7 +1,7 @@
 <% if game.present? %>
   <div class="game <%= game.css_class %>">
     <h1><%= game.start_date.strftime("%d.%m.%y") %> - <%= game.name %></h1>
-		<h3><%= game.project.name %> <%= game.format.name %> #<%= game.number %></h3>
+		<h3><%= game.project.try(:name) %> <%= game.format.try(:name) %> #<%= game.number %></h3>
 	  <b>Старт: <%= game.start_date.strftime("%H:%M:%S") %></b><br>
     <b>Зона игры:</b> <%= game.area || "уточняется" %><br>
 		<%= game.image_html.try(:html_safe) || "" %>
