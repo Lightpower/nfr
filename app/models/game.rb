@@ -33,7 +33,7 @@ class Game < ActiveRecord::Base
   attr_accessible :number, :name, :format, :format_id, :game_type, :start_date, :finish_date, :price, :area, :image_html, :preview,
                   :legend, :brief_place, :dopy_list, :is_active, :is_archived, :prepare_url, :discuss_url
 
-  CSS_CLASSES = %w(nedostroy neformat klads dozor_classic dozor_lite en_tochki en_cx)
+  CSS_CLASSES = ['neformat nedostroy', 'neformat game', 'dozor klad', 'dozor classic', 'dozor lite', 'en tochki', 'en cx']
 
   class << self
 
@@ -64,7 +64,7 @@ class Game < ActiveRecord::Base
   # Get cass class by game format
   #
   def css_class
-    result = (self.project.try(:name) || '').downcase.gsub(' ', '_')
+    result = [self.project.try(:css_class), self.try(:format).try(:css_class)].join(' ')
     CSS_CLASSES.include?(result) ? result: 'other'
   end
 
