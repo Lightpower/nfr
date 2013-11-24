@@ -33,7 +33,6 @@ group :test, :development do
 end
 
 group :development do
-  gem 'mina', '~> 0.2.0'
 end
 
 
