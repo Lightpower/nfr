@@ -6,11 +6,13 @@ module ProjectsHelper
   #
   def projects_header_menu
     menu_items =
-        [ {name: 'Всё', url: '/'} ] + Project.by_order.all.map {|project| {name: project.name, url: "/?games[project]=#{project.css_class}"}} + [ {name: 'Другие', url: '/?games[project]=other'} ]
+        [ {name: 'Всё', class: ''} ] +
+        Project.by_order.all.map {|project| {name: project.name, class: project.css_class}} +
+        [ {name: 'Другие', class: 'other'} ]
 
     result = ''
     menu_items.each do |item|
-      result << link_to(item[:name], item[:url], class: 'header_menu_item').html_safe
+      result << link_to(item[:name], '#', class: 'header_menu_item', 'data-class' => item[:class]).html_safe
     end
     result.html_safe
   end

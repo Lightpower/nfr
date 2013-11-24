@@ -6,7 +6,7 @@ CODE_COLORS = %w{red blue yellow white grey lightblue magenta orange green #AA88
 # 2 teams with user
 #
 def create_simple_game
-  game = FactoryGirl.create(:game)
+  game = FactoryGirl.create(:game, game_type: 'conquest')
   FactoryGirl.create(:game_config, game: game)
   game.reload
 
@@ -142,4 +142,94 @@ def emulate_game_activity(game=nil)
       GameStrategy::Context.send_code({game: game, code_string: code.show_code, user: team.users.first})
     end
   end
+end
+
+##
+# 2 zones, 1 task with 10 codes and 2 hints in each zone
+# 2 teams with user
+#
+def create_line_game
+  project = Project.where(name: 'DozoR').first || Project.create(name: 'DozoR', owner: 'Алесь Жук', css_class: 'dozor')
+  format = Format.where(name: 'Klad').first || Format.create(name: "Klad", organizer: "Lightpower", show_in_archives: true, project: project, css_class: nil)
+  game =  Game.where(game_type: 'line').last || Game.create(number: "1", name: "Тестовая игра", game_type: "line", start_date: "2013-07-28 15:00:00", finish_date: "2013-07-31 15:00:00", price: 0, area: nil, image_html: "<img src=\"http://neobychnye-zaprosy.ru/pict/box.png\">", preview: nil, legend: 'Тестовая игра и, соответственно, тестовая игра.', brief_place: 'Дома', dopy_list: '- Хорошее настроение', is_active: true, is_archived: false, prepare_url: nil, discuss_url: nil, format: format)
+  GameConfig.create(time: 0, bonus: 0, total_bonus: 0, game: game) if game.config.blank?
+  game.reload
+
+  @users = User.where('email ILIKE ?', 'u_@ex.ua')
+  @users = [User.create(email: 'u1@ex.ua', password: '123456', password_confirmation: '123456'),
+            User.create(email: 'u2@ex.ua', password: '123456', password_confirmation: '123456') ] if @users.blank?
+  @teams = Team.where('name LIKE ?', 'Team_')
+  @teams = [Team.create(name: 'Team1', alternative_name: 'Team 1',    image_url: '/images/test.png', user_id: @users.first.id),
+            Team.create(name: 'Team2',  alternative_name: 'Team 2', image_url: '/images/test2.png', user_id: @users.last.id) ] if @teams.blank?
+  @users.first.team = @teams.first
+  @users.first.save
+  @users.last.team = @teams.last
+  @users.last.save
+
+  debugger
+  # Requests to game
+  GameRequest.where(game_id: game.id, team_id: @teams.map(&:id)).map(&:delete) # delete just in case
+  @teams.each { |team| GameRequest.create(game: game, team: team, is_accepted: true) }
+
+  if game.zones.blank?
+    Zone.create(game: game, number: 1, name: 'Зона 1', image_url: '/image/test1.png')
+    Zone.create(game: game, number: 2, name: 'Зона 2', image_url: '/image/test2.png')
+    game.reload
+  end
+
+  # Tasks with codes and included tasks
+
+  game.zones.all.each do |zone|
+
+    # task 1 - 1 code
+    task_number = zone.new_task_number
+    task = Task.create(game: game, number: task_number, name: "Задание №#{task_number}", code_quota: 0, # all codes
+                       data: '<b>Четыре колобка свалились под мост.</b> Коды задания: <font color=\'orange\'>D номер зоны R + (номер задания*10 + номер кода)</font>',
+                       duration: 60, zone: zone)
+    # Code
+    code_number = task.new_code_number
+    code = Code.create(game: game, task: task, number: code_number,
+                       name: '',
+                       bonus: 0,
+                       ko: '1+',
+                       info: 'Под лавочкой',
+                       color: 'red')
+    CodeString.create(game: game, data: "D#{zone.number}R#{ + task_number*10 + code_number}", code: code)
+    task.codes << code
+    task.reload
+    zone.reload
+
+    # 2 hints for each task
+    Hint.create(game: game, task: task, number: 1, delay: 20, cost: -1, data: '<i>Читайте задание внимательнее!</i>')
+    Hint.create(game: game, task: task, number: 2, delay: 40, cost: -1, data: '<i>Как найти коды, выделено оранжевым.</i>')
+
+
+    # Task 2 - 10 codes
+    task_number = zone.new_task_number
+    task = Task.create(game: game, number: task_number, name: "Задание №#{task_number}", code_quota: -1, # all minus one
+                       data: '<b>Большой поиск.</b> Коды задания: <font color=\'orange\'>D номер зоны R + (номер задания*10 + номер кода)</font>',
+                       duration: 50, zone: zone)
+    # Codes
+    infos = %w(Первый Второй Третий Четвёртый Пятый Шестой Седьмой Восьмой Девятый Десятый)
+    10.times do
+      code_number = task.new_code_number
+      code = Code.create(game: game, task: task, number: code_number,
+                         name: '',
+                         bonus: 0,
+                         ko: '1+',
+                         info: infos[code_number - 1],
+                         color: 'blue')
+      CodeString.create(game: game, data: "D#{zone.number}R#{ + task_number*10 + code_number}", code: code)
+      task.codes << code
+      task.reload
+    end
+    zone.reload
+
+    # 2 hints for each task
+    Hint.create(game: game, task: task, number: 1, delay: 15, cost: -1, data: '<i>Коды можно подобрать.</i>')
+    Hint.create(game: game, task: task, number: 2, delay: 30, cost: -1, data: '<i>Как вычислить коды, выделено оранжевым.</i>')
+
+  end
+
+  game
 end

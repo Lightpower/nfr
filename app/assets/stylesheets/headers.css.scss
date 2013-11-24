@@ -70,7 +70,7 @@ a.header_menu_item:hover {
   background-color: #444444;
   border-color: #FFFFFF;
 }
-a.header_menu_item:active {
+a.header_menu_item:active, a.header_menu_item.selected {
   width:  148px;
   text-align: center;
   text-decoration: none;
