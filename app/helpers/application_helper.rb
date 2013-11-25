@@ -86,8 +86,8 @@ module ApplicationHelper
   ##
   # Helper for openable link with ID creating
   #
-  def openable_tag(id, is_open=true)
-    caption = is_open ? '- ' : '+'
+  def openable_tag(id, is_open=true, extra_caption='')
+    caption = (is_open ? '- ' : '+') + extra_caption
     params = { href: '#', class: 'openable'}
     params.merge!(id: id) if id.present?
     content_tag(:a, caption, params).html_safe

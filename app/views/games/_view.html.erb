@@ -8,7 +8,7 @@
   	<% end %>
     <%= game.image_html.try(:html_safe) || "" %><br>
 		<div class="details openable_holder">
-			<%= openable_tag(nil, false) %>Подробней
+			<%= openable_tag(nil, false, 'Подробней') %>
 			<div class="openable hidden">
 			  <b>Зона игры:</b> <%= game.area || "уточняется" %><br>
 			  <% if game.preview %>

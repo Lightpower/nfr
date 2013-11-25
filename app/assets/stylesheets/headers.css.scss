@@ -68,19 +68,18 @@ a.header_menu_item:hover {
   color: #000000;
   text-decoration: none;
   background-color: #444444;
-  border-color: #FFFFFF;
+  //border-color: #FFFFFF;
 }
 a.header_menu_item:active, a.header_menu_item.selected {
   width:  148px;
   text-align: center;
   text-decoration: none;
-  background-color: #333333;
   border-color: red;
   border-width: 2px;
-  border-style: solid;
-  font-size: 1.3em;
-  font-weight: bold;
   padding-top: 7px;
   padding-bottom: 7px;
-  margin: 3px 10px 3px 10px;
+}
+
+a.header_menu_item.selected:hover {
+  background-color: #444444;
 }

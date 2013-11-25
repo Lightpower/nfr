@@ -121,6 +121,12 @@ nav#site_navigation {
     background-color: #444444;
     border-color: #FFFFFF;
   }
+  a.selected {
+    border-color: red;
+    border-width: 2px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
 }
 
 
