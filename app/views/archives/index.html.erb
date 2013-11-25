@@ -3,4 +3,6 @@
   <% @games.each do |game| %>
 		<%= render 'archives/view', game: game %>
   <% end %>
+<% else %>
+    <h1>Нет игр в архиве</h1>
 <% end %>
