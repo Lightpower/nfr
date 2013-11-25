@@ -19,5 +19,6 @@
 /.idea
 /.rspec
 
-
 /old_files
+
+/config/database.yml
