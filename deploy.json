@@ -1,0 +1,6 @@
+{
+    "recipes": ["bundler", "active_record", "thin"],
+    "events": {
+        "on_build": "bundle exec rake assets:precompile"
+    }
+}
