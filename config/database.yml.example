@@ -18,7 +18,7 @@ development:
   database: nfr_development
   pool: 5
   username: rails
-  password: rails
+  password:
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
@@ -44,7 +44,7 @@ test:
   database: nfr_test
   pool: 5
   username: rails
-  password: rails
+  password:
 
 production:
   adapter: postgresql
@@ -52,4 +52,4 @@ production:
   database: nfr
   pool: 5
   username: rails
-  password: rails
+  password:
