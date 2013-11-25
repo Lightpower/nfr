@@ -6,6 +6,7 @@ class CreateTeamHints < ActiveRecord::Migration
       t.references :team
       t.references :hint
       t.references :zone
+      t.references :game,   null: false
 
       t.timestamps
     end
@@ -13,5 +14,6 @@ class CreateTeamHints < ActiveRecord::Migration
     add_index :team_hints, :hint_id
     add_index :team_hints, :team_id
     add_index :team_hints, :zone_id
+    add_index :team_hints, :game_id
   end
 end

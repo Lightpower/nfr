@@ -9,9 +9,11 @@ class CreateCodes < ActiveRecord::Migration
       t.float   :bonus,   null:false, default: 0
 
       t.references :task
+      t.references :game,   null: false
     end
 
     add_index :codes, :number
     add_index :codes, :ko
+    add_index :codes, :game_id
   end
 end

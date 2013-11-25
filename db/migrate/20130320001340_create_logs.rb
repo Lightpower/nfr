@@ -7,10 +7,12 @@ class CreateLogs < ActiveRecord::Migration
 
       t.references :team,     null: false
       t.references :code
+      t.references :game,   null: false
 
       t.timestamps
     end
 
     add_index :logs, :team_id
+    add_index :logs, :game_id
   end
 end

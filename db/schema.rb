@@ -241,9 +241,9 @@ ActiveRecord::Schema.define(:version => 20130716021139) do
     t.integer  "result_code", :null => false
     t.integer  "team_id",     :null => false
     t.integer  "code_id"
+    t.integer  "game_id",     :null => false
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-    t.integer  "game_id",     :null => false
   end
 
   add_index "logs", ["game_id"], :name => "index_logs_on_game_id"
@@ -290,11 +290,11 @@ ActiveRecord::Schema.define(:version => 20130716021139) do
   add_index "team_bonus", ["team_id"], :name => "index_team_bonus_on_team_id"
 
   create_table "team_bonus_actions", :force => true do |t|
-    t.integer  "team_bonus_id"
     t.boolean  "is_ok"
+    t.integer  "team_bonus_id"
+    t.integer  "game_id",       :null => false
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
-    t.integer  "game_id",       :null => false
   end
 
   add_index "team_bonus_actions", ["game_id"], :name => "index_team_bonus_actions_on_game_id"
@@ -308,10 +308,10 @@ ActiveRecord::Schema.define(:version => 20130716021139) do
     t.integer  "team_id",                        :null => false
     t.integer  "code_id",                        :null => false
     t.integer  "zone_id"
+    t.integer  "game_id",                        :null => false
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
     t.integer  "team_bonus_id"
-    t.integer  "game_id",                        :null => false
   end
 
   add_index "team_codes", ["code_id"], :name => "index_team_codes_on_code_id"
@@ -326,9 +326,9 @@ ActiveRecord::Schema.define(:version => 20130716021139) do
     t.integer  "team_id"
     t.integer  "hint_id"
     t.integer  "zone_id"
+    t.integer  "game_id",                     :null => false
     t.datetime "created_at",                  :null => false
     t.datetime "updated_at",                  :null => false
-    t.integer  "game_id",                     :null => false
   end
 
   add_index "team_hints", ["game_id"], :name => "index_team_hints_on_game_id"
@@ -414,10 +414,10 @@ ActiveRecord::Schema.define(:version => 20130716021139) do
     t.integer  "zone_id",      :null => false
     t.integer  "team_id",      :null => false
     t.integer  "team_code_id"
+    t.integer  "game_id",      :null => false
     t.datetime "time"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
-    t.integer  "game_id",      :null => false
   end
 
   add_index "zone_holders", ["game_id"], :name => "index_zone_holders_on_game_id"
@@ -430,8 +430,8 @@ ActiveRecord::Schema.define(:version => 20130716021139) do
     t.string  "name",      :null => false
     t.string  "image_url"
     t.text    "preview"
-    t.integer "code_id"
     t.integer "game_id",   :null => false
+    t.integer "code_id"
   end
 
   add_index "zones", ["game_id", "name"], :name => "index_zones_on_game_id_and_name", :unique => true

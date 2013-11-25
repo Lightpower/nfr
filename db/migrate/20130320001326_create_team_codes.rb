@@ -9,6 +9,7 @@ class CreateTeamCodes < ActiveRecord::Migration
       t.references :team, null: false
       t.references :code, null: false
       t.references :zone
+      t.references :game,   null: false
 
       t.timestamps
     end
@@ -17,5 +18,6 @@ class CreateTeamCodes < ActiveRecord::Migration
     add_index :team_codes, :code_id
     add_index :team_codes, [:team_id, :code_id], unique: true
     add_index :team_codes, :zone_id
+    add_index :team_codes, :game_id
   end
 end

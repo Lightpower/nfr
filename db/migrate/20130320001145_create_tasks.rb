@@ -12,9 +12,11 @@ class CreateTasks < ActiveRecord::Migration
       t.references :zone
       t.references :task
       t.references :code
+      t.references :game,   null: false
     end
 
     add_index :tasks, :zone_id
     add_index :tasks, :task_id
+    add_index :tasks, :game_id
   end
 end

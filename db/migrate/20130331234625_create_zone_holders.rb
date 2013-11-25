@@ -5,6 +5,7 @@ class CreateZoneHolders < ActiveRecord::Migration
       t.references :zone,      null: false
       t.references :team,      null: false
       t.references :team_code
+      t.references :game,   null: false
 
       t.datetime :time
 
@@ -14,5 +15,6 @@ class CreateZoneHolders < ActiveRecord::Migration
     add_index :zone_holders, :zone_id
     add_index :zone_holders, :team_id
     add_index :zone_holders, :team_code_id
+    add_index :zone_holders, :game_id
   end
 end

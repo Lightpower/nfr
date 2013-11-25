@@ -9,8 +9,10 @@ class CreateTeamBonus < ActiveRecord::Migration
       t.integer :amount
 
       t.references :team, null: false
+      t.references :game,   null: false
     end
 
     add_index :team_bonus, :team_id
+    add_index :team_bonus, :game_id
   end
 end

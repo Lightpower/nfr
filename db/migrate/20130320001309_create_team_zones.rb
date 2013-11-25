@@ -3,8 +3,10 @@ class CreateTeamZones < ActiveRecord::Migration
     create_table :team_zones do |t|
       t.references :team
       t.references :zone
+      t.references :game,   null: false
     end
 
     add_index :team_zones, [:team_id, :zone_id], unique: true
+    add_index :team_zones, :game_id
   end
 end

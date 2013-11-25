@@ -7,10 +7,12 @@ class CreateHints < ActiveRecord::Migration
       t.float   :cost
 
       t.references :task, null: false
+      t.references :game, null: false
     end
 
     add_index :hints, :number
     add_index :hints, :task_id
+    add_index :hints, :game_id
     add_index :hints, [:number, :task_id], unique: true
   end
 end
