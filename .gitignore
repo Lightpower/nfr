@@ -23,4 +23,6 @@
 
 /config/database.yml
 
+/db/old_seeds
 /db/seeds
+/db/seeds.rb
