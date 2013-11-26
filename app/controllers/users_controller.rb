@@ -22,7 +22,8 @@ class UsersController < ApplicationController
 
   # POST /users
   def create
-    # Only Admin and team captain can set user's team role
+    prevent_admin_role
+
     if @user.save
       redirect_to @user, notice: 'Пользователь успешно создан!'
     else
@@ -32,7 +33,8 @@ class UsersController < ApplicationController
 
   # PUT /users/1
   def update
-    # Only Admin and team captain can change user's team role
+    prevent_admin_role
+
     if cannot? :manage, :role
       params[:user].delete(:role)
     end
@@ -87,6 +89,13 @@ class UsersController < ApplicationController
       })
     end
     result
+  end
+
+  ##
+  # Deny setting the user's role to 'admin'
+  #
+  def prevent_admin_role
+    raise ActionController::RoutingError.new('Forbidden') if !current_user.is_admin? || params[:user][:role] == 'admin'
   end
 
 end
