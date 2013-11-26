@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
   end
 
   def is_admin?
-    email == 'a@ex.ua'
+    role == 'admin'
   end
 
   def waiting_for_approving?
