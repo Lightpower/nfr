@@ -95,7 +95,7 @@ class UsersController < ApplicationController
   # Deny setting the user's role to 'admin'
   #
   def prevent_admin_role
-    raise ActionController::RoutingError.new('Forbidden') if !current_user.is_admin? || params[:user][:role] == 'admin'
+    raise ActionController::RoutingError.new('Forbidden') if !current_user.is_admin? && params[:user][:role] == 'admin'
   end
 
 end
