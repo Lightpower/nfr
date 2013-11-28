@@ -12,7 +12,6 @@
   <% end %>
 
   <%= f.label :team_id, (@user.team ? "Команда" : "Запрос в команду:"), class: "caption" %>
-    Debug 1
   <%= team_select({f: f, user: @user}) %>
   <div class="actions button">
     <%= f.submit "Сохранить", class: "action_button" %>
