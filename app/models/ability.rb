@@ -16,16 +16,19 @@ class Ability
       # Registered user
       if user.id
         can :manage, User,     id: user.id
-        can :create, Team
+        can :create, Team      if user.team_id.blank?
         can :read,   Team
+        can :manage, TeamRequest, user_id: user.id, by_user: true
       end
 
       # Captain
       if user.team.try(:captain)
-        can :manage, Team,        captain: user
-        can :manage, User,        team_id: user.team_id
-        can :manage, TeamRequest, team_id: user.team_id
-        can :manage, GameRequest, team_id: user.team_id
+        can    :manage, Team,        captain: user
+        cannot :create, Team
+
+        can :manage,    User,        team_id: user.team_id
+        can :manage,    TeamRequest, team_id: user.team_id
+        can :manage,    GameRequest, team_id: user.team_id
       end
 
       # Access to Game
