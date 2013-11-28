@@ -1,6 +1,6 @@
 <% if team_request_list.values.uniq != [[]] %>
 	<div class="field content">
-	  <% if (@user == current_user) && @user.team.blank? %>
+	  <% if @user.present? && (@user == current_user) && @user.team.blank? %>
 	    <span class="info">Вы не состоите ни в одной команде. Выберите команду, чтобы подать запрос на вступление в неё, и пните капитана, чтобы принял вас.</span>
 	  <% end %>
 	  <% if @user.is_captain? %>
