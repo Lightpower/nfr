@@ -27,6 +27,8 @@ class Ability
         cannot :create, Team
 
         can :manage,    User,        team_id: user.team_id
+        cannot :delete, User
+
         can :manage,    TeamRequest, team_id: user.team_id
         can :manage,    GameRequest, team_id: user.team_id
       end
