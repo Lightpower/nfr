@@ -13,13 +13,13 @@ class TeamRequest < ActiveRecord::Base
   # Name of TeamRequest for user
   #
   def name_for_user
-    team.name
+    self.team.name rescue ''
   end
 
   ##
   # Name of TeamRequest for team (captain)
   #
   def name_for_team
-    user.show_name
+    self.user.show_name rescue ''
   end
 end
