@@ -13,7 +13,6 @@ NFR.team_requests = {
       dataType: 'json'
     }).done(function(message){
       if(message.result == "ok") {
-        alert("Операция выполнена успешно!");
         $(team_request).parent().remove();
       }else{
         alert("Ошибка рассмотрения запроса на вступление в команду!");
