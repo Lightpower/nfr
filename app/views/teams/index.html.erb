@@ -1,11 +1,11 @@
 <h1>Список команд</h1>
 
-<table class="table table-striped table-bordered">
+<table class="table table-bordered">
   <thead>
     <tr>
       <th>Название</th>
       <th>Второе название</th>
-      <th>Ссылка на эмблему</th>
+      <th>Эмблема</th>
       <th>Капитан</th>
       <th></th>
       <th></th>
@@ -18,7 +18,7 @@
     <tr>
       <td><%= team.name %></td>
       <td><%= team.alternative_name %></td>
-      <td><%= team.image_url %></td>
+      <td><%= image_tag(team.image_url, size: '100x100') if team.image_url.present? %></td>
       <td><%= team.captain.show_name %></td>
       <td><%= link_to 'Смотреть', team_path(team), class: "action_button" if can? :read, team %></td>
       <td><%= link_to 'Править', edit_team_path(team), class: "action_button" if can? :manage, team %></td>
