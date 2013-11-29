@@ -53,3 +53,26 @@ table.white {
     }
   }
 }
+
+table.table-bordered {
+  margin: 3px;
+  border-spacing: 0px;
+  border-style: none;
+  background-color: #CCCCCC;
+
+  th {
+    border: 2px;
+    border-color: black;
+    border-style: solid;
+    margin-right: 10px;
+  }
+
+  tr {
+    font-size: 14px;
+    td {
+      border: 1px;
+      border-style: solid;
+      margin-right: 0px;
+    }
+  }
+}
