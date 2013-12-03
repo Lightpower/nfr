@@ -21,6 +21,11 @@ class Ability
         can :manage, TeamRequest, user_id: user.id, by_user: true
       end
 
+      # User with team
+      if user.team.present?
+        cannot :create, Team
+      end
+
       # Captain
       if user.is_captain?
         can    :manage, Team,        captain: user
