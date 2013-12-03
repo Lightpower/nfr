@@ -5,6 +5,8 @@ module ProjectsHelper
   # Make HTML with projects names for header menu
   #
   def projects_header_menu
+    return '' if @games.blank?
+
     menu_items =
         [ {name: 'Всё', class: ''} ] +
         Project.by_order.all.map {|project| {name: project.name, class: project.css_class}} +
