@@ -4,9 +4,9 @@
   <thead>
     <tr>
       <th>Логин</th>
-      <th>Роль на сайте</th>
-      <th>Email</th>
-	    <% if current_user.is_admin? %>
+      <% if current_user.is_admin? %>
+        <th>Роль на сайте</th>
+        <th>Email</th>
         <th>Команда</th>
       <% end %>
       <th></th>
@@ -19,9 +19,9 @@
   <tbody>
     <tr>
       <td><%= user.username %></td>
-      <td><%= user.role.present? ? user.role : "Игрок" %></td>
-      <td><%= user.email %></td>
       <% if current_user.is_admin? %>
+        <td><%= user.role.present? ? user.role : "Игрок" %></td>
+        <td><%= user.email %></td>
         <td><%= user.team.try(:name) %></td>
       <% end %>
       <td><%= link_to 'Смотреть', user_path(user), class: "action_button_min" if can? :read, user %></td>
@@ -31,7 +31,3 @@
   </tbody>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'Новый пользователь', new_user_path, class: "action_button" if can? :manage, User %>
