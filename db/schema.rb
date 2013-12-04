@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130716021139) do
+ActiveRecord::Schema.define(:version => 20131204231300) do
 
   create_table "archive_code_strings", :force => true do |t|
     t.string  "data",    :null => false
@@ -401,6 +401,7 @@ ActiveRecord::Schema.define(:version => 20130716021139) do
     t.string   "role"
     t.float    "account",                :default => 0.0
     t.integer  "level"
+    t.string   "avatar_url"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
