@@ -8,10 +8,20 @@
     <%= @user.team.try(:name) || 'Не в команде' %>
     <%= content_tag(:span, ' (ожидание авторизации)', class: 'info') if @user.waiting_for_approving? %>
   </p>
+  <% if current_user.is_admin? || @user.try(:team).try(:captain) == current_user %>
   <p>
     <b>Email:</b>
     <%= @user.email %>
   </p>
+  <% end %>
+
+  <% if current_user.is_admin? || (@user == current_user) %>
+    <% team_request_list ||= nil %>
+    <% if team_request_list.present? %>
+      <%= render 'users/team_settings', team_request_list: team_request_list %>
+    <% end %>
+  <% end %>
+
 </div>
 
 <%= link_to 'Править', edit_user_path(@user), class: 'action_button' if can? :manage, @user %>

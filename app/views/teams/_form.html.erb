@@ -35,6 +35,6 @@
 
 <% team_request_list ||= nil %>
 <% @user = current_user %>
-<% if team_request_list.present? && current_user == @team.captain %>
+<% if team_request_list.present? && (current_user == @team.captain || current_user.is_admin?) %>
   <%= render 'users/team_settings', team_request_list: team_request_list %>
 <% end %>
