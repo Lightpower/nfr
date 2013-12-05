@@ -46,6 +46,7 @@ Nfr::Application.routes.draw do
   match "/users/:id/team_requests" => "users#team_requests",  via: :get, as: :team_requests_user
   match "/users/:id" => "users#show",       via: :get,    as: :user
   match "/users/:id" => "users#update",     via: :put,    as: :user
+  match "/users/:id/exclude" => "users#exclude",     via: :get,    as: :exclude_user
   match "/users/:id" => "users#destroy",    via: :delete, as: :user
 
   resources :team_requests, only: [] do

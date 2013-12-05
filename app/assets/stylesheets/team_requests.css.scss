@@ -5,7 +5,11 @@
 div.team_request {
   display: inline;
   margin: 5px;
+  padding: 2px 2px 4px 2px;
   background-color: yellow;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
   border-color: orange;
   border-width: 1px;
   border-style: solid

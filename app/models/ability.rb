@@ -7,6 +7,7 @@ class Ability
     if user.role == 'admin'
       can :manage, :all
     else
+
       # Guest or User without team
       if user.team.blank?
         cannot :read, Game
@@ -15,7 +16,7 @@ class Ability
       # Registered user
       if user.id
         can :manage, User,     id: user.id
-        can :show,   User,     team: user.team
+        can :read,   User
         can :create, Team      if user.team_id.blank?
         can :read,   Team
         can :manage, TeamRequest, user_id: user.id, by_user: true
@@ -31,7 +32,11 @@ class Ability
         can    :manage, Team,        captain: user
         cannot :create, Team
 
-        can :manage,    User,        team_id: user.team_id
+        cannot :exclude, User,       id: user.id
+        can :exclude,   User do |u|
+          (u != user) && (u.team_id == user.team_id)
+        end
+
         cannot :delete, User
 
         can :manage,    TeamRequest, team_id: user.team_id

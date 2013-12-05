@@ -4,7 +4,6 @@
   <thead>
     <tr>
       <th>Название</th>
-      <th>Второе название</th>
       <th>Эмблема</th>
       <th>Капитан</th>
       <th></th>
@@ -13,19 +12,19 @@
     </tr>
   </thead>
 
-<% @teams.each do |team| %>
   <tbody>
+<% @teams.each do |team| %>
     <tr>
-      <td><%= team.name %></td>
-      <td><%= team.alternative_name %></td>
-      <td><%= image_tag(team.image_url, size: '100x100') if team.image_url.present? %></td>
-      <td><%= team.captain.show_name %></td>
-      <td><%= link_to 'Смотреть', team_path(team), class: "action_button" if can? :read, team %></td>
-      <td><%= link_to 'Править', edit_team_path(team), class: "action_button" if can? :manage, team %></td>
-      <td><%= link_to 'Удалить', team_path(team), confirm: 'Точно удаляем?', method: :delete, class: "action_button" if can? :manage, team %></td>
+      <td><%= content_tag(:b, team.name) %></td>
+      <td><%= image_tag(team.image_url, size: '160x160') if team.image_url.present? %></td>
+      <td><%= link_to_user(team.captain) %></td>
+
+      <td><%= pic_link_to_show(team_path(team)) if can? :read, team %></td>
+      <td><%= pic_link_to_edit(edit_team_path(team)) if can? :read, team %></td>
+      <td><%= pic_link_to_delete(team_path(team), {confirm: 'Точно удаляем?', method: :delete}) if can? :read, team %></td>
     </tr>
-  </tbody>
 <% end %>
+  </tbody>
 </table>
 
 <br>

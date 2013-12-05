@@ -16,6 +16,17 @@
     <%= f.text_field :username %>
   </div>
   <div class="field">
+    <%= f.label :username, "Ссылка на аватар", class: "caption" %>
+    <%= f.text_field :avatar_url, class: 'long' %>
+  </div>
+
+  <% if @user.avatar_url.present? %>
+    <div class="field">
+      <%= image_tag @user.avatar_url, size: '100x100' %>
+    </div>
+  <% end %>
+
+  <div class="field">
     <%= f.label :password, "Пароль", class: "caption" %>
     <%= f.text_field :password %>
   </div>

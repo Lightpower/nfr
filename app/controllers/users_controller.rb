@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    @users = User.accessible_by(current_ability)
+    @users = User.accessible_by(current_ability, :read)
   end
 
   # GET /users/1
@@ -27,7 +27,7 @@ class UsersController < ApplicationController
     if @user.save
       redirect_to @user, notice: 'Пользователь успешно создан!'
     else
-      render action: "new"
+      render action: 'new'
     end
   end
 
@@ -56,7 +56,7 @@ class UsersController < ApplicationController
     if @user.update_attributes(params[:user])
       redirect_to @user, notice: 'Данные пользователя успешно изменены.'
     else
-      render action: "edit"
+      render action: 'edit'
     end
   end
 
@@ -69,6 +69,15 @@ class UsersController < ApplicationController
     @user.destroy
 
     redirect_to users_path
+  end
+
+  def exclude
+    @user.team_id = nil
+    if @user.save
+      redirect_to @user, notice: 'Игрок исключён из команды.'
+    else
+      render action: 'show', error: 'Исключить игрока из команды может только капитан!'
+    end
   end
 
 

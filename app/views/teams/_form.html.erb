@@ -17,20 +17,18 @@
   </div>
   <div class="field">
     <%= f.label :image_url, "Ссылка на эмблему", class: "caption" %>
-    <%= f.url_field :image_url %>
+    <%= f.url_field :image_url, class: 'long' %>
   </div>
 	<% if current_user.is_admin? %>
-    <div class="field">
-      <%= f.label :alternative_name, "Второе название", class: "caption" %>
-      <%= f.text_field :alternative_name %>
-    </div>
     <div class="field">
       <%= f.label :user_id, "Капитан", class: "caption" %>
       <%= f.select(:user_id, User.all.collect {|user| [user.show_name, user.id] }) %>
     </div>
 	<% end %>
 
-  <div class="actions button">
+    <%= render 'users/short_index', users: @team.users %>
+
+    <div class="actions button">
     <%= f.submit "Сохранить", class: "action_button" %>
   </div>
 <% end %>

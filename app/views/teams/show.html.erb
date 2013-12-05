@@ -12,13 +12,8 @@
     <span class="caption">Капитан:</span>
     <%= @team.captain.show_name %>
   </p>
-	<p>
-		<span class="caption">Игроки: </span><br>
-		<% @team.users.each do |user|%>
-		  <%= link_to(user.show_name, user_path(user), class: "action_button") %>
-	  <% end %>
-	</p>
+
+  <%= render 'users/short_index', users: @team.users %>
 </div>
 
-<%= link_to 'Править', edit_team_path(@team), class: "action_button" if can? :manage, @team %>
-<%= link_to 'Назад', teams_path, class: "action_button" %>
+<%= link_to 'Править', edit_team_path(@team), class: 'action_button' if can? :manage, @team %>

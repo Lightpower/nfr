@@ -4,8 +4,8 @@
 	    <span class="info">Вы не состоите ни в одной команде. Выберите команду, чтобы подать запрос на вступление в неё, и пните капитана, чтобы принял вас.</span>
 	  <% end %>
 	  <% if @user.is_captain? %>
-	    <div>
-	      <span class="caption">Командные заявки на вступление:</span>
+	    <div class="separated">
+	      <h2>Командные заявки на вступление</h2>
 	      <%= render 'team_requests/as_team', team_request_list: team_request_list %>
 	    </div>
 	  <% elsif (@user == current_user) && @user.waiting_for_approving?%>

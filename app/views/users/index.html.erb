@@ -7,8 +7,8 @@
       <% if current_user.is_admin? %>
         <th>Роль на сайте</th>
         <th>Email</th>
-        <th>Команда</th>
       <% end %>
+      <th>Команда</th>
       <th></th>
       <th></th>
       <th></th>
@@ -18,15 +18,16 @@
 <% @users.each do |user| %>
   <tbody>
     <tr>
-      <td><%= user.username %></td>
+      <td><%= link_to_user(user) %></td>
       <% if current_user.is_admin? %>
-        <td><%= user.role.present? ? user.role : "Игрок" %></td>
+        <td><%= user.role.present? ? user.role : 'Игрок' %></td>
         <td><%= user.email %></td>
-        <td><%= user.team.try(:name) %></td>
       <% end %>
-      <td><%= link_to 'Смотреть', user_path(user), class: "action_button_min" if can? :read, user %></td>
-      <td><%= link_to 'Править', edit_user_path(user), class: "action_button_min" if can? :manage, user %></td>
-      <td><%= link_to 'Удалить', user_path(user), confirm: 'Точно удаляем?', method: :delete, class: "action_button_min" if can? :manage, user %></td>
+      <td><%= link_to(user.team.name, team_path(user.team)) if user.team %></td>
+
+      <td><%= pic_link_to_show user_path(user)      if can? :read, user %></td>
+      <td><%= pic_link_to_edit edit_user_path(user) if can? :manage, user %></td>
+      <td><%= pic_link_to_delete(user_path(user), {confirm: 'Точно удаляем?', method: :delete}) if can? :manage, user %></td>
     </tr>
   </tbody>
 <% end %>

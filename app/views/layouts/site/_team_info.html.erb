@@ -9,16 +9,18 @@
 
     <ul>
       <% if current_user.team.blank? %>
-        <%= content_tag(:li, link_to("Создать свою команду", new_team_path)) %>
-        <%= content_tag(:li, link_to("Подать заявку в существующую", team_requests_user_path(current_user))) %>
+        <%= content_tag(:li, link_to('Создать свою команду', new_team_path)) %>
+        <%= content_tag(:li, link_to('Подать заявку в существующую', team_requests_user_path(current_user))) %>
       <% else %>
         <% if current_user.is_captain? %>
-          <%= content_tag(:li, link_to("Настройки команды", edit_team_path(current_user.team))) %>
+          <%= content_tag(:li, link_to('Настройки команды', edit_team_path(current_user.team))) %>
   		  <% else %>
-          <%= content_tag(:li, link_to("Данные команды", team_path(current_user.team))) %>
+          <%= content_tag(:li, link_to('Данные команды', team_path(current_user.team))) %>
         <% end %>
-        <%= content_tag(:li, link_to("Список игроков", users_path)) %>
       <% end %>
+      <div class="separated"></div>
+      <%= content_tag(:li, link_to('Список всех команд', teams_path)) %>
+      <%= content_tag(:li, link_to('Список всех игроков', users_path)) %>
       <br>
     </ul>
   </nav>
