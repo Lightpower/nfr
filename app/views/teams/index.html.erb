@@ -20,8 +20,8 @@
       <td><%= link_to_user(team.captain) %></td>
 
       <td><%= pic_link_to_show(team_path(team)) if can? :read, team %></td>
-      <td><%= pic_link_to_edit(edit_team_path(team)) if can? :read, team %></td>
-      <td><%= pic_link_to_delete(team_path(team), {confirm: 'Точно удаляем?', method: :delete}) if can? :read, team %></td>
+      <td><%= pic_link_to_edit(edit_team_path(team)) if can? :manage, team %></td>
+      <td><%= pic_link_to_delete(team_path(team), {confirm: 'Точно удаляем?', method: :delete}) if can? :delete, team %></td>
     </tr>
 <% end %>
   </tbody>
