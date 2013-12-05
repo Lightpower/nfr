@@ -3,6 +3,11 @@
     <b>Логин:</b>
     <%= @user.username %>
   </p>
+  <% if @user.avatar_url.present? %>
+      <div class="field">
+        <%= image_tag @user.avatar_url, size: '100x100' %>
+      </div>
+  <% end %>
   <p>
     <b>Команда:</b>
     <%= @user.team.try(:name) || 'Не в команде' %>
