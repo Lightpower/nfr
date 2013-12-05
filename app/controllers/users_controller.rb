@@ -9,6 +9,7 @@ class UsersController < ApplicationController
 
   # GET /users/1
   def show
+    render 'users/show', locals: {team_request_list: prepare_team_requests}
   end
 
   # GET /users/new
