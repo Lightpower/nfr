@@ -7,8 +7,6 @@
       <th>Эмблема</th>
       <th>Капитан</th>
       <th></th>
-      <th></th>
-      <th></th>
     </tr>
   </thead>
 
@@ -19,9 +17,9 @@
       <td><%= image_tag(team.image_url, size: '160x160') if team.image_url.present? %></td>
       <td><%= link_to_user(team.captain) %></td>
 
-      <td><%= pic_link_to_show(team_path(team)) if can? :read, team %></td>
-      <td><%= pic_link_to_edit(edit_team_path(team)) if can? :manage, team %></td>
-      <td><%= pic_link_to_delete(team_path(team), {confirm: 'Точно удаляем?', method: :delete}) if can? :delete, team %></td>
+      <td><%= pic_link_to_show(team_path(team)) if can? :read, team %>
+      <%= pic_link_to_edit(edit_team_path(team)) if can? :manage, team %>
+      <%= pic_link_to_delete(team_path(team), {confirm: 'Точно удаляем?', method: :delete}) if can? :delete, team %></td>
     </tr>
 <% end %>
   </tbody>
