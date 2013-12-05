@@ -9,8 +9,8 @@
 	      <%= render 'team_requests/as_team', team_request_list: team_request_list %>
 	    </div>
 	  <% elsif (@user == current_user) && @user.waiting_for_approving?%>
-	    <div>
-	      <h3>Ваши заявки на вступление:</h3>
+	    <div class="separated">
+	      <h2>Ваши заявки на вступление:</h2>
 		    <%= render 'team_requests/as_user', team_request_list: team_request_list %>
 	    </div>
 	  <% end %>
