@@ -9,7 +9,7 @@ class TeamRequestsController < ApplicationController
     user = @team_request.user
     user.team = @team_request.team
     if user.save
-      @team_request.delete
+      TeamRequest.where(user_id: @team_request.user_id).delete_all
       render json: { result: 'ok', status: 200 }
     else
       render json: self.errors, status: 500
