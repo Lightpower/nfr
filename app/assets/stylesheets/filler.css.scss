@@ -4,5 +4,27 @@ div#filler {
 }
 
 div#filler_field {
-  margin: 0 auto;
+  margin: 20px auto;
+}
+
+div#filler_config {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 400px;
+  height: 150px;
+  margin-left: -150px;
+  margin-top: -150px;
+  background-color: gray;
+  border: 1px solid black;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 12px 12px 15px #4a4d39;
+  -moz-box-shadow: 12px 12px 15px #4a4d39;
+  box-shadow: 12px 12px 15px #4a4d39;
+}
+
+div.config_player {
+  margin: 10px;
 }
