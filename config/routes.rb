@@ -62,5 +62,6 @@ Nfr::Application.routes.draw do
 
   get '/blackjack', to: redirect('http://absolutist.ru/online/bjack/blackjack.swf')
   get '/hookers',   to: redirect('https://www.google.com.ua/search?site=imghp&tbm=isch&q=%D1%88%D0%BB%D1%8E%D1%85%D0%B8')
+  match '/filler' => 'easters#filler'
 
 end
