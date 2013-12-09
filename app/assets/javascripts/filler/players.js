@@ -65,8 +65,8 @@ FIL.players = {
   showTotalPlaces: function() {
     var players = [],
         flag = true,
-        i,
-        tmp;
+        i, tmp,
+        str = "";
     for(i=0; i<4; i++){
       players[i] = [i, FIL.players.list[i].points];
     }
@@ -75,9 +75,19 @@ FIL.players = {
       flag = false;
       for(i=1; i<4; i++) {
         if(players[i-1][1] < players[i][1]) {
-          tmp = play
+          tmp = players[i-1];
+          players[i-1] = players[i]
+          players[i] = tmp;
+          flag = true;
         }
       }
     }
+    for(i=0; i<4; i++){
+      if(players[i][1] != 0) {
+        str += '\nPlayer ' + players[i][0] + ' - ' + players[i][1] + ' point(s)';
+      }
+    }
+
+    alert('Player ' + (players[0][0] + 1) + ' wins!\n\n' + str);
   }
 }

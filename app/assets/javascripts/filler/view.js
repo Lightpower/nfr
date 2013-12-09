@@ -6,6 +6,7 @@ FIL.view = {
   fieldRowClass:         'field_row',
   statusDivId:           'filler_status',
   controlDivId:          'filler_control',
+  colorDivId:            'filler_colors',
   startLinkClass:        'filler_start',
   resetLinkClass:        'filler_reset',
   saveConfigLinkClass:   'filler_save_config',
@@ -152,7 +153,8 @@ FIL.view = {
   ///////////
 
   createControl: function() {
-    var div = this.mainDiv();
+    var div = this.mainDiv(),
+        tmpDiv, newCell, i;
     // Remove status panel
     div.children("div#" + this.statusDivId).remove();
     // Create status panel
@@ -166,6 +168,15 @@ FIL.view = {
 
     // Control panel
     div.append('<div id="' + this.controlDivId + '" name="' + this.controlDivId + '"><a href="#" class="' + this.startLinkClass + ' button">Start new game</a> <a href="#" class="' + this.resetLinkClass + ' button">Reset</a></div>');
+
+    // Color panel
+    div.append('<div id="' + this.colorDivId + '" name="' + this.colorDivId + '"></div>');
+    tmpDiv = div.children('div#' + this.colorDivId);
+    for(i=0; i<FIL.core.colorCount; i++) {
+      newCell = '<a href="#" class="' + this.fieldCellClass
+        + '" style="width: 20px; height: 20px;" data-color="' + i +'"></a> &nbsp; ';
+      tmpDiv.append(newCell);
+    }
   },
 
   createConfig: function() {

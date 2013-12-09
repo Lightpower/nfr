@@ -18,6 +18,8 @@ FIL.turn = {
     FIL.players.list[FIL.players.currentPlayerId].points = points;
     FIL.view.updateField();
     this.switchToNextTurn();
+    if(this.isEnd())
+      FIL.players.showTotalPlaces();
     return points;
   },
 
@@ -28,7 +30,7 @@ FIL.turn = {
     for(i=0; i<4; i++) {
       sPlayer += FIL.players.list[i].points;
     }
-    return s == sPlayer;
+    return s <= sPlayer;
   },
 
   ////////////////

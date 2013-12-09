@@ -5,7 +5,7 @@ FIL.events = {
   },
 
   onReset: function() {
-    FIL.core.start(20, 20, 6, 10);
+    FIL.core.start(10, 10, 6, 10);
     FIL.view.updateField();
     FIL.view.updateControl();
   },
@@ -25,9 +25,11 @@ FIL.events = {
     FIL.turn.do(color);
     FIL.view.updateControl();
 
-    while(FIL.players.list[FIL.players.currentPlayerId].type == 1) { // make turn for all AI
-      FIL.turn.do(-1);
-      FIL.view.updateControl();
+    if(!FIL.turn.isEnd()) {
+      while(FIL.players.list[FIL.players.currentPlayerId].type == 1) { // make turn for all AI
+        FIL.turn.do(-1);
+        FIL.view.updateControl();
+      }
     }
   },
 
