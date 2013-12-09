@@ -5,25 +5,47 @@ FIL.events = {
   },
 
   onReset: function() {
-
+    FIL.core.start(20, 20, 6, 10);
+    FIL.view.updateField();
+    FIL.view.updateControl();
   },
 
   onConfig: function() {
-    $('div#' + FIL.view.configDivId).fadeIn();
+    FIL.view.showConfig();
   },
 
   onMakeTurn: function(color) {
+    if(FIL.turn.isEnd()) return;
 
+    if(!FIL.players.canColor(color)) {
+      alert('This color is already taken! Choose new one.');
+      return;
+    }
+
+    FIL.turn.do(color);
+    FIL.view.updateControl();
+
+    while(FIL.players.list[FIL.players.currentPlayerId].type == 1) { // make turn for all AI
+      FIL.turn.do(-1);
+      FIL.view.updateControl();
+    }
   },
 
   onStartGame: function() {
+    var players = [0,0,0,0],
+        div = $('div#' + FIL.view.playerConfigClass),
+        i=0;
 
+    for(; i<4; i++) {
+      players[i] = $('input[name=' + FIL.view.playerRadioItemPrefix + i + ']:checked').val();
+    }
+    FIL.players.setup(players);
     this.onReset();
-    $('div#' + FIL.view.configDivId).fadeOut();
+    FIL.view.hideConfig();
   },
 
   onCloseConfig: function() {
-    $('div#' + FIL.view.configDivId).fadeOut();
+    FIL.view.hideConfig();
   }
 }
 
@@ -43,7 +65,7 @@ $(function() {
   });
 
   // Click on Cell (player makes his turn)
-  $('div.' + FIL.view.fieldCellClass).on("click", function(e) {
+  $('div#filler').on("click", 'a.' + FIL.view.fieldCellClass, function(e) {
     FIL.events.onMakeTurn( $(this).data('color') );
     e.preventDefault();
   });
@@ -54,15 +76,9 @@ $(function() {
     e.preventDefault();
   });
 
-//  $(document).on("click", "a." + FIL.view.cancelConfigLinkClass, function(e) {
-//    FIL.events.onCloseConfig();
-//    e.preventDefault();
-//  });
-
   //Click on Close on Config panel
   $('a.' + FIL.view.cancelConfigLinkClass).on("click", function(e) {
     FIL.events.onCloseConfig();
     e.preventDefault();
   });
-
 });

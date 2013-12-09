@@ -3,8 +3,25 @@ div#filler {
   min-height: 400px;
 }
 
+div#filler_status {
+  border: 1px solid #454545;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  -webkit-box-shadow: 2px 2px 2px #2d3121;
+  -moz-box-shadow: 2px 2px 2px #2d3121;
+  box-shadow: 2px 2px 2px #2d3121;
+}
+
 div#filler_field {
+  -webkit-box-shadow: 4px 4px 6px #2d3121;
+  -moz-box-shadow: 4px 4px 6px #2d3121;
+  box-shadow: 4px 4px 6px #2d3121;
+  width: 400px;
+  height: 400px;
   margin: 20px auto;
+  border: 1px solid black;
+  padding: 1px;
 }
 
 div#filler_config {
@@ -12,9 +29,9 @@ div#filler_config {
   left: 50%;
   top: 50%;
   width: 400px;
-  height: 150px;
+  height: 160px;
   margin-left: -150px;
-  margin-top: -150px;
+  margin-top: -100px;
   background-color: gray;
   border: 1px solid black;
   -webkit-border-radius: 5px;
@@ -25,6 +42,68 @@ div#filler_config {
   box-shadow: 12px 12px 15px #4a4d39;
 }
 
-div.config_player {
-  margin: 10px;
+div.player_config {
+  margin: 15px;
+}
+
+div#filler_config_block {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  opacity: 0.7;
+  background-color: gray;
+}
+
+div#filler {
+  a.button {
+    display: inline-block;
+    width: 120px;
+    height: 20px;
+    text-align: center;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    color: #000000;
+    text-decoration: none;
+    background-color: #AAAAAA;
+    border-color: #000000;
+    border-width: 1px 1px 1px 1px;
+    border-style: solid;
+    -webkit-box-shadow: 2px 2px 3px #282b1f;
+    -moz-box-shadow: 2px 2px 3px #282b1f;
+    box-shadow: 2px 2px 3px #282b1f;
+    padding: 2px;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 5px;
+  }
+
+  a.button:hover {
+    background-color: #565656;
+  }
+
+}
+
+a.fcell {
+  display: inline-block;
+  text-decoration: none;
+  border: 1px solid #333333;
+  margin: 0px;
+}
+// ['white', 'black', 'red', 'orange', 'yellow', 'green', 'cyan', 'blue', 'magenta']
+
+a.fcell[data-color='0'] { background-color:  white }
+a.fcell[data-color='1'] { background-color:  black }
+a.fcell[data-color='2'] { background-color:  red }
+a.fcell[data-color='3'] { background-color:  orange }
+a.fcell[data-color='4'] { background-color:  yellow }
+a.fcell[data-color='5'] { background-color:  green }
+a.fcell[data-color='6'] { background-color:  cyan }
+a.fcell[data-color='7'] { background-color:  blue }
+a.fcell[data-color='8'] { background-color:  magenta }
+
+div.field_row {
+  margin-bottom: 0px;
 }

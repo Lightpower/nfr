@@ -3,6 +3,7 @@ FIL.view = {
   fillerDivId:           'filler',
   fieldDivId:            'filler_field',
   fieldCellClass:        'fcell',
+  fieldRowClass:         'field_row',
   statusDivId:           'filler_status',
   controlDivId:          'filler_control',
   startLinkClass:        'filler_start',
@@ -10,11 +11,18 @@ FIL.view = {
   saveConfigLinkClass:   'filler_save_config',
   cancelConfigLinkClass: 'filler_cancel_config',
   configDivId:           'filler_config',
+  configBlockDivId:      'filler_config_block',
   playerDivId:           'filler_players',
   playerTunDivId:        'player_turn',
   playerTurnSpanId:      'filler_player_turn',
+  playerConfigClass:     'player_config',
+  playerRadioItemPrefix: 'radio_player_',
 
   mainDiv: function() { return $('div#' + this.fillerDivId) },
+
+  isFieldBuilt: function() {
+    return this.mainDiv().children('div.' + this.fieldCellClass).length > 0
+  },
 
   createDivs: function() {
     this.createControl();
@@ -22,24 +30,36 @@ FIL.view = {
     this.createConfig();
   },
 
+  //################
+  // Control panel
+  //################
+
   updateControl: function() {
     var i = 0,
       div = this.mainDiv(),
       row, subDiv;
     
     if(FIL.players.count() == 0) return false;
-    
-    // Create status panel
+
+    // Get status panel
     div = div.children("div#" + this.statusDivId);
 
     subDiv = div.children("div#" + this.playerDivId);
     subDiv.html('');
     // Info about each player
-    for(; i<FIL.players.count(); i++) {
-      if(FIL.players.list[i].on) {
-        row  = '<div style="position: inline-block; margin-right: 10px;">';
-        row += '<b>Player ' + i+1 + '</b><br>';
-        row += (FIL.players.list[i].human ? 'HUMAN' : 'AI') + '<br>';
+    for(; i<4; i++) {
+      if(FIL.players.list[i].type > 0) {
+        row  = '<div style="display: inline-block; margin-right: 10px;">';
+        row += '<b>Player ' + (i+1) + '</b><br>';
+        switch(FIL.players.list[i].type) {
+          case 1: // AI
+            row += 'AI';
+            break;
+          case 2:
+            row += 'HUMAN';
+            break;
+        }
+        row += '<br>';
         row += '<b>Points:</b> ' + FIL.players.list[i].points;
         row += '</div>';
         subDiv.append(row);
@@ -49,62 +69,87 @@ FIL.view = {
     // Info about player's turn
     subDiv = div.children('div#' + this.playerDivId);
     subDiv.fadeIn();
-    subDiv.children('span#' + this.playerTurnSpanId).text = FIL.players.currentPlayerTurn;
-    
-    // Control panel
-    div.append('<div id="filler_control" name="filler_control"><a href="#" class="' + this.startLinkClass + '">Start new game</a> <a href="#" class="' + this.resetLinkClass + '">Reset</a></div>');
+    subDiv.children('span#' + this.playerTurnSpanId).text = FIL.players.currentPlayerId;
   },
 
-  showField: function() {
+  //#########
+  // Field
+  //#########
+
+  createField: function() {
     // show FIL.core.field on <div id="field">
-    var i=0,
-        j= 0,
-        div = this.mainDiv(),
-        cellWidth = Math.floor(div.clientWidth / FIL.core.width),
-        cellHeight = Math.floor(div.clientHeight / FIL.core.height),
-        newCell,
-        cellColor;
+    var i, j,
+      div = this.mainDiv(),
+      cellWidth, cellHeight,
+      newCell,
+      cellColor,
+      rowDiv;
     // Delete field
-    div.children("div#" + this.fieldDivId).remove();
+    div.children('div#' + this.fieldDivId).remove();
     // Create field
-    div.append('<div id="' + this.fieldDivId + '" name="' + this.fieldDivId + '" style="width: ' + (cellWidth+2) * FIL.core.width + '"></div>');
+    div.append('<div id="' + this.fieldDivId + '" name="' + this.fieldDivId + '"></div>');
     div = div.children("div#" + this.fieldDivId);
 
-    if(FIL.core.field) {
-      // Place cells on the field
-      for(; j<FIL.core.height; j++) {
-        div.append('<div></div>');
-        for(; i<FIL.core.width; j++) {
-          cellColor = this.getColor(i, j);
-          newCell = '<div class="' + this.fieldCellClass
-            + '" style="display: inline-block; width: ' + cellWidth + 'px; height: ' + cellHeight + 'px; background-color: ' + cellColor + '" '
-            + 'data-color="' + FIL.core.field[i][j][0] + '">';
-          div.children().last().append(newCell);
-        }
+    cellWidth = Math.floor(div.width() / FIL.core.width) - 2;
+    cellHeight = Math.floor(div.height() / FIL.core.height) - 2;
+
+    // Place cells on the field
+    for(j=0; j<FIL.core.height; j++) {
+      div.append('<div class="' + this.fieldRowClass + '" style="height: ' + (cellHeight+2) + 'px;"></div>');
+      rowDiv = div.children().last();
+      for(i=0; i<FIL.core.width; i++) {
+        cellColor = this.getColor(i, j);
+        newCell = '<a href="#" class="' + this.fieldCellClass
+          + '" style="width: ' + cellWidth + 'px; height: ' + cellHeight + 'px;"'
+          + ' data-color="' + FIL.core.field[i][j][0] +'"'
+          + ' data-coord="' + i + '_' + j + '">';
+        rowDiv.append(newCell);
       }
     }
   },
 
+  updateField: function() {
+    // show FIL.core.field on <div id="field">
+    var i=0,
+        j= 0,
+        div = this.mainDiv().children("div#" + this.fieldDivId),
+        cell,
+        cellColor;
+
+    if(FIL.core.field) {
+      if(this.isFieldBuilt()) {
+        // Place cells on the field
+        for(j=0; j<FIL.core.height; j++) {
+          for(i=0; i<FIL.core.width; i++) {
+            cellColor = this.getColor(i, j);
+            cell = div.children('div[data-coord='+ i + '_' + j +']');
+            cell.data('color', cellColor);
+          }
+        }
+      }else {
+        this.createField();
+      }
+    }
+  },
+
+  //##########
+  // Config
+  //##########
   showConfig: function() {
-    var div = this.mainDiv();
+    $('div#' + FIL.view.configDivId).fadeIn();
+    $('div#' + FIL.view.configBlockDivId).fadeIn();
+  },
 
-    // Create status panel
-    if(div.children("div#" + this.configDivId).length > 0)
-      div.children("div#" + this.configDivId).html('');
-    else
-      div.append('<div id="' + this.configDivId + '" name="' + this.configDivId + '"></div>');
-    div = div.children("div#" + this.configDivId);
-
-
+  hideConfig: function() {
+    $('div#' + FIL.view.configDivId).fadeOut();
+    $('div#' + FIL.view.configBlockDivId).fadeOut();
   },
 
 
 
-
-
-  getColor: function(x, y) {
-    return ['white', 'black', 'red', 'orange', 'yellow', 'green', 'cyan', 'blue', 'magenta'][ FIL.core.field[x][y][0] ];
-  },
+  ///////////
+  // PRIVATE
+  ///////////
 
   createControl: function() {
     var div = this.mainDiv();
@@ -120,50 +165,20 @@ FIL.view = {
     div.append('<div id="'+this.playerTunDivId+'" name="'+this.playerTunDivId+'" style="display: none;">PLAYER <span id="'+this.playerTurnSpanId+'" name="'+this.playerTurnSpanId+'">' + 0 + '</span> TURNS</div>');
 
     // Control panel
-    div.append('<div id="' + this.controlDivId + '" name="' + this.controlDivId + '"><a href="#" class="' + this.startLinkClass + '">Start new game</a> <a href="#" class="' + this.resetLinkClass + '">Reset</a></div>');
-  },
-
-  createField: function() {
-    // show FIL.core.field on <div id="field">
-    var i=0,
-      j= 0,
-      div = this.mainDiv(),
-      cellWidth = Math.floor(div.clientWidth / FIL.core.width),
-      cellHeight = Math.floor(div.clientHeight / FIL.core.height),
-      newCell,
-      cellColor,
-      rowDiv;
-    // Delete field
-    div.children('div#' + this.fieldDivId).remove();
-    // Create field
-    div.append('<div id="' + this.fieldDivId + '" name="' + this.fieldDivId + '" style="width: ' + (cellWidth+2) * FIL.core.width + '"></div>');
-    div = div.children("div#" + this.fieldDivId);
-
-    // Place cells on the field
-    for(; j<FIL.core.height; j++) {
-      div.append('<div></div>');
-      rowDiv = div.children().last();
-      for(; i<FIL.core.width; j++) {
-        cellColor = this.getColor(i, j);
-        newCell = '<div class="' + this.fieldCellClass
-          + '" style="display: inline-block; width: ' + cellWidth + 'px; height: ' + cellHeight + 'px;'
-          + ' background-color: ' + cellColor + '"'
-          + ' data-color="' + FIL.core.field[i][j][0] + '"'
-          + ' data-coord="' + i + '_' + j + '">';
-        rowDiv.append(newCell);
-      }
-    }
+    div.append('<div id="' + this.controlDivId + '" name="' + this.controlDivId + '"><a href="#" class="' + this.startLinkClass + ' button">Start new game</a> <a href="#" class="' + this.resetLinkClass + ' button">Reset</a></div>');
   },
 
   createConfig: function() {
     var div = this.mainDiv(),
         playerDiv, subDiv,
-        i, row,
+        i,
         radio,
         selectedIndex;
 
     // Delete config panel
     div.children('div#' + this.configDivId).remove();
+    // Create background div
+    div.append('<div id="' + this.configBlockDivId + '" name="' + this.configBlockDivId + '"></div>');
     // Create config panel
     div.append('<div id="' + this.configDivId + '" name="' + this.configDivId + '" style="display: inline;"></div>');
     div = div.children("div#" + this.configDivId);
@@ -173,20 +188,20 @@ FIL.view = {
     playerDiv = div.children('div').first();
 
     for(i=0; i<4; i++) {
-      playerDiv.append('<div class="config_player" style="display: inline-block;"></div>')
-      subDiv = playerDiv.children('div.config_player').last();
+      playerDiv.append('<div class="' + this.playerConfigClass + '" style="display: inline-block;"></div>')
+      subDiv = playerDiv.children("div." + this.playerConfigClass).last();
       subDiv.append('Player ' + (i+1) + '<br><br>');
-      subDiv.append('<input type="radio" name="radio_player_' + i + '" value="off" checked>OFF<br>');
-      subDiv.append('<input type="radio" name="radio_player_' + i + '" value="AI"'    + (FIL.players.list[i].type==1 ? "checked":"" ) + '>AI<br>');
-      subDiv.append('<input type="radio" name="radio_player_' + i + '" value="Human"' + (FIL.players.list[i].type==2 ? "checked":"" ) + '>Human');
+      subDiv.append('<input type="radio" name="' + this.playerRadioItemPrefix + i + '" value="0" checked>OFF<br>');
+      subDiv.append('<input type="radio" name="' + this.playerRadioItemPrefix + i + '" value="1"'    + (FIL.players.list[i].type==1 ? " checked":"" ) + '>AI<br>');
+      subDiv.append('<input type="radio" name="' + this.playerRadioItemPrefix + i + '" value="2"' + (FIL.players.list[i].type==2 ? " checked":"" ) + '>Human');
     }
 
-    div.append('<div><a href="#" class="' + this.saveConfigLinkClass + '">Save and Start</a>' +
-      ' <a href="#" class="' + this.cancelConfigLinkClass + '">Cancel</a></div>');
+    div.append('<div><a href="#" class="' + this.saveConfigLinkClass + ' button">Save and Start</a>' +
+      ' <a href="#" class="' + this.cancelConfigLinkClass + ' button">Cancel</a></div>');
 
   },
 
-  styleForConfig: function() {
-    return 'left:  '
+  getColor: function(x, y) {
+    return ['white', 'black', 'red', 'orange', 'yellow', 'green', 'cyan', 'blue', 'magenta'][ FIL.core.field[x][y][0] ];
   }
 }

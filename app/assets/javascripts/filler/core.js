@@ -3,14 +3,12 @@ FIL.core = {
   height: 20,
   colorCount: 7,
   field: undefined,
-  playerBases: undefined,
   moveArea: undefined,
   // Field is [X][Y] array which contains color of point and its owner
   turns: 0,
 
-  start: function(_width, _height, _colorCount, _playerCount, fieldUnityLevel) {
-    var i, j,
-        playerPoints = [[0,0], [_width-1, _height-1], [_width-1, 0], [0, _height-1]];
+  start: function(_width, _height, _colorCount, fieldUnityLevel) {
+    var i, j, point;
     this.width = _width;
     this.height = _height;
     this.colorCount = _colorCount;
@@ -23,28 +21,39 @@ FIL.core = {
         this.field[i][j] = [undefined, undefined]
       }
     }
-    // Players' base points
-    this.playerBases = new Array(_playerCount);
-    for(i=0; i<_playerCount; i++) {
-      this.playerBases[i] = playerPoints[i];
-    }
 
     this.moveArea = undefined;
     this.turns = 0;
 
     this.fieldRandom(fieldUnityLevel);
+
+    // Hold start areas
+    for(i=0; i<4; i++) {
+      if(FIL.players.list[i].type != 0) {
+        point = FIL.players.list[i].basePoint;
+        this.moveArea = undefined;
+        FIL.core.move(i, point, FIL.core.field[point[0]][point[1]][0], FIL.core.field[point[0]][point[1]] [0], true);
+      }
+    }
   },
 
   // unityLevel defines the frequency of color unions on the field. Bigger unityLevel is bigger chance of big color unions
   fieldRandom: function(unityLevel) {
-    var x = 0, y = 0,
+    var x, y,
         unityTry;
-    for(; y<this.height; y++) {
-      for(; x<this.width; x++)
+    for(y=0; y<this.height; y++) {
+      for(x=0; x<this.width; x++)
       {
         for(unityTry = 0; unityTry<unityLevel; unityTry++) {
           this.field[x][y] = [Math.floor(Math.random() * this.colorCount), undefined];
-          if(( (x != 0) && (this.field[x][y] == this.field[x-1][y]) ) || ( (y != 0) && (this.field[x][y] == this.field[x][y-1]) )) break;
+
+          if(x + y == 0) // x=0 && y=0
+            break;
+          if((x != 0) && (this.field[x][y] == this.field[x-1][y]))
+            break;
+          if((y != 0) && (this.field[x][y] == this.field[x][y-1]))
+            break;
+
         }
       }
     }
@@ -79,14 +88,21 @@ FIL.core = {
     // Search
     for(i=0; i<4; i++) {
       if(
-        (shifts[i][1] >= 0)
-          && !this.moveArea[ shifts[i][0] ][ shifts[i][1] ]
-          && (!!this.field[ shifts[i][0] ][ shifts[i][1] ] [1] || (this.field[ shifts[i][0] ][ shifts[i][1] ] [1] == playerNumber))
-          && ((newColor == this.field[ shifts[i][0] ][ shifts[i][1] ] [0]) || (oldColor == this.field[ shifts[i][0] ][ shifts[i][1] ] [0]))
+        ( this.isPointInField(shifts[i]) )
+       && !this.moveArea[ shifts[i][0] ][ shifts[i][1] ]
+       && (
+            ( !this.field[ shifts[i][0] ][ shifts[i][1] ] [1] && (newColor == this.field[ shifts[i][0] ][ shifts[i][1] ] [0]) )
+         || (this.field[ shifts[i][0] ][ shifts[i][1] ] [1] == playerNumber)
+          )
         )
-        paintedCellNumber += this.move(playerNumber, shifts[i], newColor, doPaint);
+        paintedCellNumber += this.move(playerNumber, shifts[i], oldColor, newColor, doPaint);
     }
 
     return paintedCellNumber;
+  },
+
+  isPointInField: function(point) {
+    return (point[0] >= 0 && point[0] < this.width)
+        && (point[1] >= 0 && point[1] < this.height);
   }
 }
