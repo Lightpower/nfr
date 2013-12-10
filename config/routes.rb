@@ -56,7 +56,11 @@ Nfr::Application.routes.draw do
     end
   end
 
-  match '/adm/action' => 'admin#action'
+  namespace :admins do
+    match '/action' => 'common#action'
+
+    resources :sql, only: [:index, :create]
+  end
 
   # Easters
 

@@ -78,6 +78,8 @@ aside.site_aside_right {
 }
 
 section.site_main_content {
+  white-space: nowrap;
+  overflow: auto;
   min-height: 394px;
   width: 750px;
   -webkit-border-radius: 2px;

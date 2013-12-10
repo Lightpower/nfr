@@ -1,0 +1,28 @@
+<%= form_for :sql do |f| %>
+    <%= text_area :sql, :to_s, rows: '10', class: 'full_width' %><br>
+    <%= f.submit %>
+<% end %>
+
+<% if @cmd_tuples %>
+  <div>Affected <%= @cmd_tuples %> row(s) </div>
+<% end %>
+
+<% if @response.present? %>
+    <table id="sql" name="sql" class="table-bordered">
+      <thead>
+        <% @response.first.keys.each do |header| %>
+          <%= content_tag(:th, header) %>
+        <% end %>
+      </thead>
+      <tbody>
+      <% @response.each do |row| %>
+        <tr>
+        <% row.values.each do |cell| %>
+          <%= content_tag(:td, cell) %>
+        <% end %>
+        </tr>
+      <% end %>
+
+      </tbody>
+    </table>
+<% end %>

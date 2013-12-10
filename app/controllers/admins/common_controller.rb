@@ -1,13 +1,15 @@
 # encoding: UTF-8
-class AdminController < ApplicationController
+class Admins::CommonController < ApplicationController
+
   before_filter :authenticate_user!
-  before_filter :admin_check
+  authorize_resource class: false
+
 
   ##
   # Some action
   #
   def action
-    ArchiveFacade.copy_from_archive(Game.first)
+    #ArchiveFacade.copy_from_archive(Game.first)
     redirect_to root_path, notice: 'Admin action is processed'
   end
 
