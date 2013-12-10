@@ -5,7 +5,7 @@ FIL.events = {
   },
 
   onReset: function() {
-    FIL.core.start(10, 10, 6, 10);
+    FIL.core.start(FIL.core.width, FIL.core.height, FIL.core.colorCount, FIL.core.unityLevel);
     FIL.view.updateField();
     FIL.view.updateControl();
   },
@@ -36,12 +36,18 @@ FIL.events = {
   onStartGame: function() {
     var players = [0,0,0,0],
         div = $('div#' + FIL.view.playerConfigClass),
+        width, height, colorCount, unityLevel,
         i=0;
 
     for(; i<4; i++) {
       players[i] = $('input[name=' + FIL.view.playerRadioItemPrefix + i + ']:checked').val();
     }
+    width = $('input#' + FIL.view.fieldWidthInputId).val();
+    height = $('input#' + FIL.view.fieldHeightInputId).val();
+    colorCount = $('input#' + FIL.view.colorCountInputId).val();
+    unityLevel = $('input#' + FIL.view.unityLevelInputId).val();
     FIL.players.setup(players);
+    FIL.core.fieldSetup(width, height, colorCount, unityLevel);
     this.onReset();
     FIL.view.hideConfig();
   },

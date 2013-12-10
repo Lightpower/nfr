@@ -1,23 +1,30 @@
 // Show status panel and game field
 FIL.view = {
   fillerDivId:           'filler',
+  // Field
   fieldDivId:            'filler_field',
   fieldCellClass:        'fcell',
   fieldRowClass:         'field_row',
+  // Control panel
   statusDivId:           'filler_status',
   controlDivId:          'filler_control',
   colorDivId:            'filler_colors',
   startLinkClass:        'filler_start',
   resetLinkClass:        'filler_reset',
+  headDivId:           'filler_players',
+  playerTunDivId:        'player_turn',
+  playerTurnSpanId:      'filler_player_turn',
+  // Config panel
   saveConfigLinkClass:   'filler_save_config',
   cancelConfigLinkClass: 'filler_cancel_config',
   configDivId:           'filler_config',
   configBlockDivId:      'filler_config_block',
-  playerDivId:           'filler_players',
-  playerTunDivId:        'player_turn',
-  playerTurnSpanId:      'filler_player_turn',
   playerConfigClass:     'player_config',
   playerRadioItemPrefix: 'radio_player_',
+  fieldWidthInputId:     'field_width',
+  fieldHeightInputId:    'field_height',
+  colorCountInputId:     'color_count',
+  unityLevelInputId:     'unity_level',
 
   mainDiv: function() { return $('div#' + this.fillerDivId) },
 
@@ -45,7 +52,7 @@ FIL.view = {
     // Get status panel
     div = div.children("div#" + this.statusDivId);
 
-    subDiv = div.children("div#" + this.playerDivId);
+    subDiv = div.children("div#" + this.headDivId);
     subDiv.html('');
     // Info about each player
     for(; i<4; i++) {
@@ -68,9 +75,11 @@ FIL.view = {
     }
 
     // Info about player's turn
-    subDiv = div.children('div#' + this.playerDivId);
+    subDiv = div.children('div#' + this.headDivId);
     subDiv.fadeIn();
     subDiv.children('span#' + this.playerTurnSpanId).text = FIL.players.currentPlayerId;
+
+    this.createColorPanel();
   },
 
   //#########
@@ -162,12 +171,21 @@ FIL.view = {
     div = div.children("div#" + this.statusDivId);
 
     // Info about each player
-    div.append('<div id="' + this.playerDivId + '" name="' + this.playerDivId + '"></table>');
+    div.append('<div id="' + this.headDivId + '" name="' + this.headDivId + '"></table>');
 
     div.append('<div id="'+this.playerTunDivId+'" name="'+this.playerTunDivId+'" style="display: none;">PLAYER <span id="'+this.playerTurnSpanId+'" name="'+this.playerTurnSpanId+'">' + 0 + '</span> TURNS</div>');
 
     // Control panel
     div.append('<div id="' + this.controlDivId + '" name="' + this.controlDivId + '"><a href="#" class="' + this.startLinkClass + ' button">Start new game</a> <a href="#" class="' + this.resetLinkClass + ' button">Reset</a></div>');
+
+    this.createColorPanel();
+  },
+
+  createColorPanel: function() {
+    var div = $('div#' + this.statusDivId),
+        tmpDiv, newCell, i;
+    // Delete color panel
+    $('div#' + this.colorDivId).remove();
 
     // Color panel
     div.append('<div id="' + this.colorDivId + '" name="' + this.colorDivId + '"></div>');
@@ -181,10 +199,10 @@ FIL.view = {
 
   createConfig: function() {
     var div = this.mainDiv(),
-        playerDiv, subDiv,
+        headDiv, subDiv,
         i,
         radio,
-        selectedIndex;
+        row;
 
     // Delete config panel
     div.children('div#' + this.configDivId).remove();
@@ -194,18 +212,36 @@ FIL.view = {
     div.append('<div id="' + this.configDivId + '" name="' + this.configDivId + '" style="display: inline;"></div>');
     div = div.children("div#" + this.configDivId);
 
-    // Place
+    // Place players config
     div.append("<div></div>");
-    playerDiv = div.children('div').first();
+    headDiv = div.children('div').first();
 
     for(i=0; i<4; i++) {
-      playerDiv.append('<div class="' + this.playerConfigClass + '" style="display: inline-block;"></div>')
-      subDiv = playerDiv.children("div." + this.playerConfigClass).last();
+      headDiv.append('<div class="' + this.playerConfigClass + '"></div>')
+      subDiv = headDiv.children("div." + this.playerConfigClass).last();
       subDiv.append('Player ' + (i+1) + '<br><br>');
       subDiv.append('<input type="radio" name="' + this.playerRadioItemPrefix + i + '" value="0" checked>OFF<br>');
       subDiv.append('<input type="radio" name="' + this.playerRadioItemPrefix + i + '" value="1"'    + (FIL.players.list[i].type==1 ? " checked":"" ) + '>AI<br>');
       subDiv.append('<input type="radio" name="' + this.playerRadioItemPrefix + i + '" value="2"' + (FIL.players.list[i].type==2 ? " checked":"" ) + '>Human');
     }
+
+    // Place field config
+    div.append('<table style="margin: 5px 15px;">');
+    headDiv = div.children('table').first();
+    // Width and color number
+    headDiv.append('<tr>');
+    subDiv = headDiv.find('tr').last();
+    subDiv.append('<td>Field width:</td>');
+    subDiv.append('<td><input id="' + this.fieldWidthInputId + '" name="' + this.fieldWidthInputId + '" value="20"></td>');
+    subDiv.append('<td>Colors number: </td>');
+    subDiv.append('<td><input id="' + this.colorCountInputId + '" name="' + this.colorCountInputId + '" value="7"></td>');
+    // Height and unity level
+    headDiv.append('<tr>');
+    subDiv = headDiv.find('tr').last();
+    subDiv.append('<td>Field height:</td>');
+    subDiv.append('<td><input id="' + this.fieldHeightInputId + '" name="' + this.fieldHeightInputId + '" value="20"></td>');
+    subDiv.append('<td>Unity level: </td>');
+    subDiv.append('<td><input id="' + this.unityLevelInputId + '" name="' + this.unityLevelInputId + '" value="2"></td>');
 
     div.append('<div><a href="#" class="' + this.saveConfigLinkClass + ' button">Save and Start</a>' +
       ' <a href="#" class="' + this.cancelConfigLinkClass + ' button">Cancel</a></div>');

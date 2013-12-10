@@ -36,9 +36,9 @@ div#filler_config {
   left: 50%;
   top: 50%;
   width: 400px;
-  height: 160px;
+  height: 220px;
   margin-left: -150px;
-  margin-top: -100px;
+  margin-top: -200px;
   background-color: gray;
   border: 1px solid black;
   -webkit-border-radius: 5px;
@@ -50,6 +50,7 @@ div#filler_config {
 }
 
 div.player_config {
+  display: inline-block;
   margin: 15px;
 }
 
@@ -61,6 +62,10 @@ div#filler_config_block {
   top: 0;
   opacity: 0.7;
   background-color: gray;
+}
+
+input#field_width, input#field_height, input#color_count, input#unity_level {
+  width: 40px;
 }
 
 div#filler {

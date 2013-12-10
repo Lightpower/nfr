@@ -84,7 +84,7 @@ FIL.players = {
     }
     for(i=0; i<4; i++){
       if(players[i][1] != 0) {
-        str += '\nPlayer ' + players[i][0] + ' - ' + players[i][1] + ' point(s)';
+        str += '\nPlayer ' + (players[i][0]+1) + ' - ' + players[i][1] + ' point(s)';
       }
     }
 

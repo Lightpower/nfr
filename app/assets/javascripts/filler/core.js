@@ -2,21 +2,22 @@ FIL.core = {
   width: 20,
   height: 20,
   colorCount: 7,
+  unityLevel: 10,
+  // Field is [X][Y] array which contains color of point and its owner
   field: undefined,
   moveArea: undefined,
-  // Field is [X][Y] array which contains color of point and its owner
   turns: 0,
 
-  start: function(_width, _height, _colorCount, fieldUnityLevel) {
+  start: function(width, height, colorCount, unityLevel) {
     var i, j, point;
-    this.width = _width;
-    this.height = _height;
-    this.colorCount = _colorCount;
+    this.width = width;
+    this.height = height;
+    this.colorCount = colorCount;
     // Init field array
-    this.field = new Array(_width);
-    for(i=0; i<_width; i++) {
-      this.field[i] = new Array(_height);
-      for(j=0; j<_height; j++) {
+    this.field = new Array(width);
+    for(i=0; i<width; i++) {
+      this.field[i] = new Array(height);
+      for(j=0; j<height; j++) {
         // undefined color, undefined owner
         this.field[i][j] = [undefined, undefined]
       }
@@ -25,7 +26,7 @@ FIL.core = {
     this.moveArea = undefined;
     this.turns = 0;
 
-    this.fieldRandom(fieldUnityLevel);
+    this.fieldRandom(unityLevel);
 
     // Hold start areas
     for(i=0; i<4; i++) {
@@ -49,9 +50,9 @@ FIL.core = {
 
           if(x + y == 0) // x=0 && y=0
             break;
-          if((x != 0) && (this.field[x][y] == this.field[x-1][y]))
+          if((x != 0) && (this.field[x][y][0] == this.field[x-1][y][0]))
             break;
-          if((y != 0) && (this.field[x][y] == this.field[x][y-1]))
+          if((y != 0) && (this.field[x][y][0] == this.field[x][y-1][0]))
             break;
 
         }
@@ -99,6 +100,20 @@ FIL.core = {
     }
 
     return paintedCellNumber;
+  },
+  
+  fieldSetup: function(width, height, colorCount, unityLevel) {
+    var tmpWidth, tmpHeight, tmpColorCount, tmpLevel;
+    try {
+      tmpWidth = parseInt(width);
+      tmpHeight = parseInt(height);
+      tmpColorCount = parseInt(colorCount);
+      tmpLevel = parseInt(unityLevel);
+      this.width = tmpWidth;
+      this.height = tmpHeight;
+      this.colorCount = tmpColorCount;
+      this.unityLevel = tmpLevel;
+    }catch(e) {}
   },
 
   isPointInField: function(point) {
