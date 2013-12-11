@@ -27,7 +27,7 @@ class TeamsController < ApplicationController
     if @team.save!
       current_user.team = @team
       current_user.save!
-      redirect_to @team, notice: 'Команда успешно создана!.'
+      redirect_to @team, notice: 'Команда успешно создана!'
     else
       render action: "new"
     end
