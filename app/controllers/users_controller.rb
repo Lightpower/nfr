@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    @users = User.accessible_by(current_ability, :read)
+    @users = User.accessible_by(current_ability, :read).by_username
   end
 
   # GET /users/1
@@ -24,6 +24,8 @@ class UsersController < ApplicationController
   # POST /users
   def create
     prevent_admin_role
+    # Cannot set team_id when user is being created
+    @user.team_id = nil
 
     if @user.save
       redirect_to @user, notice: 'Пользователь успешно создан!'
