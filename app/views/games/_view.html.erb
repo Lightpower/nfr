@@ -35,7 +35,7 @@
 					<%= link_to_create_game_request(game) %>
 	      <% end %>
 	    <% end %>
-	    <% if game.is_active? && game.teams.include?(current_user.team) %>
+	    <% if game.is_active? && game.teams.include?(current_user.team) && (game.start_date < Time.now) %>
 				<%= link_to_enter_game(game) %>
 	    <% end %>
 	  <% end %>
