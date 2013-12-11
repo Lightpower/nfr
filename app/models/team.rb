@@ -12,6 +12,13 @@ class Team < ActiveRecord::Base
 
   attr_accessible :name, :alternative_name, :image_url, :captain, :user_id
 
+  validates_presence_of   :name
+  validates_uniqueness_of :name
+
+  validates_format_of :name,             with: /^[\wа-яА-Я\-_\.\!]{3,32}$/
+  validates_format_of :alternative_name, with: /^[\wа-яА-Я\-_\.\!]{3,32}$/,   if: Proc.new {|t| t.alternative_name.present? }
+  validates_format_of :image_url, with: /^http(s?):\/\/[a-zA-Z0-9-_\.\/]+$/,  if: Proc.new {|t| t.image_url.present? }
+
   ##
   # Number of accepted codes in defined zone
   #

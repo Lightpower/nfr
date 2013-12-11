@@ -11,10 +11,20 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :username, :email, :password, :password_confirmation, :remember_me,
-                  :team, :team_id, :avatar_url
+                  :team_id, :avatar_url
   # Use login an username OR email
   attr_accessor :login
   attr_accessible :login
+
+  # Validations
+  validates_format_of :username, with: /^[\w\-_\.]{3,32}$/,                         if: Proc.new {|u| u.username.present? }
+  validates_format_of :password, with: /^[\w\-_\.]{6,32}$/,                         if: Proc.new {|u| u.password.present? }
+  validates_format_of :avatar_url, with: /^http(s?):\/\/[a-zA-Z0-9-_\.\/]+$/,       if: Proc.new {|u| u.avatar_url.present? }
+
+
+  # Scopes
+
+  scope :by_username, order(:username)
 
   ##
   # Reload user authorization - use email OR username
