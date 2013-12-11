@@ -1,44 +1,48 @@
 <% if game.present? %>
-  <div class="game <%= game.css_class %>">
-    <h1><%= game.start_date.localtime.strftime("%d.%m.%y") %> - <%= game.name %></h1>
-		<h3><%= game.project.try(:name) %> <%= game.format.try(:name) %> #<%= game.number %></h3>
-	  <b>Старт: <%= game.start_date.localtime.strftime("%H:%M") %></b><br>
-	  <% if (game.price || 0) > 0 %>
-	    <b>Взнос: <%= game.price %> грн.</b><br>
-  	<% end %>
-    <%= game.image_html.try(:html_safe) || "" %><br>
-		<div class="details openable_holder">
-			<%= openable_tag(nil, false, 'Подробней') %>
-			<div class="openable hidden">
-			  <b>Зона игры:</b> <%= game.area || "уточняется" %><br>
-			  <% if game.preview %>
-			    <p><b>Анонс</b><br> <%= game.preview.try(:html_safe) %></p>
-			  <% end %>
-			  <% if game.legend %>
-			    <p><b>Легенда</b>
-                <div class="word_wrap"><%= game.legend.try(:html_safe) %></div></p>
-			  <% end %>
-			  <% if game.brief_place %>
-			    <p><b>Место брифинга: </b> <%= game.brief_place.try(:html_safe) %></p>
-			  <% end %>
-			  <div class="details">
-  			  <b>Принятые заявки: </b> <%= game.teams.map(&:name).join(', ') %><br>
-  			  <b>Ждут принятия: </b> <%= game.teams_unaccepted.map(&:name).join(', ') %>
-			  </div>
+    <div class="game <%= game.css_class %>">
+      <h1><%= game.start_date.localtime.strftime("%d.%m.%y") %> - <%= game.name %></h1>
+      <h3><%= game.project.try(:name) %> <%= game.format.try(:name) %> #<%= game.number %></h3>
+      <b>Старт: <%= game.start_date.localtime.strftime("%H:%M") %></b><br>
+      <% if (game.price || 0) > 0 %>
+          <b>Взнос: <%= game.price %> грн.</b><br>
+      <% end %>
+      <%= game.image_html.try(:html_safe) || "" %><br>
+      <div class="details openable_holder">
+        <%= openable_tag(nil, false, 'Подробней') %>
+        <div class="openable hidden">
+          <b>Зона игры:</b> <%= game.area || "уточняется" %><br>
+          <% if game.preview %>
+              <p><b>Анонс</b><br> <%= game.preview.try(:html_safe) %></p>
+          <% end %>
+          <% if game.legend %>
+              <p><b>Легенда</b>
+              <div class="word_wrap"><%= game.legend.try(:html_safe) %></div></p>
+          <% end %>
+          <% if game.brief_place %>
+              <p><b>Место брифинга: </b> <%= game.brief_place.try(:html_safe) %></p>
+          <% end %>
+          <div class="details">
+            <b>Принятые заявки: </b> <%= game.teams.map(&:name).join(', ') %><br>
+            <b>Ждут принятия: </b> <%= game.teams_unaccepted.map(&:name).join(', ') %>
+          </div>
 
-			</div>
-		</div>
-		<% if current_user %>
-	    <% if current_user.is_captain? %>
-	      <% if game.requests.map(&:team).include?(current_user.team) %>
-	        <%= link_to_delete_game_request(game, current_user) %>
-  			<% else %>
-					<%= link_to_create_game_request(game) %>
-	      <% end %>
-	    <% end %>
-	    <% if game.is_active? && game.teams.include?(current_user.team) && (game.start_date < Time.now) %>
-				<%= link_to_enter_game(game) %>
-	    <% end %>
-	  <% end %>
-	</div>
+        </div>
+      </div>
+      <div>
+        <%= link_to('Обсудить на форуме', game.prepare_url, class: 'action_button') if game.prepare_url.present? %>
+      </div>
+
+      <% if current_user %>
+          <% if current_user.is_captain? %>
+              <% if game.requests.map(&:team).include?(current_user.team) %>
+                  <%= link_to_delete_game_request(game, current_user) %>
+              <% else %>
+                  <%= link_to_create_game_request(game) %>
+              <% end %>
+          <% end %>
+          <% if game.is_active? && game.teams.include?(current_user.team) && (game.start_date < Time.now) %>
+              <%= link_to_enter_game(game) %>
+          <% end %>
+      <% end %>
+    </div>
 <% end %>
