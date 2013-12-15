@@ -4,18 +4,18 @@
   <%= devise_error_messages! %>
 
   <div><%= f.label :username, 'Логин' %>
-  <%= f.text_field :username %></div>
+  <%= f.text_field :username, :autofocus => true %></div>
 
   <div><%= f.label :email %>
-  <%= f.email_field :email, :autofocus => true %></div>
+  <%= f.email_field :email %></div>
 
-  <div><%= f.label :password, "Пароль" %>
+  <div><%= f.label :password, 'Пароль' %>
   <%= f.password_field :password %></div>
 
-  <div><%= f.label :password_confirmation, "Подтверждение пароля" %>
+  <div><%= f.label :password_confirmation, 'Подтверждение пароля' %>
   <%= f.password_field :password_confirmation %></div>
 
-  <div><%= f.submit "Зарегистрироваться" %></div>
+  <div><%= f.submit 'Зарегистрироваться' %></div>
 <% end %>
 
-<%= render "devise/shared/links" %>
+<%= render 'devise/shared/links' %>

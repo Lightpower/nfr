@@ -4,10 +4,10 @@
   <%= devise_error_messages! %>
 
   <div><%= f.label :username, 'Логин' %>
-    <%= f.text_field :username %></div>
+    <%= f.text_field :username, :autofocus => true %></div>
 
   <div><%= f.label :email %>
-  <%= f.email_field :email, :autofocus => true %></div>
+  <%= f.email_field :email %></div>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Ожидается подтверждение: <%= resource.unconfirmed_email %></div>
