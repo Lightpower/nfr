@@ -1,5 +1,7 @@
-<nav id="site_navigation">
-  <%= link_to("Анонсы", '/',                            class: (params[:controller] == 'home' ?     'selected':'')) %>
-  <%= link_to("Архивы", archives_path,                  class: (params[:controller] == 'archives' ? 'selected':'')) %>
-  <%= link_to("Форум", 'http://nedostroy.com.ua/forum', class: (params[:controller] == 'forum' ?    'selected':'')) %>
+<nav id='site_navigation'>
+  <%= link_to('Анонсы', '/',                            class: (params[:controller] == 'home' ?     'selected':'')) %>
+  <%= link_to('Архивы', archives_path,                  class: (params[:controller] == 'archives' ? 'selected':'')) %>
+  <%= link_to('Форум', 'http://nedostroy.com.ua/forum', class: (params[:controller] == 'forum' ?    'selected':''), target: '_blank') %>
+  <%= link_to('ВКонтакте', 'https://vk.com/neformat_quest',                   target: '_blank') %>
+  <%= link_to('Facebook', 'https://www.facebook.com/groups/neformat.quest/',  target: '_blank') %>
 </nav>
