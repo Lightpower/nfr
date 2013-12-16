@@ -19,7 +19,7 @@ class Ability
       if user.id
         can :manage, User,     id: user.id
         can :read,   User
-        can :create, Team      if user.team_id.blank?
+        can :create, Team      if user.team.blank?
         can :read,   Team
         can :manage, TeamRequest, user_id: user.id, by_user: true
       end
