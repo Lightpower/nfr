@@ -1,6 +1,6 @@
 # coding: utf-8
 class UsersController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource    except: [:index]
 
   # GET /users
   def index

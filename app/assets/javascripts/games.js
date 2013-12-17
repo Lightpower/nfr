@@ -1,10 +1,10 @@
 NFR.games = {
   filter: function(filter_class) {
     if(filter_class === '') {
-      $('div.game').fadeIn();
+      $('article.game').fadeIn();
     }else{
-      $('div.game').fadeOut(0);
-      $('div.game.' + filter_class).fadeIn();
+      $('article.game').fadeOut(0);
+      $('article.game.' + filter_class).fadeIn();
     }
   }
 };

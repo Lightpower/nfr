@@ -9,7 +9,9 @@ $(function() {
       if(id != '') NFR.openable.open(id);
     } else {
       submenu.addClass("hidden");
-      this_text = "+" + this_text.split("- ")[1];
+      if(this_text[0] == '-') {
+        this_text = "+" + this_text.split("- ")[1];
+      }
       if(id != '') NFR.openable.close(id);
     }
     $(this).text(this_text);

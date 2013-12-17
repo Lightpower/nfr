@@ -62,6 +62,10 @@ Nfr::Application.routes.draw do
     resources :sql, only: [:index, :create]
   end
 
+  namespace :creators do
+    resources :games
+  end
+
   # Easters
 
   get '/blackjack', to: redirect('http://absolutist.ru/online/bjack/blackjack.swf')

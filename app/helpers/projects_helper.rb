@@ -14,9 +14,9 @@ module ProjectsHelper
 
     result = ''
     menu_items.each do |item|
-      result << link_to(item[:name], '#', class: 'header_menu_item', 'data-class' => item[:class]).html_safe
+      result << content_tag(:li, link_to(item[:name], '#', class: 'header_menu_item', 'data-class' => item[:class])).html_safe
     end
-    result.html_safe
+    content_tag(:ul, result.html_safe, class: 'header_menu').html_safe
   end
 
 end

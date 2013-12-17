@@ -1,0 +1,111 @@
+<%= form_for @game, html: { class: 'form-horizontal' } do |f| %>
+    <% if @game.errors.any? %>
+        <div id='error_explanation'>
+          <h2><%= pluralize(@game.errors.count, 'error') %> не дают сохранить команду:</h2>
+
+          <ul>
+            <% @game.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class='field'>
+      <%= f.label :number, 'Номер', class: 'caption' %>
+      <%= f.text_field :number, required: true %>
+    </div>
+    <div class='field'>
+      <%= f.label :format_id, 'Формат', class: 'caption' %>
+      <%= f.select(:format_id, @formats) %>
+    </div>
+    <div class='field'>
+      <%= f.label :name, 'Название', class: 'caption' %>
+      <%= f.text_field :name, required: true %>
+    </div>
+    <div class='field'>
+      <%= f.label :game_type, 'Тип игры', class: 'caption' %>
+      <%= f.text_field :game_type, required: true %>
+    </div>
+    <div class='field'>
+      <%= f.label :start_date, 'Начало (ДД.ММ.ГГГГ ЧЧ:ММ)', class: 'caption' %>
+      <%= f.text_field :start_date, required: true, default: Time.now.strftime('%d.%m.%Y %H:%M') %>
+    </div>
+    <div class='field'>
+      <%= f.label :finish_date, 'Конец (ДД.ММ.ГГГГ ЧЧ:ММ)', class: 'caption' %>
+      <%= f.text_field :finish_date %>
+    </div>
+    <div class='field'>
+      <%= f.label :price, 'Цена (грн.)', class: 'caption' %>
+      <%= f.text_field :price %>
+    </div>
+    <div class='field'>
+      <%= f.label :area, 'Зона игры', class: 'caption' %>
+      <%= f.text_field :area %>
+    </div>
+    <div class='field'>
+      <%= f.label :image_html, 'HTML картинки анонса', class: 'caption' %>
+
+      <div class="hint openable_holder">
+        <%= openable_tag('image_html_div', false, 'Последний сохранённый HTML') %>
+        <div class="openable">
+          <%= @game.image_html.try(:html_safe) %>
+        </div>
+      </div>
+
+      <%= f.text_field :image_html, class: 'long' %>
+    </div>
+
+    <div class='field'>
+      <%= f.label :preview, 'HTML анонса', class: 'caption' %>
+
+      <div class="hint openable_holder">
+        <%= openable_tag('preview_div', false, 'Последний сохранённый HTML') %>
+        <div class="openable">
+          <%= @game.preview.try(:html_safe) %>
+        </div>
+      </div>
+
+      <%= f.text_area :preview, class: 'long' %>
+    </div>
+
+    <div class='field'>
+      <%= f.label :legend, 'Легенда', class: 'caption' %>
+
+      <div class="hint openable_holder">
+        <%= openable_tag('legend_div', false, 'Последний сохранённый HTML') %>
+        <div class="openable">
+          <%= @game.legend.try(:html_safe) %>
+        </div>
+      </div>
+
+      <%= f.text_area :legend, class: 'long' %>
+    </div>
+
+    <div class='field'>
+      <%= f.label :brief_place, 'Место брифинга', class: 'caption' %>
+      <%= f.text_field :brief_place, class: 'long' %>
+    </div>
+    <div class='field'>
+      <%= f.label :dopy_list, 'Дополнительные принадлежности', class: 'caption' %>
+      <%= f.text_field :dopy_list, class: 'long' %>
+    </div>
+    <div class='field'>
+      <%= f.check_box :is_active %>
+      <%= f.label :is_active, 'Активна', class: 'inline-block' %><br>
+      <%= f.check_box :is_archived %>
+      <%= f.label :is_archived, 'В архиве', class: 'inline-block' %>
+    </div>
+    <div class='field'>
+      <%= f.label :prepare_url, 'Ссылка на форум (подготовка)', class: 'caption' %>
+      <%= f.text_field :prepare_url, class: 'long' %>
+    </div>
+    <div class='field'>
+      <%= f.label :discuss_url, 'Ссылка на форум (обсуждение)', class: 'caption' %>
+      <%= f.text_field :discuss_url, class: 'long' %>
+    </div>
+
+    <div class='actions button'>
+      <%= f.submit 'Сохранить', class: 'action_button' %>
+    </div>
+<% end %>
