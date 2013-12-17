@@ -32,7 +32,7 @@ nav#site_info_container {
   border-style: solid;
 }
 
-nav.menu {
+aside.menu {
   display: block;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
@@ -66,14 +66,13 @@ nav.menu {
 }
 
 aside#team_info {
-  font-size: 15px;
 
   li {
     height: 21px;
   }
 }
 
-nav#user_info, aside#team_info {
+aside#user_info, aside#team_info {
   font-size: 12px;
 
   li {

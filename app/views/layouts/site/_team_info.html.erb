@@ -1,5 +1,5 @@
 <% if current_user.present? %>
-  <nav id="user_info" class="menu">
+  <aside id="user_info" class="menu">
 	  <h2>Командные настройки</h2>
     <% if current_user.team.present? %>
       <span>Команда: <%= content_tag(:b, current_user.team.name) %></span><br><br>
@@ -23,5 +23,5 @@
       <%= content_tag(:li, link_to('Список всех игроков', users_path)) %>
       <br>
     </ul>
-  </nav>
+  </aside>
 <% end %>
