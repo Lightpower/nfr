@@ -23,4 +23,17 @@ module TeamsHelper
       end
     end
   end
+
+  ##
+  # Show team link as pretty div
+  #
+  def link_to_team(team_or_id)
+    team = team_or_id.is_a?(Team) ? team_or_id : Team.find(team_or_id) rescue nil
+    return '' if team.blank?
+
+    ret_val = link_to(team.name, team_path(team), class: 'team_link')
+
+    content_tag(:div, ret_val, class: 'team_link')
+  end
+
 end
