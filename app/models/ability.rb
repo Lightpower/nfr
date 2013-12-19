@@ -45,8 +45,10 @@ class Ability
         can :manage,    TeamRequest, team_id: user.team_id
         can :manage,    GameRequest, team_id: user.team_id
       end
-    #
-    #  # Access to Game
+
+      # Access to Game
+      cannot :read, Game, !:is_visible
+
     #  if user.team.present?
     #    team = user.team
     #    if team.present?
