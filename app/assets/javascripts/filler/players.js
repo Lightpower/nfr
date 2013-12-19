@@ -18,6 +18,13 @@ FIL.players = {
   ],
   currentPlayerId: 0,
 
+  reset: function() {
+    var i;
+    for(i=0; i<4; i++) {
+      this.list[i].points = 0;
+    }
+  },
+
   count: function() {
     var count = 0, i;
     for(i=0; i<4; i++ )

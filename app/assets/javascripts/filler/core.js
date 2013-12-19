@@ -36,6 +36,7 @@ FIL.core = {
         FIL.core.move(i, point, FIL.core.field[point[0]][point[1]][0], FIL.core.field[point[0]][point[1]] [0], true);
       }
     }
+    FIL.players.reset();
   },
 
   // unityLevel defines the frequency of color unions on the field. Bigger unityLevel is bigger chance of big color unions
