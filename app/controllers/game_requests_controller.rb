@@ -7,10 +7,11 @@ class GameRequestsController < ApplicationController
   #
   def create
     @game_request.team_id = current_user.team_id
+    @game_request.is_accepted = true if @game_request.game.auto_teams_accept
     if @game_request.save
-      flash[:notice] = "Заявка подана успешно!"
+      flash[:notice] = 'Заявка подана успешно!'
     else
-      flash[:error] = "Ошибка подачи заявки!"
+      flash[:error] = 'Ошибка подачи заявки!'
     end
     redirect_to root_path
   end
@@ -20,9 +21,9 @@ class GameRequestsController < ApplicationController
   #
   def destroy
     if @game_request.delete
-      flash[:notice] = "Заявка удалена!"
+      flash[:notice] = 'Заявка удалена!'
     else
-      flash[:error] = "Ошибка удаления заявки!"
+      flash[:error] = 'Ошибка удаления заявки!'
     end
     redirect_to root_path
   end
