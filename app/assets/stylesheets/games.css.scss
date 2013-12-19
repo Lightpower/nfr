@@ -2,6 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+article.game.invisible {
+  opacity: .7;
+}
+
 article.game {
   display: block;
   padding: 10px;
