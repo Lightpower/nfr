@@ -1,3 +1,4 @@
+# encoding: utf-8
 ##
 # Controller for handling Games by their creators and co-creators
 #
