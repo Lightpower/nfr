@@ -91,10 +91,14 @@
       <%= f.text_field :dopy_list, class: 'long' %>
     </div>
     <div class='field'>
+      <%= f.check_box :is_visible %>
+      <%= f.label :is_visible, 'Отображать в анонсах и архивах', class: 'inline-block' %>
       <%= f.check_box :is_active %>
       <%= f.label :is_active, 'Активна', class: 'inline-block' %><br>
       <%= f.check_box :is_archived %>
       <%= f.label :is_archived, 'В архиве', class: 'inline-block' %>
+      <%= f.check_box :auto_teams_accept %>
+      <%= f.label :auto_teams_accept, 'Принимать заявки без предварительного одобрения', class: 'inline-block' %>
     </div>
     <div class='field'>
       <%= f.label :prepare_url, 'Ссылка на форум (подготовка)', class: 'caption' %>
