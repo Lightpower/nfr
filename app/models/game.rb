@@ -30,8 +30,9 @@ class Game < ActiveRecord::Base
 
   has_one  :config, class_name: 'GameConfig'
 
-  attr_accessible :number, :name, :format, :format_id, :game_type, :start_date, :finish_date, :price, :area, :image_html, :preview,
-                  :legend, :brief_place, :dopy_list, :is_active, :is_archived, :prepare_url, :discuss_url
+  attr_accessible :number, :name, :format, :format_id, :game_type, :start_date, :finish_date, :price, :area, :image_html,
+                  :preview, :legend, :brief_place, :dopy_list, :is_active, :is_archived, :prepare_url, :discuss_url,
+                  :is_visible, :auto_teams_accept
 
   CSS_CLASSES = ['neformat nedostroy', 'neformat game', 'dozor klad', 'dozor classic', 'dozor lite', 'en tochki', 'en cx']
 
@@ -41,7 +42,7 @@ class Game < ActiveRecord::Base
     # Games which are not in archive
     #
     def actual
-      where(is_archived: false).order("start_date DESC")
+      where(is_archived: false).order('start_date DESC')
     end
 
   end
@@ -65,7 +66,9 @@ class Game < ActiveRecord::Base
   #
   def css_class
     result = [self.project.try(:css_class), self.try(:format).try(:css_class)].join(' ')
-    CSS_CLASSES.include?(result) ? result: 'other'
+    result = 'other' unless CSS_CLASSES.include?(result)
+    result += ' invisible' unless self.is_visible
+    result
   end
 
   ##
