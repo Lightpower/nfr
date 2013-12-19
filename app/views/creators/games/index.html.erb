@@ -1,0 +1,23 @@
+<h1>Мои игры</h1>
+<% if @games.present? %>
+    <table class="table-bordered">
+      <thead>
+        <th>#</th>
+        <th>Название</th>
+        <th>Дата</th>
+        <th>Проект</th>
+        <th>Формат</th>
+      </thead>
+  <% @games.each do |game| %>
+    <tr>
+      <td><%= link_to game.number, edit_creators_game_url(game) %></td>
+      <td><%= link_to game.name,   edit_creators_game_url(game) %></td>
+      <td><%= game.start_date.strftime('%d.%m.%Y') %></td>
+      <td><%= game.project.try(:name) %></td>
+      <td><%= game.format.try(:name) %></td>
+    </tr>
+  <% end %>
+    </table>
+<% else %>
+  <h2>У вас нет ни одной игры</h2>
+<% end %>
