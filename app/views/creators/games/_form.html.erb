@@ -1,4 +1,6 @@
-<%= form_for @game, html: { class: 'form-horizontal' } do |f| %>
+<% url ||= '' %>
+
+<%= form_for(@game, url: url, html: {class: 'form-horizontal'}) do |f| %>
     <% if @game.errors.any? %>
         <div id='error_explanation'>
           <h2><%= pluralize(@game.errors.count, 'error') %> не дают сохранить команду:</h2>
@@ -28,11 +30,11 @@
       <%= f.text_field :game_type, required: true %>
     </div>
     <div class='field'>
-      <%= f.label :start_date, 'Начало (ДД.ММ.ГГГГ ЧЧ:ММ)', class: 'caption' %>
+      <%= f.label :start_date, 'Начало (ГГГГ-ММ-ДД ЧЧ:ММ)', class: 'caption' %>
       <%= f.text_field :start_date, required: true, default: Time.now.strftime('%d.%m.%Y %H:%M') %>
     </div>
     <div class='field'>
-      <%= f.label :finish_date, 'Конец (ДД.ММ.ГГГГ ЧЧ:ММ)', class: 'caption' %>
+      <%= f.label :finish_date, 'Конец (ГГГГ-ММ-ДД ЧЧ:ММ)', class: 'caption' %>
       <%= f.text_field :finish_date %>
     </div>
     <div class='field'>
@@ -92,11 +94,11 @@
     </div>
     <div class='field'>
       <%= f.check_box :is_visible %>
-      <%= f.label :is_visible, 'Отображать в анонсах и архивах', class: 'inline-block' %>
+      <%= f.label :is_visible, 'Отображать в анонсах и архивах', class: 'inline-block' %><br>
       <%= f.check_box :is_active %>
       <%= f.label :is_active, 'Активна', class: 'inline-block' %><br>
       <%= f.check_box :is_archived %>
-      <%= f.label :is_archived, 'В архиве', class: 'inline-block' %>
+      <%= f.label :is_archived, 'В архиве', class: 'inline-block' %><br>
       <%= f.check_box :auto_teams_accept %>
       <%= f.label :auto_teams_accept, 'Принимать заявки без предварительного одобрения', class: 'inline-block' %>
     </div>
