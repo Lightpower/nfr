@@ -5,7 +5,7 @@ class Ability
     user ||= User.new
 
     cannot :all, [:admin_common, :admin_sql]
-    cannot :manage, Game
+    cannot [:create, :update, :delete], Game
 
     if user.role == 'admin'
       can :manage, :all
@@ -13,7 +13,7 @@ class Ability
 
       # Guest or User without team
       if user.team.blank?
-        cannot :read, Game
+        cannot :play, Game
       end
 
       # Registered user
@@ -47,16 +47,19 @@ class Ability
       end
 
       # Access to Game
-      cannot :read, Game, !:is_visible
+      can :read, Game, is_visible: true
 
-    #  if user.team.present?
-    #    team = user.team
-    #    if team.present?
-    #      can [:show, :stat], Game do |game|
-    #        game.teams.include?(team)
-    #      end
-    #    end
-    #  end
+      if user.team.present?
+        cannot :create, Team
+
+        team = user.team
+
+        if team.present?
+          can [:play, :stat], Game do |game|
+            game.teams.include?(team)
+          end
+        end
+      end
     end
 
     # Define abilities for the passed in user here. For example:
