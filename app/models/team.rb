@@ -16,9 +16,9 @@ class Team < ActiveRecord::Base
   validates_presence_of   :name
   validates_uniqueness_of :name
 
-  validates_format_of :name,             with: /^[\wа-яА-Я\-_\.\!]{3,32}$/
+  validates_format_of :name,             with: /^[\wа-яА-Я\-_\.\!\&]{3,32}$/
   validates_format_of :alternative_name, with: /^[\wа-яА-Я\-_\.\!]{3,32}$/,   if: Proc.new {|t| t.alternative_name.present? }
-  validates_format_of :image_url, with: /^http(s?):\/\/[a-zA-Z0-9-_\.\/]+$/,  if: Proc.new {|t| t.image_url.present? }
+  validates_format_of :image_url, with: /^http(s?):\/\/[a-zA-Z0-9\-_\.\/]+$/,  if: Proc.new {|t| t.image_url.present? }
 
   before_destroy      {|team| User.where(team_id: team.id).each {|user| user.team_id = nil; user.save }}
 

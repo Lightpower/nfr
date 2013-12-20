@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   # Validations
   validates_format_of :username, with: /^[\w\-_\.]{3,32}$/,                         if: Proc.new {|u| u.username.present? }
   validates_format_of :password, with: /^[\w\-_\.]{6,32}$/,                         if: Proc.new {|u| u.password.present? }
-  validates_format_of :avatar_url, with: /^http(s?):\/\/[a-zA-Z0-9-_\.\/]+$/,       if: Proc.new {|u| u.avatar_url.present? }
+  validates_format_of :avatar_url, with: /^http(s?):\/\/[a-zA-Z0-9\-_\.\/]+$/,       if: Proc.new {|u| u.avatar_url.present? }
 
 
   # Scopes
@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
     if login = conditions.delete(:login)
-      where(conditions).where(["lower(username) = :value OR lower(email) = :value", { value: login.downcase }]).first
+      where(conditions).where(['lower(username) = :value OR lower(email) = :value', { value: login.downcase }]).first
     else
       where(conditions).first
     end
