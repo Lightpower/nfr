@@ -42,7 +42,7 @@ class Game < ActiveRecord::Base
     # Games which are not in archive
     #
     def actual
-      where(is_archived: false).order('start_date DESC')
+      where(is_archived: false).order('start_date')
     end
 
   end
