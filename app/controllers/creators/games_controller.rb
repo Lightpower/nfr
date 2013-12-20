@@ -60,7 +60,7 @@ class Creators::GamesController < ApplicationController
   private
 
   def load_formats
-    @formats = Format.all.map { |f| [f.project.try(:name) + ' ' + f.name, f.id] }
+    @formats = Format.all.map { |f| [ [f.project.try(:name), f.name].join(' '), f.id] }
   end
 
 end
