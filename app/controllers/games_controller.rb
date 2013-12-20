@@ -1,7 +1,9 @@
 # encoding: UTF-8
 class GamesController < ApplicationController
   before_filter :authenticate_user!
-  load_and_authorize_resource
+
+  load_resource
+  authorize_resource     except: [:show, :archive]
 
   ##
   # Get the list of all games (announce)
@@ -14,6 +16,8 @@ class GamesController < ApplicationController
   # Play the Game
   #
   def show
+    authorize! :play, @game
+
     if @game.try(:is_active) && @game.teams.include?(current_user.team) && (@game.start_date < Time.now)# check if game is active
 
       render *GameStrategy::Context.main_block({game: @game, user: current_user})
@@ -37,6 +41,8 @@ class GamesController < ApplicationController
   # Archiving the game
   #
   def archiving
+    authorize! :archive, @game
+
     flash_type = :message
     if @game && !@game.is_archived
       if ArchiveFacade.archive(@game)
