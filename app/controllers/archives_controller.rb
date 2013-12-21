@@ -23,7 +23,7 @@ class ArchivesController < ApplicationController
   #
   def short_stat
     @game = Game.where(id: params[:id], is_archived: true).first
-    @stat_result = Stat.total({ game: @game })
+    @stat_result = Sbase.total({ game: @game })
 
     render 'archives/stats/results', layout: 'stat'
   end
@@ -33,7 +33,7 @@ class ArchivesController < ApplicationController
   #
   def wide_stat
     @game = Game.where(id: params[:id], is_archived: true).first
-    @stat_result = Stat.wide({ game: @game })
+    @stat_result = Sbase.wide({ game: @game })
 
     render 'archives/stats/wide', layout: 'stat'
   end

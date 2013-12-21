@@ -54,7 +54,7 @@ module GameStrategy
       # 'game_strategies/conquest/stat/item', locals: { data: {...} }, layout: 'game_strategies/conquest/layouts/game'
       #
       def stat_block(params)
-        data = Stat.subtotal({ game: params[:game], team: params[:user].team })
+        data = subtotal({ game: params[:game], team: params[:user].team })
         return "#{TEMPLATE_PREFIX}stat/index", locals: {data: data}, layout: LAYOUT
       end
 
@@ -92,7 +92,7 @@ module GameStrategy
       # 'game_strategies/conquest/logs/results', layout: 'game_strategies/conquest/layouts/game'
       #
       def logs_result(params)
-        stat_result = Stat.total({ game: params[:game] })
+        stat_result = Sbase.total({ game: params[:game] })
 
         return "#{TEMPLATE_PREFIX}logs/results", locals: {stat_result: stat_result}, layout: LAYOUT
       end
@@ -110,6 +110,35 @@ module GameStrategy
       def mobile_block(params)
         return "#{TEMPLATE_PREFIX}mobile/index", locals: params, layout: LAYOUT_MOBILE
       end
+
+
+      private
+
+      ########################################
+      ####  STATISTICS  ######################
+      ########################################
+
+      def subtotal(params)
+        game = params[:game]
+        team = params[:team]
+        data = []
+        tasks = Task.where(game_id: game.id).order(:id)
+        tasks.each do |task|
+          if task.codes.size > 0
+            new_task = { id: task.id, name: task.number.to_s + '. ' + task.name, codes: [] }
+            task.codes.by_order.each do |code|
+              new_code = {id: code.number}
+              team_codes = TeamCode.where(code_id: code.id).all
+              new_code[:me] = 1 if team_codes.select{|t| t.team_id == team.id}.size > 0
+              new_code[:total] = team_codes.size
+              new_task[:codes] << new_code
+            end
+            data << new_task
+          end
+        end
+        data
+      end
+
     end
   end
 end

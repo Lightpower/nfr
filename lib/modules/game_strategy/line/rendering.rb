@@ -54,7 +54,7 @@ module GameStrategy
       # 'game_strategies/conquest/stat/item', locals: { data: {...} }, layout: 'game_strategies/conquest/layouts/game'
       #
       def stat_block(params)
-        data = Stat.subtotal({ game: params[:game], team: params[:user].team })
+        data = Sbase.subtotal({ game: params[:game], team: params[:user].team })
         return "#{TEMPLATE_PREFIX}stat/index", locals: {data: data}, layout: LAYOUT
       end
 
@@ -92,7 +92,7 @@ module GameStrategy
       # 'game_strategies/conquest/logs/results', layout: 'game_strategies/conquest/layouts/game'
       #
       def logs_result(params)
-        stat_result = Stat.total({ game: params[:game] })
+        stat_result = Sbase.total({ game: params[:game] })
 
         return "#{TEMPLATE_PREFIX}logs/results", locals: {stat_result: stat_result}, layout: LAYOUT
       end

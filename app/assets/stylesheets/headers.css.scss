@@ -95,3 +95,12 @@ a.header_menu_item:active, a.header_menu_item.selected {
 a.header_menu_item.selected:hover {
   background-color: #444444;
 }
+
+header.game {
+  height: 33px;
+  font-size: 24px;
+
+  input {
+    font-size: 18px;
+  }
+}

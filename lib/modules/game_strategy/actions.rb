@@ -93,6 +93,12 @@ module GameStrategy
         "GameStrategy::#{params[:game].game_type.classify}".constantize.attach_unzoned_codes(params) # it raises error if need
       end
 
+      def subtotal(params)
+        raise ArgumentError.new("subtotal: Unresolved params: #{params.inspect}") unless verify_attach_unzoned_codes_data(params)
+
+        "GameStrategy::#{params[:game].game_type.classify}".constantize.subtotal(params) # it raises error if need
+      end
+
     private
 
       ##
