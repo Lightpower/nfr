@@ -20,10 +20,11 @@ module GameStrategy
       #
       def send_code(params)
         res = []
-        Unicode::downcase(params[:code_string]).split(" ").uniq.each do |code|
-          res << check_code({game: params[:game], code: code, user: params[:user]})
+        code_string = Unicode::downcase(params[:code_string])
+        code_string.split(" ").uniq.each do |code|
+          res << check_code({game: params[:game], code: code, user: params[:user]}) if code.present?
         end
-        res << check_code({game: params[:game], code: params[:code_string], user: params[:user]}) if params[:code_string].index(' ').present?
+        res << check_code({game: params[:game], code: code_string, user: params[:user]}) if params[:code_string].index(' ').present?
         # Check if this code passing have changed any zone holding
         check_holding(res.select { |i| i[:team_code].present? })
 
