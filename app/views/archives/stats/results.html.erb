@@ -4,7 +4,7 @@
   <% if @stat_result[:error].blank? %>
 	  <table class='log_full'>
 		  <thead>
-		    <th>Дом</th>
+		    <th>Команда</th>
 		    <% @game.archive_zones.each do |zone| %>
 		    <th colspan="2"><%= zone.name %></th>
 			  <% end %>
@@ -29,7 +29,7 @@
     <table class='log_full'>
 	    <thead>
 	    <th>Зона</th>
-	    <th>Дом</th>
+	    <th>Команда</th>
 	    <th>Влияние</th>
 	    </thead>
 	    <tbody>

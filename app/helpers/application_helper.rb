@@ -79,7 +79,7 @@ module ApplicationHelper
     result = content_tag(:div, result.html_safe, class: 'openable').html_safe
 
     caption = openable_tag('team_bonuses')
-    caption << content_tag(:span, 'Бонусы Дома', class: 'caption')
+    caption << content_tag(:span, 'Бонусы команды', class: 'caption')
 
     result = caption + result
     content_tag(:div, result.html_safe, class: 'blitz_info openable_holder').html_safe
