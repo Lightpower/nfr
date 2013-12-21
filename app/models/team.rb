@@ -81,4 +81,8 @@ class Team < ActiveRecord::Base
   def action_bonuses
     team_bonuses.where(bonus_type: TeamBonus::ACTION_TYPES)
   end
+
+  def game_zones(game)
+    self.zones.where("team_zones.team_id = #{self.id} and zones.game_id = #{game.id}")
+  end
 end
