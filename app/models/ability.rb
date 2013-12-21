@@ -54,10 +54,8 @@ class Ability
 
         team = user.team
 
-        if team.present?
-          can [:play, :stat], Game do |game|
-            game.teams.include?(team)
-          end
+        can [:play, :stat, :log], Game do |game|
+          game.teams.include?(team)
         end
       end
     end

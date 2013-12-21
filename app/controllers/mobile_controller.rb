@@ -1,7 +1,8 @@
 # encoding: UTF-8
 class MobileController < ApplicationController
   before_filter :authenticate_user!
-  load_and_authorize_resource :game
+  load_resource :game
+  before_filter :authorize_game!
 
   def index
     # Codes processing
@@ -16,4 +17,9 @@ class MobileController < ApplicationController
     render *GameStrategy::Context.mobile_block({game: @game, user: current_user, input_url: game_m_path(@game)})
   end
 
+  private
+
+  def authorize_game!
+    authorize! :play, @game
+  end
 end

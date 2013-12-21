@@ -1,7 +1,8 @@
 # encoding: UTF-8
 class CodesController < ApplicationController
   before_filter :authenticate_user!
-  load_and_authorize_resource :game
+  load_resource :game
+  before_filter :authorize_game!
 
   ##
   # Show all free codes with possibility of attaching them to some zone
@@ -20,7 +21,8 @@ class CodesController < ApplicationController
       @results = nil
     end
 
-    render *GameStrategy::Context.main_block({game: @game, user: current_user})
+    #render *GameStrategy::Context.main_block({game: @game, user: current_user})
+    redirect_to game_path(@game)
   end
 
   ##
@@ -58,6 +60,11 @@ class CodesController < ApplicationController
     respond_to do |format|
       format.js { render json: result }
     end
+  end
 
+  private
+
+  def authorize_game!
+    authorize! :play, @game
   end
 end
