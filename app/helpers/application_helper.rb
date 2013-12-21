@@ -23,13 +23,15 @@ module ApplicationHelper
 
     if current_user.is_admin?
       @game.teams.each do |t|
-        result << content_tag(:td, t.name)
+        if t.game_zones(@game).size > 0
+          result << content_tag(:tr, content_tag(:td, t.name))
 
-        t.game_zones(@game).each do |zone|
-          zone_html =  content_tag(:td, content_tag(:b, "#{zone.name}:") )
-          zone_html << content_tag(:td, team.codes_number_in_zone(zone).round(3) )
+          t.game_zones(@game).each do |zone|
+            zone_html =  content_tag(:td, content_tag(:b, "#{zone.name}:") )
+            zone_html << content_tag(:td, t.codes_number_in_zone(zone).round(3) )
 
-          result << content_tag(:tr, zone_html)
+            result << content_tag(:tr, zone_html)
+          end
         end
       end
     else
