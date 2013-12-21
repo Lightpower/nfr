@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131219232700) do
+ActiveRecord::Schema.define(:version => 20131221060000) do
 
   create_table "archive_code_strings", :force => true do |t|
     t.string  "data",    :null => false
@@ -138,7 +138,7 @@ ActiveRecord::Schema.define(:version => 20131219232700) do
   create_table "codes", :force => true do |t|
     t.integer "number",                   :null => false
     t.string  "name",                     :null => false
-    t.string  "info"
+    t.text    "info"
     t.string  "ko",                       :null => false
     t.string  "color"
     t.float   "bonus",   :default => 0.0, :null => false
@@ -188,10 +188,10 @@ ActiveRecord::Schema.define(:version => 20131219232700) do
   add_index "game_requests", ["game_id", "team_id"], :name => "index_game_requests_on_game_id_and_team_id", :unique => true
 
   create_table "games", :force => true do |t|
-    t.string   "number",                                 :null => false
-    t.string   "name",                                   :null => false
-    t.string   "game_type",         :default => "zones", :null => false
-    t.datetime "start_date",                             :null => false
+    t.string   "number",                                    :null => false
+    t.string   "name",                                      :null => false
+    t.string   "game_type",         :default => "conquest", :null => false
+    t.datetime "start_date",                                :null => false
     t.datetime "finish_date"
     t.integer  "price"
     t.string   "area"
@@ -200,13 +200,13 @@ ActiveRecord::Schema.define(:version => 20131219232700) do
     t.text     "legend"
     t.text     "brief_place"
     t.text     "dopy_list"
-    t.boolean  "is_active",         :default => false,   :null => false
-    t.boolean  "is_archived",       :default => false,   :null => false
+    t.boolean  "is_active",         :default => false,      :null => false
+    t.boolean  "is_archived",       :default => false,      :null => false
     t.string   "prepare_url"
     t.string   "discuss_url"
     t.integer  "format_id"
-    t.boolean  "is_visible",        :default => false,   :null => false
-    t.boolean  "auto_teams_accept", :default => false,   :null => false
+    t.boolean  "is_visible",        :default => false,      :null => false
+    t.boolean  "auto_teams_accept", :default => false,      :null => false
   end
 
   add_index "games", ["format_id"], :name => "index_games_on_format_id"

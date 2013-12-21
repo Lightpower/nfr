@@ -126,7 +126,7 @@ module GameStrategy
 
 
         # Add to log
-        Log.create(game_id: game.id, login: user.email, code_id: code.try(:id), data: data, result_code: Code::STATES.index(result), team: team)
+        Log.create(game_id: game.id, login: user.show_name, code_id: code.try(:id), data: data, result_code: Code::STATES.index(result), team: team)
 
         { id: code.try(:id), data: data, result: result }
       end
@@ -166,7 +166,7 @@ module GameStrategy
               team_codes << {team_code: team_code}
 
               # Add to log
-              Log.create(game_id: team_code.game_id, login: user.email, code_id: team_code.code_id, data: team_code.code.show_code,
+              Log.create(game_id: team_code.game_id, login: user.show_name, code_id: team_code.code_id, data: team_code.code.show_code,
                          result_code: Code::STATES.index(:attached), team: user.team)
             end
           else
@@ -220,7 +220,7 @@ module GameStrategy
         end
 
         # Add to log
-        Log.create(game_id: game.id, login: user.email, code_id: code.try(:id), data: params[:code], result_code: Code::STATES.index(result), team: user.team)
+        Log.create(game_id: game.id, login: user.show_name, code_id: code.try(:id), data: params[:code], result_code: Code::STATES.index(result), team: user.team)
 
         { id: code.try(:id), data: params[:code], result: result, team_code: new_team_code }
       end
@@ -247,7 +247,7 @@ module GameStrategy
         end
 
         # Add to log
-        Log.create(game_id: game.id, login: user.email, data: "Hint #{hint.id} (цена #{hint.cost})", result_code: Code::STATES.index(result), team: user.team)
+        Log.create(game_id: game.id, login: user.show_name, data: "Hint #{hint.id} (цена #{hint.cost})", result_code: Code::STATES.index(result), team: user.team)
         {id: hint.id, data: "Hint #{hint.id} (цена #{hint.cost})", result: result}
       end
 

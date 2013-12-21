@@ -28,6 +28,10 @@ class Task < ActiveRecord::Base
     def unzoned
       where(zone_id: nil)
     end
+
+    def unincluded
+      where(task_id: nil)
+    end
   end
 
   ##

@@ -2,20 +2,20 @@
   <% if zone.present? %>
     <div class='zone_header'>
       <%= openable_tag(zone.make_id) %>
-      <%= content_tag(:span, zone.name, class: "caption") %>
+      <%= content_tag(:span, zone.name, class: 'caption') %>
     </div>
   	<div class='openable'>
-  	  <% zone.tasks.by_order.each do |task| %>
+  	  <% zone.tasks.unincluded.by_order.each do |task| %>
   		  <%= render 'game_strategies/conquest/tasks/item', task: task  %>
   	  <% end %>
     </div>
-	<% else %>
+  <% else %>
     <div class='zone_header'>
       <%= openable_tag('free_zone0') %>
-      <%= content_tag(:span, 'Свободные задания', class: "caption") %>
+      <%= content_tag(:span, 'Свободные задания', class: 'caption') %>
     </div>
     <div class='openable'>
-      <% @game.tasks.unzoned.by_order.each do |task| %>
+      <% @game.tasks.unincluded.unzoned.by_order.each do |task| %>
         <%= render 'game_strategies/conquest/tasks/item', task: task %>
       <% end %>
     </div>

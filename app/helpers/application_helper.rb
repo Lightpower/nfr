@@ -28,8 +28,10 @@ module ApplicationHelper
     end
 
     # Free zone
-    zone_html =  content_tag(:td, content_tag(:b, "В резерве -") )
-    zone_html << content_tag(:td, team.codes_number_in_zone(nil).round(3) )
+    if team.codes_number_in_zone(nil) > 0
+      zone_html =  content_tag(:td, content_tag(:b, "В резерве -") )
+      zone_html << content_tag(:td, team.codes_number_in_zone(nil).round(3) )
+    end
 
     result << content_tag(:tr, zone_html)
 

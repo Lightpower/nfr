@@ -1,18 +1,26 @@
 <div class='task openable_holder <%= 'unavailable' unless task.is_available?(current_user.team) %>'>
-  <%= openable_tag(task.make_id) %>
 
   <% if task.is_available?(current_user.team) %>
-    <%= content_tag(:span, task.number) %>. <%= content_tag(:span, task.name) if task.is_available?(current_user.team)%><br>
-	<% end %>
+    <%= openable_tag(task.make_id, true, "#{task.number}. #{task.name}") %>
+  <% else %>
+      <%= openable_tag(task.make_id, true, "#{task.number}. #{task.name} (Недоступно)") %>
+  <% end %>
 
   <div class='openable'>
 
   <% if task.is_available?(current_user.team) %>
       <%= task.data.html_safe %><br>
-  		<br><b>KO:</b> <%= task.codes.by_order.map{|code| ko_colored(code, current_user.team.id, @results)}.join(', ').html_safe %>
-	<% else %>
-      <%= content_tag(:span, task.number) %>. <%= content_tag(:span, task.name) %> <span class='warning'>(Недоступно)</span><br>
-      <%= show_preview(task).html_safe %>
+  	  <% if task.codes.present? %>
+        <br><b>KO:</b> <%= task.codes.by_order.map{|code| ko_colored(code, current_user.team.id, @results)}.join(', ').html_safe %>
+      <% end %>
+
+      <% if task.tasks.present? %>
+        <% task.tasks.by_order.each do |included_task| %>
+          <%= render 'game_strategies/conquest/tasks/item', task: included_task %>
+        <% end %>
+      <% end %>
+  <% else %>
+    <%= show_preview(task).html_safe %>
   <% end %>
 
 	<%= render 'game_strategies/conquest/hints/item', task: task %>
