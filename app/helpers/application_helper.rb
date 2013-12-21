@@ -20,11 +20,25 @@ module ApplicationHelper
   def zone_information
     result = ''
     team = current_user.team
-    team.zones.each do |zone|
-      zone_html =  content_tag(:td, content_tag(:b, "#{zone.name}:") )
-      zone_html << content_tag(:td, team.codes_number_in_zone(zone).round(3) )
 
-      result << content_tag(:tr, zone_html)
+    if current_user.is_admin?
+      @game.teams.each do |t|
+        result << content_tag(:td, t.name)
+
+        t.game_zones(@game).each do |zone|
+          zone_html =  content_tag(:td, content_tag(:b, "#{zone.name}:") )
+          zone_html << content_tag(:td, team.codes_number_in_zone(zone).round(3) )
+
+          result << content_tag(:tr, zone_html)
+        end
+      end
+    else
+      team.game_zones(@game).each do |zone|
+          zone_html =  content_tag(:td, content_tag(:b, "#{zone.name}:") )
+          zone_html << content_tag(:td, team.codes_number_in_zone(zone).round(3) )
+
+          result << content_tag(:tr, zone_html)
+      end
     end
 
     # Free zone
