@@ -217,6 +217,31 @@ div.blitz_info {
   padding: 0 3px 0 3px;
 }
 
+.admin_action_button {
+  display: inline-block;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  color: #000000;
+  text-decoration: none;
+  background-color: #c60600;
+  border-color: #ffff00;
+  border-width: 1px 1px 1px 1px;
+  border-style: solid;
+  -webkit-box-shadow: 2px 2px 3px #282b1f;
+  -moz-box-shadow: 2px 2px 3px #282b1f;
+  box-shadow: 2px 2px 3px #282b1f;
+  padding: 2px;
+  font-weight: bold;
+  font-style: italic;
+  margin: 5px;
+}
+
+.admin_action_button:hover {
+  background-color: #c68400;
+}
+
+
 span.caption, label.caption {
   font-weight: bold;
 }

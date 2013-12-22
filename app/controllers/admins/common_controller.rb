@@ -13,13 +13,12 @@ class Admins::CommonController < ApplicationController
     redirect_to root_path, notice: 'Admin action is processed'
   end
 
-  private
-
-  ##
-  # Check if current_user is admin
-  #
-  def admin_check
-    current_user.is_admin?
+  def become
+    return unless current_user.is_admin?
+    sign_in(:user, User.find(params[:id]))
+    redirect_to root_url # or user_root_url
   end
+
+  private
 
 end

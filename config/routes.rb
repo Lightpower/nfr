@@ -57,7 +57,8 @@ Nfr::Application.routes.draw do
   end
 
   namespace :admins do
-    match '/action' => 'common#action'
+    match '/action'     => 'common#action'
+    match '/become/:id' => 'common#become', as: :become
 
     resources :sql, only: [:index, :create]
   end
