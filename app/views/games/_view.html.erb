@@ -24,8 +24,8 @@
         </div>
       </div>
       <div class="details">
-        <b>Принятые заявки: </b> <%= game.teams.map {|t| link_to_team(t) }.join(', ').html_safe %><br><br>
-        <b>Ждут принятия: </b> <%= game.teams_unaccepted.map(&:name).join(', ') %>
+        <div class="details_caption">Принятые заявки: </div> <%= game.teams.map {|t| link_to_team(t) }.join('').html_safe %><br><br>
+        <div class="details_caption">Ждут принятия: </div> <%= game.teams_unaccepted.map(&:name).join(', ') %>
       </div>
       <div>
         <%= link_to('Обсудить на форуме', game.prepare_url, class: 'action_button') if game.prepare_url.present? %>
