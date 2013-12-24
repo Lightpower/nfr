@@ -32,16 +32,11 @@
       </div>
 
       <% if current_user %>
-          <% if current_user.is_captain? %>
-              <% if game.requests.map(&:team).include?(current_user.team) %>
-                  <%= link_to_delete_game_request(game, current_user) %>
-              <% else %>
-                  <%= link_to_create_game_request(game) %>
-              <% end %>
-          <% end %>
-          <% if game.is_active? && game.teams.include?(current_user.team) && (game.start_date < Time.now) %>
-              <%= link_to_enter_game(game) %>
-          <% end %>
+          <%= link_to_create_game_request(game) if game.can_request?(current_user) %>
+          <%= link_to_delete_game_request(game, current_user) if game.can_delete_request?(current_user) %>
+          <%= link_to_enter_game(game) if game.can_enter?(current_user) %>
+
+          <%= link_to_edit_game(game) if current_user.is_admin? %>
       <% end %>
     </article>
 <% end %>
