@@ -108,4 +108,32 @@ class Game < ActiveRecord::Base
     self.format.try(:project)
   end
 
+  ##
+  # Define if user can create game request
+  #
+  def can_request?(user)
+    self.is_active? &&
+      user.is_captain? &&
+      ! self.teams.include?(user.team) &&
+      (!self.finish_date || self.finish_date > Time.now)
+  end
+
+  ##
+  # Define if user can create game request
+  #
+  def can_delete_request?(user)
+    self.is_active? &&
+      user.is_captain? &&
+      self.teams.include?(user.team) &&
+      (self.start_date < Time.now) && (!self.finish_date || self.finish_date > Time.now)
+  end
+
+  ##
+  # Define if user can create game request
+  #
+  def can_enter?(user)
+    self.is_active? &&
+      self.teams.include?(user.team) &&
+      (self.start_date < Time.now) && (!self.finish_date || self.finish_date > Time.now)
+  end
 end
