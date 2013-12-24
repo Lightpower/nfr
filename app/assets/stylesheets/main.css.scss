@@ -407,6 +407,27 @@ a.enter_game {
   padding: 5px;
 }
 
+a.edit_game {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  font-size: 1.4em;
+  font-weight: bold;
+  -webkit-box-shadow: 3px 3px 4px #282b1f;
+  -moz-box-shadow: 3px 3px 4px #282b1f;
+  box-shadow: 3px 3px 4px #282b1f;
+  color: white;
+  background-color: #ff0000;
+  border-color: black;
+  border-width: 2px;
+  border-style: solid;
+  margin-top: 2px;
+  padding: 5px;
+}
+
 div.separated {
   margin-top: 20px;
 }
