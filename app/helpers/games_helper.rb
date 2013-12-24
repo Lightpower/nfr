@@ -25,4 +25,11 @@ module GamesHelper
     link_to 'Вход в игру', game_path(game), class: 'enter_game'
   end
 
+  ##
+  # Create link_to for edit game data
+  #
+  def link_to_edit_game(game)
+    link_to 'Править игру', edit_creators_game_path(game), class: 'edit_game'
+  end
+
 end
