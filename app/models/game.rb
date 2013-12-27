@@ -79,13 +79,6 @@ class Game < ActiveRecord::Base
   end
 
   ##
-  # Does current game has "is_active = true" and its start_date is being started
-  #
-  def is_active?
-    self.is_active && (self.start_date <= Time.now)
-  end
-
-  ##
   # For game_type='zones':
   # Time which team should hold a zone to get the bonus
   #
@@ -109,10 +102,17 @@ class Game < ActiveRecord::Base
   end
 
   ##
+  # Does current game has "is_active = true" and its start_date is being started
+  #
+  def is_going?
+    self.is_active && (self.start_date < Time.now) && (!self.finish_date || self.finish_date > Time.now)
+  end
+
+  ##
   # Define if user can create game request
   #
   def can_request?(user)
-    self.is_active? &&
+    self.is_active &&
       user.is_captain? &&
       ! self.teams.include?(user.team) &&
       (!self.finish_date || self.finish_date > Time.now)
@@ -122,7 +122,7 @@ class Game < ActiveRecord::Base
   # Define if user can create game request
   #
   def can_delete_request?(user)
-    self.is_active? &&
+    self.is_active &&
       user.is_captain? &&
       self.teams.include?(user.team) &&
       (self.start_date < Time.now) && (!self.finish_date || self.finish_date > Time.now)
@@ -132,7 +132,7 @@ class Game < ActiveRecord::Base
   # Define if user can create game request
   #
   def can_enter?(user)
-    self.is_active? &&
+    self.is_active &&
       self.teams.include?(user.team) &&
       (self.start_date < Time.now) && (!self.finish_date || self.finish_date > Time.now)
   end
