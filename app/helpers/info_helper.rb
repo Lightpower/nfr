@@ -1,3 +1,4 @@
+# encoding: UTF-8
 module InfoHelper
   def contact(name, phone, skype, email, extra={})
     result = ''
