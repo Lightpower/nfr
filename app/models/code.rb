@@ -28,7 +28,7 @@ class Code < ActiveRecord::Base
     # Ordered by number
     #
     def by_order
-      order("codes.number")
+      order('codes.number')
     end
   end
 

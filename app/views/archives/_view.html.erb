@@ -1,5 +1,5 @@
 <% if game.present? %>
-  <div class="game <%= game.css_class %>">
+  <article class="game <%= game.css_class %>">
     <h1><%= game.start_date.strftime("%d.%m.%y") %> - <%= game.name %></h1>
 		<h3><%= game.project.try(:name) %> <%= game.format.try(:name) %> #<%= game.number %></h3>
 	  <b>Старт: <%= game.start_date.strftime("%H:%M:%S") %></b><br>
@@ -15,5 +15,5 @@
 	    <p><b>Место брифинга: </b> <%= game.brief_place.try(:html_safe) %></p>
 	  <% end %>
     <div> <%= links(game) %> </div>
-	</div>
+	</article>
 <% end %>
