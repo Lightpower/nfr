@@ -5,25 +5,28 @@ module ArchiveFacade
     # Archive the Game
     #
     def archive(game)
-      # Copying the teams which were playing this game
-      team_table = {}
-      GameRequest.where(game_id: game.id).map(&:team).each do |team|
-        archive_team = ArchiveTeam.create(name: team.name, alternative_name: team.alternative_name,
-          image_url: team.image_url, team_id: team.id, game_id: game.id)
-        team_table.merge!({team.id => archive_team.id})
-        GameRequest.where(game_id: game.id).map(&:delete)
+      game.transaction do
+        # Copying the teams which were playing this game
+        team_table = {}
+        GameRequest.where(game_id: game.id).map(&:team).each do |team|
+          archive_team = ArchiveTeam.create(name: team.name, alternative_name: team.alternative_name,
+            image_url: team.image_url, team_id: team.id, game_id: game.id)
+          team_table.merge!({team.id => archive_team.id})
+          GameRequest.where(game_id: game.id).map(&:delete)
+        end
+        # Copying the tables and clear them
+        %w(Zone Task Code CodeString Hint TeamBonus TeamCode TeamHint TeamZone).each do |table|
+          copy_and_clear_table({ table: table, game: game, team_table: team_table })
+        end
+        # Copy logs - successful records only
+        copy_and_clear_table({ table: 'Log', game: game, team_table: team_table,
+          result_filter: [Code::STATES.index(:accepted), Code::STATES.index(:accessed), Code::STATES.index(:hint_accessed), Code::STATES.index(:attached)]
+                             })
+        game.is_archived = true
+        game.is_active = false
+        game.save
       end
-      # Copying the tables and clear them
-      %w(Zone Task Code CodeString Hint TeamBonus TeamCode TeamHint TeamZone).each do |table|
-        copy_and_clear_table({ table: table, game: game, team_table: team_table })
-      end
-      # Copy logs - successful records only
-      copy_and_clear_table({ table: "Log", game: game, team_table: team_table,
-        result_filter: [Code::STATES.index(:accepted), Code::STATES.index(:accessed), Code::STATES.index(:hint_accessed), Code::STATES.index(:attached)]
-                           })
-      game.is_archived = true
-      game.is_active = false
-      game.save
+
       game
     end
 
@@ -34,18 +37,21 @@ module ArchiveFacade
       return false unless game.is_archived
 
       new_game = game.dup
-      new_game.number *= 1000
+      new_game.number *= 10000
       new_game.name += " (копия)"
       new_game.is_active = false
       new_game.is_archived = false
       new_game.save
       # Copy game config
       new_game.config = game.config.dup
-      new_game.config.save
 
-      # Zones with ALL stuff
-      game.archive_zones.each do |archive_zone|
-        copy_zone(archive_zone, new_game)
+      game.transaction do
+        new_game.config.save
+
+        # Zones with ALL stuff
+        game.archive_zones.each do |archive_zone|
+          copy_zone(archive_zone, new_game)
+        end
       end
 
       new_game
