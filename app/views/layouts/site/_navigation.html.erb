@@ -1,5 +1,6 @@
 <aside id='site_navigation'>
   <ul>
+    <li><%= link_to('О нас', about_info_index_path,           class: (params[:controller] == 'info' ?     'selected':'')) %></li>
     <li><%= link_to('Анонсы', '/',                            class: (params[:controller] == 'home' ?     'selected':'')) %></li>
     <li><%= link_to('Архивы', archives_path,                  class: (params[:controller] == 'archives' ? 'selected':'')) %></li>
     <li><%= link_to('Форум', 'http://nedostroy.com.ua/forum', class: (params[:controller] == 'forum' ?    'selected':''), target: '_blank') %></li>
