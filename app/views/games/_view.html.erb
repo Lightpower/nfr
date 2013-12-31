@@ -37,7 +37,8 @@
           <%= link_to_delete_game_request(game, current_user) if game.can_delete_request?(current_user) %>
           <%= link_to_enter_game(game) if game.can_enter?(current_user) %>
 
-          <%= link_to_edit_game(game) if current_user.is_admin? %>
+          <%= link_to_edit_game(game)    if current_user.is_admin? %>
+          <%= link_to_archive_game(game) if current_user.is_admin? %>
       <% end %>
     </article>
 <% end %>

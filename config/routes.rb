@@ -7,7 +7,7 @@ Nfr::Application.routes.draw do
   resources :games, only: [:index, :show] do
     member do
       get :stat
-      get :archiving
+      get :archive
     end
 
     match '/m' => 'mobile#index'

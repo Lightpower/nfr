@@ -22,7 +22,7 @@ class GamesController < ApplicationController
     elsif @game.blank?
       redirect_to root_path, alert: "Игра с таким номером (#{params[:id]}) не найдена!"
     elsif @game.is_archived
-      redirect_to archive_path(@game), notice: "Выбранная игра уже в архиве"
+      redirect_to archive_path(@game), notice: 'Выбранная игра уже в архиве'
     else
       redirect_to root_path, notice: 'Выбранная игра неактивна'
     end
@@ -38,7 +38,7 @@ class GamesController < ApplicationController
   ##
   # Archiving the game
   #
-  def archiving
+  def archive
     authorize! :archive, @game
 
     flash_type = :message

@@ -32,4 +32,12 @@ module GamesHelper
     link_to 'Править игру', edit_creators_game_path(game), class: 'edit_game'
   end
 
+  ##
+  # Create link_to for archive game
+  #
+  def link_to_archive_game(game)
+    link_to 'Заархивировать', archive_game_path(game), class: 'archive_game'
+  end
+
+
 end
