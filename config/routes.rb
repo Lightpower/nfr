@@ -67,6 +67,13 @@ Nfr::Application.routes.draw do
     resources :games
   end
 
+  resources :info, only: [] do
+    collection do
+      get :about
+      get :contacts
+    end
+  end
+
   # Easters
 
   get '/blackjack', to: redirect('http://absolutist.ru/online/bjack/blackjack.swf')
