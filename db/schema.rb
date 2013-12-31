@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131221060000) do
+ActiveRecord::Schema.define(:version => 20131230160200) do
 
   create_table "archive_code_strings", :force => true do |t|
     t.string  "data",    :null => false
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(:version => 20131221060000) do
   create_table "archive_codes", :force => true do |t|
     t.integer "number",                   :null => false
     t.string  "name",                     :null => false
-    t.string  "info"
+    t.text    "info"
     t.string  "ko",                       :null => false
     t.string  "color"
     t.float   "bonus",   :default => 0.0, :null => false
