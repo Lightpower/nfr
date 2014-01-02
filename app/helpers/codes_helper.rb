@@ -26,11 +26,24 @@ module CodesHelper
       style << "border: 2px inset red;" if last_result.present? && last_result.select {|i| i[:id] == code.id}.present?
       code_text = ko_price
       code_text += "(#{code.show_code})" if team_code.team_bonus.blank?
-      code_text = content_tag(:b, content_tag(:span, code_text, style: style).html_safe).html_safe
+      code_text = content_tag(:b, content_tag(:span, code_text, style: style).html_safe)#.html_safe
       code_text += ("<br>#{code.info}<br>").html_safe if code.info.present?
       code_text.html_safe
     else
       content_tag(:span, "#{ko_price}", class: 'ko', 'data-id' => code.id).html_safe
     end
+  end
+
+  ##
+  # Color code's KO if it is passed
+  #
+  def show_code(code)
+    ko_price = ''
+
+    style = "color: #{code.color || 'red'};"
+    code_text = "#{code.ko}[#{code.bonus}] (#{code.show_code})"
+    code_text = content_tag(:b, content_tag(:span, code_text, style: style))
+    code_text += (", информация к коду:<br>#{code.info}<br>").html_safe if code.info.present?
+    code_text.html_safe
   end
 end

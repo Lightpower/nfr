@@ -15,7 +15,7 @@ module GameStrategy
     # Params:
     # - params {Hash} - should contain :game_type. It is excluded before calling target class method
     #
-    %w(main_block free_codes stat_block logs_block logs_result mobile_block).each do |method_name|
+    %w(main_block archive_block free_codes stat_block logs_block logs_result mobile_block).each do |method_name|
       define_method method_name do |params|
         raise ArgumentError.new("#{method_name}: unresolved params - #{params.inspect}") unless verify_data(params)
 

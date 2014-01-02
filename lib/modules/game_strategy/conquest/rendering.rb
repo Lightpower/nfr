@@ -25,6 +25,22 @@ module GameStrategy
       end
 
       ##
+      # Prepare parameters for main block
+      #
+      # Params:
+      # - params {Hash} - is not used
+      #
+      # Returns:
+      #
+      # 'game_strategies/conquest/zones/item', layout: 'game_strategies/conquest/layouts/game'
+      #
+      def archive_block(params)
+        @game = params[:game]
+        zones = @game.archive_zones
+        return "#{TEMPLATE_PREFIX}/archives/zones/index", locals: {zones: zones}
+      end
+
+      ##
       # Prepare parameters for free codes managing page
       #
       # Params:

@@ -1,0 +1,10 @@
+<article class="info">
+  <% if zones.present? || @game.archive_tasks.unzoned.present? %>
+      <% zones.each do |zone|  %>
+          <%= render 'game_strategies/conquest/archives/zones/item', zone: zone %>
+      <% end %>
+      <%= render('game_strategies/conquest/archives/zones/item', zone: nil) if @game.archive_tasks.unzoned.present? %>
+  <% else %>
+      <div class='zone'>Нет доступных зон</div>
+  <% end %>
+</article>

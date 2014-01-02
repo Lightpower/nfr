@@ -15,7 +15,9 @@ class ArchivesController < ApplicationController
   #
   def show
     @game = Game.where(id: params[:id], is_archived: true).first
-    @archive_zones = @game.archive_zones.order(:number) if @game.present?
+
+    render *GameStrategy::Context.archive_block({game: @game, user: current_user})
+    #@archive_zones = @game.archive_zones.order(:number) if @game.present?
   end
 
   ##

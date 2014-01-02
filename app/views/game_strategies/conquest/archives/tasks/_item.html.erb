@@ -1,0 +1,21 @@
+<div class='task openable_holder'>
+
+  <%= openable_tag(task.make_id, true, "#{task.number}. #{task.name}") %>
+
+  <div class='openable'>
+
+    <%= task.data.html_safe %><br>
+    <% if task.archive_codes.present? %>
+        <br><b>KO:</b> <%= task.archive_codes.by_order.map{|code| show_code(code)}.join(', ').html_safe %>
+    <% end %>
+
+    <% if task.archive_tasks.present? %>
+        <% task.archive_tasks.by_order.each do |included_task| %>
+            <%= render 'game_strategies/conquest/archives/tasks/item', task: included_task %>
+        <% end %>
+    <% end %>
+
+    <%= render 'game_strategies/conquest/archives/hints/item', task: task %>
+
+  </div>
+</div>

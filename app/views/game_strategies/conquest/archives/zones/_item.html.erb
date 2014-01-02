@@ -1,0 +1,23 @@
+<div class='zone openable_holder'>
+  <% if zone.present? %>
+    <div class='zone_header'>
+      <%= openable_tag(zone.make_id) %>
+      <%= content_tag(:span, zone.name, class: 'caption') %>
+    </div>
+  	<div class='openable'>
+  	  <% zone.archive_tasks.unincluded.by_order.each do |task| %>
+  		  <%= render 'game_strategies/conquest/archives/tasks/item', task: task  %>
+  	  <% end %>
+    </div>
+  <% else %>
+    <div class='zone_header'>
+      <%= openable_tag('free_zone0') %>
+      <%= content_tag(:span, 'Свободные задания', class: 'caption') %>
+    </div>
+    <div class='openable'>
+      <% @game.archive_tasks.unincluded.unzoned.by_order.each do |task| %>
+        <%= render 'game_strategies/conquest/archives/tasks/item', task: task %>
+      <% end %>
+    </div>
+	<% end %>
+</div>

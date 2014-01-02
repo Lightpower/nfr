@@ -1,0 +1,14 @@
+<% if task.archive_hints.present? %>
+  <div class='hint openable_holder'>
+    <%= openable_tag("#{task.make_id}hint") %>
+    <%= content_tag(:span, "Подсказки (#{task.archive_hints.size} шт.)") %>
+    <div class="openable">
+      <% task.archive_hints.by_order.each do |hint| %>
+        <div class=hint_data>
+          <%= content_tag(:b, "Подсказка #{hint.number} (#{hint.cost})") %><br>
+	   	  <%= hint.data.html_safe %>
+        </div>
+	  <% end %>
+    </div>
+  </div>
+<% end %>

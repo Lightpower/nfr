@@ -21,6 +21,17 @@ class ArchiveTask < ActiveRecord::Base
     def by_order
       order('archive_tasks.number')
     end
+
+    ##
+    # Free tasks
+    #
+    def unzoned
+      where(zone_id: nil)
+    end
+
+    def unincluded
+      where(task_id: nil)
+    end
   end
 
   ##
