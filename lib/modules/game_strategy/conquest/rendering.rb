@@ -13,7 +13,9 @@ module GameStrategy
       # Prepare parameters for main block
       #
       # Params:
-      # - params {Hash} - is not used
+      # - params {Hash} - hash of parameter which contains game and current user
+      #   - :game {Game} - game which main block should be created for
+      #   - :user {Game} - current user
       #
       # Returns:
       #
@@ -25,19 +27,36 @@ module GameStrategy
       end
 
       ##
-      # Prepare parameters for main block
+      # Prepare parameters for Game's script block
       #
       # Params:
-      # - params {Hash} - is not used
+      # - params {Hash} - hash of parameter which contains game
+      #   - :game {Game} - game which script block should be created for
       #
       # Returns:
       #
-      # 'game_strategies/conquest/zones/item', layout: 'game_strategies/conquest/layouts/game'
+      # 'game_strategies/conquest/archives/zones/item', layout: вуафгде
       #
-      def archive_block(params)
+      def script_block(params)
         @game = params[:game]
         zones = @game.archive_zones
         return "#{TEMPLATE_PREFIX}/archives/zones/index", locals: {zones: zones}
+      end
+
+      ##
+      # Prepare parameters for Game's result block
+      #
+      # Params:
+      # - params {Hash} - hash of parameter which contains game
+      #   - :game {Game} - game which script block should be created for
+      #
+      # Returns:
+      #
+      # 'game_strategies/conquest/archives/zones/item', layout: вуафгде
+      #
+      def total_block(params)
+        data = total(params)
+        return "#{TEMPLATE_PREFIX}/archives/total", locals: {data: data}
       end
 
       ##
@@ -63,7 +82,9 @@ module GameStrategy
       # Prepare parameters for statistics block
       #
       # Params:
-      # - params {Hash} - {data: {...}} - data which contains statistic info
+      # - params {Hash} - hash of parameter which contains game and current user
+      #   - :game {Game} - game which main block should be created for
+      #   - :user {Game} - current user
       #
       # Returns:
       #
@@ -134,6 +155,10 @@ module GameStrategy
       ####  STATISTICS  ######################
       ########################################
 
+      ##
+      # Subtotal data
+      # It is used during the game
+      #
       def subtotal(params)
         game = params[:game]
         team = params[:team]
@@ -153,6 +178,19 @@ module GameStrategy
           end
         end
         data
+      end
+
+      ##
+      # Total data
+      # It is used after game's finishing
+      #
+      def total(params)
+        game = params[:game]
+        data = []
+        game.archive_teams.each do |team|
+          data << {team: team.name, result: team.codes_number_in_zone(nil)}
+        end
+        data.sort{|x, y| x[:result] <=> y[:result]}
       end
 
     end

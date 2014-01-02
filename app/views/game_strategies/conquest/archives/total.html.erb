@@ -1,0 +1,14 @@
+<table class="table table-bordered">
+  <thead>
+    <th>Место</th>
+    <th>Команда</th>
+    <th>Очков</th>
+  </thead>
+  <% data.each_with_index do |row, i| %>
+    <tr>
+      <%= content_tag(:td, i+1) %>
+      <%= content_tag(:td, row[:team]) %>
+      <%= content_tag(:td, row[:result]) %>
+    </tr>
+  <% end %>
+</table>

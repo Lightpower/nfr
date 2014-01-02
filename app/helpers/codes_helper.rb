@@ -38,9 +38,7 @@ module CodesHelper
   ##
   # Color code's KO if it is passed
   #
-  def show_code(code)
-    ko_price = ''
-
+  def show_opened_code(code)
     style = "color: #{code.color || 'red'};"
     code_text = "#{code.ko}[#{code.bonus}] (#{code.show_code})"
     code_text = content_tag(:b, content_tag(:span, code_text, style: style))

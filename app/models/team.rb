@@ -23,6 +23,13 @@ class Team < ActiveRecord::Base
   before_destroy      {|team| User.where(team_id: team.id).each {|user| user.team_id = nil; user.save }}
 
   ##
+  # Number of all codes in all zones and without zones
+  #
+  def total_codes_number(time=Time.now)
+
+  end
+
+  ##
   # Number of accepted codes in defined zone
   #
   def codes_number_in_zone(zone, time=Time.now)

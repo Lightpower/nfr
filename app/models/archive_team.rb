@@ -34,4 +34,12 @@ class ArchiveTeam < ActiveRecord::Base
   def action_bonuses
     archive_team_bonuses.where(bonus_type: TeamBonus::ACTION_TYPES)
   end
+
+  ##
+  # Number of accepted codes in defined zone
+  #
+  def codes_number_in_zone(zone, time=Time.now)
+    ArchiveTeamCode.codes_number_of_team(self.id, zone.try(:id), time)
+  end
+
 end

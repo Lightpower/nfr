@@ -16,7 +16,7 @@ class ArchivesController < ApplicationController
   def show
     @game = Game.where(id: params[:id], is_archived: true).first
 
-    render *GameStrategy::Context.archive_block({game: @game, user: current_user})
+    render *GameStrategy::Context.script_block({game: @game, user: current_user})
     #@archive_zones = @game.archive_zones.order(:number) if @game.present?
   end
 
@@ -25,9 +25,8 @@ class ArchivesController < ApplicationController
   #
   def short_stat
     @game = Game.where(id: params[:id], is_archived: true).first
-    @stat_result = Sbase.total({ game: @game })
 
-    render 'archives/stats/results', layout: 'stat'
+    render *GameStrategy::Context.total_block({game: @game, user: current_user})
   end
 
   ##

@@ -6,7 +6,7 @@
 
     <%= task.data.html_safe %><br>
     <% if task.archive_codes.present? %>
-        <br><b>KO:</b> <%= task.archive_codes.by_order.map{|code| show_code(code)}.join(', ').html_safe %>
+        <br><b>KO:</b> <%= task.archive_codes.by_order.map{|code| show_opened_code(code)}.join(', ').html_safe %>
     <% end %>
 
     <% if task.archive_tasks.present? %>
