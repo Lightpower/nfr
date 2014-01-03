@@ -222,7 +222,7 @@ module GameStrategy
           if task.archive_codes.size > 0
             new_task = {id: task.id, name: task.number.to_s + '. ' + task.name, codes: []}
             task.archive_codes.by_order.each do |code|
-              new_code = {data: code.show_code, passed: []}
+              new_code = {data: code.show_code, ko: code.ko, passed: []}
               teams.each do |team|
                 new_code[:passed] << ArchiveTeamCode.where(team_id: team[:id], code_id: code.id).try(:first).try(:created_at).try(:localtime)
               end
