@@ -21,7 +21,7 @@ module CodesHelper
   #
   def ko_colored(code, team_id, last_result=nil)
     ko_price = "#{code.ko}[#{code.bonus}]"
-    team_code = TeamCode.where(code_id: code.id, team_id: team_id, state: Code::STATES.index(:accepted)).first
+    team_code = TeamCode.where(code_id: code.id, team_id: team_id, state: [Code::STATES.index(:accepted), Code::STATES.index(:accessed)]).first
     if team_code.present?
       style = "color: #{code.color || 'red'};"
       style << "border: 2px inset red;" if last_result.present? && last_result.select {|i| i[:id] == code.id}.present?
