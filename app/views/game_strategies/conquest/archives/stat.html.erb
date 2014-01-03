@@ -1,0 +1,27 @@
+<%= archive_links(game) %>
+<h3><%= game.project.try(:name) %> <%= game.format.try(:name) %> #<%= game.number %> - <%= game.start_date.strftime("%d.%m.%y") %></h3>
+<h1><%= game.name %></h1>
+<h3>Подробная статистика</h3>
+
+<table class="table table-bordered">
+  <thead>
+  <th>Задание</th>
+  <th>Код</th>
+  <% teams.each do |team| %>
+      <th><%= team %></th>
+  <% end %>
+  </thead>
+  <tbody>
+  <% data.each do |task| %>
+      <% task[:codes].each do |code| %>
+          <tr>
+            <td><%= task[:name] %></td>
+            <td><%= code[:data] %></td>
+            <% teams.size.times do |i| %>
+              <td><%= code[:passed][i].try(:strftime, '%d.%m.%y %H:%M:%S') %></td>
+            <% end %>
+          </tr>
+      <% end %>
+  <% end %>
+  </tbody>
+</table>

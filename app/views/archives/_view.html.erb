@@ -1,19 +1,11 @@
 <% if game.present? %>
-  <article class="game <%= game.css_class %>">
-    <h1><%= game.start_date.strftime("%d.%m.%y") %> - <%= game.name %></h1>
-		<h3><%= game.project.try(:name) %> <%= game.format.try(:name) %> #<%= game.number %></h3>
-	  <b>Старт: <%= game.start_date.strftime("%H:%M:%S") %></b><br>
-    <b>Зона игры:</b> <%= game.area || "уточняется" %><br>
-		<%= game.image_html.try(:html_safe) || "" %>
-	  <% if game.preview %>
-	    <p><b>Анонс</b><br> <%= game.preview.try(:html_safe) %></p>
-	  <% end %>
-	  <% if game.legend %>
-	    <p><b>Легенда</b><br> <%= game.legend.try(:html_safe) %></p>
-	  <% end %>
-	  <% if game.brief_place %>
-	    <p><b>Место брифинга: </b> <%= game.brief_place.try(:html_safe) %></p>
-	  <% end %>
-    <div> <%= links(game) %> </div>
-	</article>
+    <article class="game <%= game.css_class %>">
+      <h3><%= game.project.try(:name) %> <%= game.format.try(:name) %> #<%= game.number %> - <%= game.start_date.strftime("%d.%m.%y") %></h3>
+      <h1><%= game.name %></h1>
+      <%= game.image_html.try(:html_safe) || "" %>
+      <% if game.legend %>
+          <p><b>Легенда</b><br> <%= game.legend.truncate(200, separator: ' ').try(:html_safe) %></p>
+      <% end %>
+      <div> <%= archive_links(game) %> </div>
+    </article>
 <% end %>

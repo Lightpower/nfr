@@ -1,4 +1,11 @@
 <article class="archive">
+  <%= archive_links(@game) %>
+  <h3><%= @game.project.try(:name) %> <%= @game.format.try(:name) %> #<%= @game.number %> - <%= @game.start_date.strftime("%d.%m.%y") %></h3>
+  <h1><%= @game.name %></h1>
+  <% if @game.legend %>
+      <p><b>Легенда</b><br> <%= @game.legend.try(:html_safe) %></p>
+  <% end %>
+  <h3>Задания</h3>
   <% if zones.present? || @game.archive_tasks.unzoned.present? %>
       <% zones.each do |zone|  %>
           <%= render 'game_strategies/conquest/archives/zones/item', zone: zone %>

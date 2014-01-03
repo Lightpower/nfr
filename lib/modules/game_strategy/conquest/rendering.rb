@@ -8,6 +8,7 @@ module GameStrategy
       TEMPLATE_PREFIX = 'game_strategies/conquest/'
       LAYOUT = 'game_strategies/conquest/layouts/game'
       LAYOUT_MOBILE = 'game_strategies/conquest/layouts/mobile'
+      LAYOUT_SINGLE = 'layouts/stat'
 
       ##
       # Prepare parameters for main block
@@ -24,39 +25,6 @@ module GameStrategy
       def main_block(params)
         zones = params[:user].team.zones.where('zones.game_id=?', params[:game].id)
         return "#{TEMPLATE_PREFIX}zones/index", locals: {zones: zones}, layout: LAYOUT
-      end
-
-      ##
-      # Prepare parameters for Game's script block
-      #
-      # Params:
-      # - params {Hash} - hash of parameter which contains game
-      #   - :game {Game} - game which script block should be created for
-      #
-      # Returns:
-      #
-      # 'game_strategies/conquest/archives/zones/item', layout: вуафгде
-      #
-      def script_block(params)
-        @game = params[:game]
-        zones = @game.archive_zones
-        return "#{TEMPLATE_PREFIX}/archives/zones/index", locals: {zones: zones}
-      end
-
-      ##
-      # Prepare parameters for Game's result block
-      #
-      # Params:
-      # - params {Hash} - hash of parameter which contains game
-      #   - :game {Game} - game which script block should be created for
-      #
-      # Returns:
-      #
-      # 'game_strategies/conquest/archives/zones/item', layout: вуафгде
-      #
-      def total_block(params)
-        data = total(params)
-        return "#{TEMPLATE_PREFIX}/archives/total", locals: {data: data}
       end
 
       ##
@@ -148,6 +116,59 @@ module GameStrategy
         return "#{TEMPLATE_PREFIX}mobile/index", locals: params, layout: LAYOUT_MOBILE
       end
 
+      ####################
+      ###   ARCHIVE    ###
+      ####################
+
+      ##
+      # Prepare parameters for Game's script block
+      #
+      # Params:
+      # - params {Hash} - hash of parameter which contains game
+      #   - :game {Game} - game which script block should be created for
+      #
+      # Returns:
+      #
+      # 'game_strategies/conquest/archives/zones/item', layout: default
+      #
+      def script_block(params)
+        @game = params[:game]
+        zones = @game.archive_zones
+        return "#{TEMPLATE_PREFIX}/archives/zones/index", locals: {zones: zones}
+      end
+
+      ##
+      # Prepare parameters for Game's result block
+      #
+      # Params:
+      # - params {Hash} - hash of parameter which contains game
+      #   - :game {Game} - game which script block should be created for
+      #
+      # Returns:
+      #
+      # 'game_strategies/conquest/archives/total', layout: default
+      #
+      def total_block(params)
+        data = total(params)
+        return "#{TEMPLATE_PREFIX}/archives/total", locals: {data: data}
+      end
+
+      ##
+      # Prepare parameters for Game's detailed statistics block
+      #
+      # Params:
+      # - params {Hash} - hash of parameter which contains game
+      #   - :game {Game} - game which script block should be created for
+      #
+      # Returns:
+      #
+      # 'game_strategies/conquest/archives/stat', layout: default
+      #
+      def archive_stat_block(params)
+        game, teams, data = stat(params)
+        return "#{TEMPLATE_PREFIX}/archives/stat", locals: {game: game, teams: teams, data: data}, layout: LAYOUT_SINGLE
+      end
+
 
       private
 
@@ -163,8 +184,7 @@ module GameStrategy
         game = params[:game]
         team = params[:team]
         data = []
-        tasks = Task.where(game_id: game.id).order(:id)
-        tasks.each do |task|
+        Task.where(game_id: game.id).order(:id).each do |task|
           if task.codes.size > 0
             new_task = { id: task.id, name: task.number.to_s + '. ' + task.name, codes: [] }
             task.codes.by_order.each do |code|
@@ -190,9 +210,30 @@ module GameStrategy
         game.archive_teams.each do |team|
           data << {team: team.name, result: team.codes_number_in_zone(nil)}
         end
-        data.sort{|x, y| x[:result] <=> y[:result]}
+        data.sort{|x, y| y[:result] <=> x[:result]}
       end
 
+      def stat(params)
+        game = params[:game]
+        teams = game.archive_teams.map{|team| {id: team.id, name: team.name} }
+        data = []
+
+        game.archive_tasks.order(:id).each do |task|
+          if task.archive_codes.size > 0
+            new_task = {id: task.id, name: task.number.to_s + '. ' + task.name, codes: []}
+            task.archive_codes.by_order.each do |code|
+              new_code = {data: code.show_code, passed: []}
+              teams.each do |team|
+                new_code[:passed] << ArchiveTeamCode.where(team_id: team[:id], code_id: code.id).try(:first).try(:created_at).try(:localtime)
+              end
+              new_task[:codes] << new_code
+            end
+            data << new_task
+          end
+        end
+
+        [game, teams.map {|team| team[:name]}, data]
+      end
     end
   end
 end

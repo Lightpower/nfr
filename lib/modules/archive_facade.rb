@@ -78,7 +78,15 @@ module ArchiveFacade
           archive_instance = archive_class.new
           main_class.column_names.each do |column|
             if column == 'team_id'
-              archive_instance.send( "#{column}=", team_table[row.send(column)] )
+              # if this team is not in game requests
+              unless team_table[row.team_id]
+                team = Team.find(row.team_id)
+                archive_team = ArchiveTeam.create(name: team.name, alternative_name: team.alternative_name,
+                                                  image_url: team.image_url, team_id: team.id, game_id: game.id)
+                team_table.merge!({team.id => archive_team.id})
+              end
+
+              archive_instance.send( "#{column}=", team_table[row.team_id] )
             else
               archive_instance.send("#{column}=", row.send(column))
             end

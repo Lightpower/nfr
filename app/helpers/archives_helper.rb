@@ -4,7 +4,7 @@ module ArchivesHelper
   ##
   # Create links to all details
   #
-  def links(game)
+  def archive_links(game)
     return '' unless game
     res = link_to('Описание', archive_path(game), class: 'archive_link')
     res << link_to('Результаты', short_stat_archive_path(game), class: 'archive_link')
