@@ -12,15 +12,10 @@ class UpdateGameFormats < ActiveRecord::Migration
     end
 
     unless Rails.env.test?
-      Project.create(id: 1, name: 'NeFoRmat', owner: 'Виталий Lightpower Бескровный', css_class: '')
-      Project.create(id: 2, name: 'DozoR', owner: 'Алесь Жук')
+      Project.create(id: 1, name: 'NeFoRmat', owner: 'Виталий Lightpower Бескровный', css_class: 'neformat')
 
-      Format.create(id: 1,  project_id: 1, name: 'NeDostRoy', organizer: 'Lightpower', show_in_archives: true)
-      Format.create(id: 2,  project_id: 1, name: 'Game', organizer: 'Lightpower', show_in_archives: true)
-
-      Format.create(id: 11, project_id: 2, name: 'Classic', organizer: 'AlexKey', show_in_archives: true)
-      Format.create(id: 12, project_id: 2, name: 'Lite', organizer: 'AlexKey', show_in_archives: true)
-      Format.create(id: 13, project_id: 2, name: 'Klad', organizer: 'Lightpower', show_in_archives: true)
+      Format.create(id: 1,  project_id: 1, name: 'NeDostRoy', organizer: 'Lightpower', css_class: 'nedostroy', show_in_archives: true)
+      Format.create(id: 2,  project_id: 1, name: 'Game', organizer: 'Lightpower', css_class: 'game', show_in_archives: true)
 
       Game.all.each do |game|
         game.format_id = 11
