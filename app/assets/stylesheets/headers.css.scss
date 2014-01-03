@@ -97,6 +97,9 @@ a.header_menu_item.selected:hover {
 }
 
 header.game {
+  position: fixed;
+  top: 0px;
+  left: auto;
   height: 33px;
   font-size: 24px;
 
