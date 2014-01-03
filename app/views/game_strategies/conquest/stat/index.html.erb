@@ -7,9 +7,9 @@
     </thead>
     <tbody>
     <% data.each do |task|%>
-      <% task[:codes].each do |code| %>
+      <% task[:codes].each_with_index do |code, ix| %>
         <tr>
-          <td><%= task[:name] %></td>
+          <%= content_tag(:td, task[:name], rowspan: task[:codes].size) if ix == 0%>
           <td><%= code[:id] %></td>
           <td><%= 'ДА' if code[:me] == 1 %></td>
           <td><%= code[:total] if code[:total] > 0 %></td>
