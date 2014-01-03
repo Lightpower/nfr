@@ -12,6 +12,10 @@ div.task {
   border-style: solid
 }
 
+div.task.finished {
+  background-color: #99FF99;
+}
+
 div.unavailable {
   font-size: 0.8em;
 }

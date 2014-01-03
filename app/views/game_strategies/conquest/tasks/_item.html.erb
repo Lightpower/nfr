@@ -1,7 +1,8 @@
-<div class='task openable_holder <%= 'unavailable' unless task.is_available?(current_user.team) %>'>
+<div class='task openable_holder<%= ' unavailable' unless task.is_available?(current_user.team) %><%= ' finished' if task.is_finished?(current_user.team)%>'>
 
   <% if task.is_available?(current_user.team) %>
-    <%= openable_tag(task.make_id, true, "#{task.number}. #{task.name}") %>
+    <%= openable_tag(task.make_id, true, "#{task.number}. #{task.name}")%>
+      (сдано <%= task.passed_code_count(current_user.team) %> из <%= task.code_count %>)
   <% else %>
       <%= openable_tag(task.make_id, true, "#{task.number}. #{task.name} (Недоступно)") %>
   <% end %>
