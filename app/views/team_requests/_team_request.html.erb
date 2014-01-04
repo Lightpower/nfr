@@ -1,5 +1,5 @@
 <div class="team_request">
   <%= content_tag(:span, name) %>
-  <%= link_to "V", "#", class: "action_button_min", "data-url" => accept_team_request_path(team_request_id) if can_manage %>
-  <%= link_to "X", "#", class: "action_button_min", "data-url" => reject_team_request_path(team_request_id) %>
+  <%= link_to 'V', '#', class: 'action_button_min', 'data-url' => accept_team_request_path(team_request_id) if can_manage %>
+  <%= link_to 'X', '#', class: 'action_button_min', 'data-url' => reject_team_request_path(team_request_id) %>
 </div>

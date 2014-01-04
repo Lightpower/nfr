@@ -5,8 +5,7 @@ module Abilities
     def abilities_for_guest(user)
       return if user.id
 
-      can :read, Game
-
+      can :read, Game, is_visible: true
     end
   end
 end

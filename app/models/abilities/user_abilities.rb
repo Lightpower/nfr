@@ -4,19 +4,40 @@ module Abilities
 
     def abilities_for_user(user)
       return unless user.id
-
+      for_user_without_team(user)
+      for_user_with_team(user)
+      for_both_users(user)
     end
 
     private
 
-    def abilities_for_user_with_team(user)
-      return unless user.team_id
+    def for_user_with_team(user)
+      return if user.team.present?
+
+      can :read, Game, is_visible: true
+
+      can [:play, :stat, :log], Game do |game|
+        game.teams.include?(user.team)
+      end
 
     end
 
-    def abilities_for_user_without_team(user)
-      return if user.team_id
+    def for_user_without_team(user)
+      return if user.team.blank?
 
+      can :create, Team
+
+      can :accept, TeamRequest, user_id: user.id, by_user: false
+      can :reject, TeamRequest, user_id: user.id, by_user: true
+    end
+
+    def for_both_users(user)
+      can :read, Game, is_visible: true
+
+      can :manage, User,     id: user.id
+      can :read,   User
+
+      can :read,   Team
     end
   end
 end

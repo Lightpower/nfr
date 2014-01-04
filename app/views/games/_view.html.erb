@@ -29,7 +29,7 @@
         <div class="details_caption">Ждут принятия: </div> <%= game.teams_unaccepted.map(&:name).join(', ') %>
       </div>
       <div>
-        <%= link_to('Обсудить на форуме', game.prepare_url, class: 'action_button') if game.prepare_url.present? %>
+        <%= link_to('Обсудить на форуме', game.prepare_url, class: 'action_button', target: '_blank') if game.prepare_url.present? %>
       </div>
 
       <% if current_user %>
@@ -37,8 +37,8 @@
           <%= link_to_delete_game_request(game, current_user) if game.can_delete_request?(current_user) %>
           <%= link_to_enter_game(game) if game.can_enter?(current_user) %>
 
-          <%= link_to_edit_game(game)    if current_user.is_admin? %>
-          <%= link_to_archive_game(game) if current_user.is_admin? %>
+          <%= link_to_edit_game(game)    if can? :update,  game %>
+          <%= link_to_archive_game(game) if can? :archive, game %>
       <% end %>
     </article>
 <% end %>
