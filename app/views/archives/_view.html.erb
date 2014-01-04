@@ -1,6 +1,6 @@
 <% if game.present? %>
     <article class="game <%= game.css_class %>">
-      <h3><%= game.project.try(:name) %> <%= game.format.try(:name) %> #<%= game.number %> - <%= game.start_date.strftime("%d.%m.%y") %></h3>
+      <h3><%= game.project.try(:name) %> <%= game.format.try(:name) %> #<%= game.number %> - <%= game.start_date.strftime('%d.%m.%y') %></h3>
       <h1><%= game.name %></h1>
       <%= game.image_html.try(:html_safe) || "" %>
       <% if game.legend %>
