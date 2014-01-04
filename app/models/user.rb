@@ -42,6 +42,10 @@ class User < ActiveRecord::Base
     role == 'admin'
   end
 
+  def is_moderator?
+    role == 'moderator'
+  end
+
   def waiting_for_approving?
     self.team_requests.present? && self.team.blank?
   end
