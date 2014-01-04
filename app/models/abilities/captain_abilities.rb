@@ -14,7 +14,7 @@ module Abilities
       end
 
       can :accept, TeamRequest, team_id: user.team_id, by_user: true
-      can :reject, TeamRequest, team_id: user.team_id, by_user: false
+      can :reject, TeamRequest, team_id: user.team_id
 
       can :create, GameRequest do |gr|
         game = Game.find(gr.game_id)

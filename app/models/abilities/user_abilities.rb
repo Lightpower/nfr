@@ -28,7 +28,7 @@ module Abilities
       can :create, Team
 
       can :accept, TeamRequest, user_id: user.id, by_user: false
-      can :reject, TeamRequest, user_id: user.id, by_user: true
+      can :reject, TeamRequest, user_id: user.id
     end
 
     def for_both_users(user)
