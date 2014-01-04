@@ -4,7 +4,6 @@ class UserMailer < ActionMailer::Base
 
   def welcome(user)
     @user = user
-    binding.pry
     mail(to: @user.email, subject: 'Добро пожаловать на сайт NeFoRmat!')
   end
 end
