@@ -1,6 +1,6 @@
 <%= form_for :sql do |f| %>
     <%= text_area :sql, :to_s, rows: '10', class: 'full_width' %><br>
-    <%= f.submit %>
+    <%= f.submit 'RUN' %>
 <% end %>
 
 <% if @cmd_tuples %>
