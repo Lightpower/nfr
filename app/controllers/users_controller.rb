@@ -51,7 +51,6 @@ class UsersController < ApplicationController
         # Captain cannot change his team
         params[:user].delete(:team_id)
       elsif params[:user][:team_id].present?
-        binding.pry
         # if user wants to change his team, create TeamRequest and clear his team_id
         TeamRequest.create(team_id: params[:user][:team_id], user_id: params[:id], by_user: true)
         UserMailer.team_request_from_user(Team.find(params[:user][:team_id]), User.find(params[:id])).deliver
