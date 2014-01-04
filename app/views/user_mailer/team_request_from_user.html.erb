@@ -1,0 +1,9 @@
+<p>Привет, <%= @team.captain.show_name %>!</p>
+
+<p>В вашу команду "<%= @team.name %>" поступила заявка на участие от пользователя <%= @user.show_name %>. Рассмотреть её Вы можете <%= link_to 'здесь', edit_team_path(@team) %>. </p>
+
+<p>
+--<br>
+С уважением,<br>
+команда <%= link_to 'NeFoRmat', 'http://nfr.kiev.ua' %>
+</p>

@@ -30,4 +30,4 @@
 </div>
 
 <%= link_to 'Править', edit_user_path(@user), class: 'action_button' if can? :manage, @user %><br>
-<%= link_to 'Зайти под этим пользователем', admins_become_path(@user), class: 'admin_action_button' if can? :manage, @user %>
+<%= link_to 'Зайти под этим пользователем', admins_become_path(@user), class: 'admin_action_button' if can?(:manage, @user) && (@user != current_user) %>

@@ -1,0 +1,9 @@
+<p>Привет, <%= @user.show_name %>!</p>
+
+<p>Вас пригласили в команду "<%= @team.name %>". Рассмотреть его Вы можете <%= link_to 'здесь', edit_user_path(@user) %>. </p>
+
+<p>
+--<br>
+С уважением,<br>
+команда <%= link_to 'NeFoRmat', 'http://nfr.kiev.ua' %>
+</p>
