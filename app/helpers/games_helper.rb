@@ -36,8 +36,6 @@ module GamesHelper
   # Create link_to for archive game
   #
   def link_to_archive_game(game)
-    link_to 'Заархивировать', archive_game_path(game), class: 'archive_game'
+    link_to 'Заархивировать', archive_game_path(game), class: 'archive_game', confirm: 'Заархивировать игру?'
   end
-
-
 end
