@@ -1,8 +1,9 @@
 Nfr::Application.routes.draw do
 
-  devise_for :users
-
   root :to => 'home#index'
+
+  #devise_for :users
+  devise_for :users, controllers: { registrations: 'registrations' }
 
   resources :games, only: [:index, :show] do
     member do
@@ -39,15 +40,15 @@ Nfr::Application.routes.draw do
   end
 
 # resource :users
-  match "/users" => "users#index",          via: :get,    as: :users
-  match "/users" => "users#create",         via: :post,   as: :users
-  match "/users/new" => "users#new",        via: :get,    as: :new_user
-  match "/users/:id/edit" => "users#edit",  via: :get,    as: :edit_user
-  match "/users/:id/team_requests" => "users#team_requests",  via: :get, as: :team_requests_user
-  match "/users/:id" => "users#show",       via: :get,    as: :user
-  match "/users/:id" => "users#update",     via: :put,    as: :user
-  match "/users/:id/exclude" => "users#exclude",     via: :get,    as: :exclude_user
-  match "/users/:id" => "users#destroy",    via: :delete, as: :user
+  match '/users' => 'users#index',          via: :get,    as: :users
+  match '/users' => 'users#create',         via: :post,   as: :users
+  match '/users/new' => 'users#new',        via: :get,    as: :new_user
+  match '/users/:id/edit' => 'users#edit',  via: :get,    as: :edit_user
+  match '/users/:id/team_requests' => 'users#team_requests',  via: :get, as: :team_requests_user
+  match '/users/:id' => 'users#show',       via: :get,    as: :user
+  match '/users/:id' => 'users#update',     via: :put,    as: :user
+  match '/users/:id/exclude' => 'users#exclude',     via: :get,    as: :exclude_user
+  match '/users/:id' => 'users#destroy',    via: :delete, as: :user
 
   resources :team_requests, only: [] do
     member do
