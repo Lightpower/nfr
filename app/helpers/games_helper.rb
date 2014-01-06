@@ -38,4 +38,11 @@ module GamesHelper
   def link_to_archive_game(game)
     link_to 'Заархивировать', archive_game_path(game), class: 'archive_game', confirm: 'Заархивировать игру?'
   end
+
+  ##
+  # Create link_to for mass mail with game's annonce
+  #
+  def link_to_mass_mail_game(game)
+    link_to 'Создать рассылку', mailouts_path({mailout: {game_id: game.id}, mass_send: true}), class: 'mass_mail_game', method: :post, confirm: 'Разослать письма с анонсом игры всем капитанам?'
+  end
 end

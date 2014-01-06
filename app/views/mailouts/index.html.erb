@@ -1,0 +1,28 @@
+<h1>Рассылки</h1>
+<% if @mailouts.present? %>
+    <table class="table-bordered">
+      <thead>
+      <th>Создано</th>
+      <th>Отправлено</th>
+      <th>Тема</th>
+      <th colspan="2">Игра</th>
+      <th>Адресатов</th>
+      <th></th>
+      </thead>
+      <% @mailouts.each do |mailout| %>
+          <tr>
+            <%= content_tag(:td, mailout.created_at.localtime.strftime('%d.%m.%y %H:%M')) %>
+            <%= content_tag(:td, mailout.sent_at ? mailout.sent_at.localtime.strftime('%d.%m.%y %H:%M') : '') %>
+            <%= content_tag(:td, mailout.subject) %>
+            <%= content_tag(:td, mailout.game.try(:number)) %>
+            <%= content_tag(:td, (mailout.game.try(:name) || '').truncate(25, separator: ' ')) %>
+            <%= content_tag(:td, mailout.to.split(',').size) %>
+            <td>
+              <%= pic_link_to_show(mailout_path(mailout)) if can? :read, mailout %>
+            </td>
+          </tr>
+      <% end %>
+    </table>
+<% else %>
+    <h2>Список рассылок пуст</h2>
+<% end %>

@@ -1,0 +1,30 @@
+<div class="content">
+  <p>
+    <b>Отправитель:</b><br>
+    <%= @mailout.from %>
+  </p>
+  <p>
+    <b>Адресаты:</b><br>
+    <%= @mailout.to.gsub(',', ', ') %>
+  </p>
+  <p>
+    <b>Тема:</b><br>
+    <%= @mailout.subject %>
+  </p>
+  <p>
+    <b>Письмо:</b><br>
+    <%= @mailout.body.try(:html_safe) %>
+  </p>
+  <p>
+    <b>Создана:</b><br>
+    <%= @mailout.created_at.localtime.strftime('%d.%m.%y %H:%M') %>
+  </p>
+  <p>
+    <b>Отправлена:</b><br>
+    <%= @mailout.sent_at ? @mailout.sent_at.localtime.strftime('%d.%m.%y %H:%M') : 'никогда' %>
+  </p>
+  <p>
+    <b>Связанная игра:</b><br>
+    <%= @mailout.game ? "ID: #{@mailout.game.id}, ##{@mailout.game.number} \"#{@mailout.game.name}\"" : 'нет' %>
+  </p>
+</div>

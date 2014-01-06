@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131230160200) do
+ActiveRecord::Schema.define(:version => 20140105133700) do
 
   create_table "archive_code_strings", :force => true do |t|
     t.string  "data",    :null => false
@@ -250,6 +250,18 @@ ActiveRecord::Schema.define(:version => 20131230160200) do
 
   add_index "logs", ["game_id"], :name => "index_logs_on_game_id"
   add_index "logs", ["team_id"], :name => "index_logs_on_team_id"
+
+  create_table "mailouts", :force => true do |t|
+    t.string   "from",        :null => false
+    t.text     "to",          :null => false
+    t.text     "subject"
+    t.text     "body"
+    t.text     "attachments"
+    t.datetime "sent_at"
+    t.integer  "game_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "projects", :force => true do |t|
     t.string "name",      :null => false

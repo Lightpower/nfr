@@ -75,6 +75,12 @@ Nfr::Application.routes.draw do
     end
   end
 
+  resources :mailouts, except: [:delete] do
+    collection do
+      put :send_mail
+    end
+  end
+
   # Easters
 
   get '/blackjack', to: redirect('http://absolutist.ru/online/bjack/blackjack.swf')

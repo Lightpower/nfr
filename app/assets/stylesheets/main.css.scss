@@ -94,6 +94,10 @@ section.site_main_content {
   border-style: solid;
   margin-right: 5px;
   padding: 3px;
+
+  div.content {
+    white-space: normal;
+  }
 }
 
 section.devise {
@@ -101,6 +105,7 @@ section.devise {
   height: 800px;
 
   div.content {
+    white-space: normal;
     min-height: 220px;
     width: 500px;
     margin: 0 auto;
@@ -410,7 +415,7 @@ a.enter_game {
   padding: 5px;
 }
 
-a.edit_game, a.archive_game {
+a.edit_game, a.archive_game, a.mass_mail_game {
   display: inline-block;
   text-align: center;
   text-decoration: none;

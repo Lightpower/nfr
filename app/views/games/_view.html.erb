@@ -37,8 +37,9 @@
           <%= link_to_delete_game_request(game, current_user) if game.can_delete_request?(current_user) %>
           <%= link_to_enter_game(game) if game.can_enter?(current_user) %>
 
-          <%= link_to_edit_game(game)    if can? :update,  game %>
-          <%= link_to_archive_game(game) if can? :archive, game %>
+          <%= link_to_edit_game(game)      if can? :update,    game %>
+          <%= link_to_archive_game(game)   if can? :archive,   game %>
+          <%= link_to_mass_mail_game(game) if can? :mass_mail, game %>
       <% end %>
     </article>
 <% end %>

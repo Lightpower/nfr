@@ -5,7 +5,7 @@ module Abilities
     def abilities_for_moderator(user)
       return unless user.is_moderator?
 
-      can :manage, Game
+      can [:read, :update, :create, :play, :log, :stat, :archive], Game
     end
   end
 end
