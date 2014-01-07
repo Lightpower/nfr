@@ -1,7 +1,7 @@
 function Player(_type, _basePoint) {
   // Type: { 0: off, 1: AI, 2: HUMAN}
   this.type = _type || 0;
-  this.basePoint = _basePoint
+  this.basePoint = _basePoint;
   this.points = 0;
 
   this.color = function() {
@@ -12,9 +12,9 @@ function Player(_type, _basePoint) {
 FIL.players = {
   list: [
     new Player(2, [0,0]),
-    new Player(0, [FIL.core.width-1][FIL.core.height-1]),
-    new Player(0, [FIL.core.width-1][0]),
-    new Player(0, [0][FIL.core.height-1])
+    new Player(0, [FIL.core.width-1, FIL.core.height-1]),
+    new Player(0, [FIL.core.width-1, 0]),
+    new Player(0, [0, FIL.core.height-1])
   ],
   currentPlayerId: 0,
 
@@ -23,6 +23,12 @@ FIL.players = {
     for(i=0; i<4; i++) {
       this.list[i].points = 0;
     }
+    this.list[0].basePoint = [0,0];
+    this.list[1].basePoint = [FIL.core.width-1, FIL.core.height-1];
+    this.list[2].basePoint = [FIL.core.width-1, 0];
+    this.list[3].basePoint = [0, FIL.core.height-1];
+
+    this.currentPlayerId = 0;
   },
 
   count: function() {
