@@ -175,7 +175,7 @@ div.blitz_info {
   -webkit-box-shadow: 6px 6px 8px #282b1f;
   -moz-box-shadow: 6px 6px 8px #282b1f;
   box-shadow: 6px 6px 8px #282b1f;
-  margin-top: 10px;
+  margin: 10px 3px 1px 1px;
   padding: 3px;
   font-family: "Sans";
   color: #520000;
@@ -316,9 +316,8 @@ a.openable {
 }
 
 div#log {
-  width: 200px;
-  margin-right: 5px;
-  margin-top: 5px;
+  display: block;
+  margin: 5px 1px 1px 1px;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px;

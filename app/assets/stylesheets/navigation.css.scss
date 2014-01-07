@@ -42,7 +42,6 @@ aside.menu {
   border-style: solid;
   padding: 3px;
   font-family: "Sans";
-  font-style: bold;
   ul {
     margin: 0px;
     padding: 4px;
@@ -54,7 +53,6 @@ aside.menu {
     margin: 0px;
   }
   ul.submenu {
-    font-style: bold;
     font-size: 14px;
     padding: 0px 0px 0px 12px;
     li {
@@ -66,7 +64,7 @@ aside.menu {
 }
 
 aside#team_info {
-
+  min-width: 0px;
   li {
     height: 21px;
   }
