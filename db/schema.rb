@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140105133700) do
+ActiveRecord::Schema.define(:version => 20140107100501) do
 
   create_table "archive_code_strings", :force => true do |t|
     t.string  "data",    :null => false
@@ -63,6 +63,8 @@ ActiveRecord::Schema.define(:version => 20140105133700) do
     t.integer "task_id"
     t.integer "code_id"
     t.integer "game_id",    :null => false
+    t.string  "task_type"
+    t.text    "special"
   end
 
   create_table "archive_team_bonus", :force => true do |t|
@@ -283,6 +285,8 @@ ActiveRecord::Schema.define(:version => 20140105133700) do
     t.integer "task_id"
     t.integer "code_id"
     t.integer "game_id",    :null => false
+    t.string  "task_type"
+    t.text    "special"
   end
 
   add_index "tasks", ["game_id"], :name => "index_tasks_on_game_id"

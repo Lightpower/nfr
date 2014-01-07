@@ -9,8 +9,8 @@ class ArchiveTask < ActiveRecord::Base
   has_many   :archive_hints, class_name: 'ArchiveHint', foreign_key: 'task_id'
   has_many   :archive_codes, class_name: 'ArchiveCode', foreign_key: 'task_id'
 
-  attr_accessible :game, :game_id, :bonus, :code_quota, :preview, :data, :name, :number, :duration,
-                  :archive_task, :task_id, :archive_zone, :zone_id, :access_code, :code_id, :bonus
+  attr_accessible :game, :game_id, :bonus, :code_quota, :preview, :data, :name, :number, :duration, :archive_task,
+                  :task_id, :archive_zone, :zone_id, :access_code, :code_id, :bonus, :task_type, :special
 
 
   class << self

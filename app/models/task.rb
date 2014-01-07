@@ -10,7 +10,7 @@ class Task < ActiveRecord::Base
   has_many   :codes
 
   attr_accessible :game, :game_id, :bonus, :code_quota, :preview, :data, :name, :number, :duration, :task, :task_id, :zone, :zone_id,
-                  :access_code, :code_id, :bonus
+                  :access_code, :code_id, :bonus, :task_type, :special
 
 
   class << self
@@ -46,17 +46,19 @@ class Task < ActiveRecord::Base
   #
   def is_available?(team)
     return false if team.blank?
-    return true if self.zone.blank?
-    if team.zones.include?(self.zone)
-      self.access_code.blank? || TeamCode.where(team_id: team.id, code_id: self.access_code.id).present?
-    else
-      false
-    end
+    return false if (self.zone.present? && !team.zones.include?(self.zone))
+
+    # Is current task accessible?
+    result = self.access_code.blank? || TeamCode.where(team_id: team.id, code_id: self.access_code.id).present?
+    # Is parent task (and all its parent tasks) accessible?
+    result &&= (self.task_id.blank? || self.parent_task.is_available?(team))
+
+    result
   end
 
   ##
   # If task is finished (necessary codes are passed)
-  # Task can be finished by all necessary codes passing and all included tasks finishing or by deration ending
+  # Task can be finished by all necessary codes passing and all included tasks finishing or by duration ending
   #
   def is_finished?(team)
     return false if team.blank?
