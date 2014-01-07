@@ -2,7 +2,7 @@
 
   <% if task.is_available?(current_user.team) %>
     <%= openable_tag(task.make_id, true, "#{task.number}. #{task.name}")%>
-      (сдано <%= task.passed_code_count(current_user.team) %> из <%= task.code_count %>)
+      <%= "(сдано #{task.passed_code_count(current_user.team)} из #{task.code_count})" if task.code_count > 0 %>
   <% else %>
       <%= openable_tag(task.make_id, true, "#{task.number}. #{task.name} (Недоступно)") %>
   <% end %>
@@ -12,7 +12,7 @@
   <% if task.is_available?(current_user.team) %>
       <%= task.data.html_safe %><br>
   	  <% if task.codes.present? %>
-        <br><b>KO:</b> <%= task.codes.by_order.map{|code| ko_colored(code, current_user.team.id, @results)}.join(', ').html_safe %>
+        <%= TaskStrategy::Context.codes_block({task: task, user: current_user, last_result: @results}) %>
       <% end %>
 
       <% if task.tasks.present? %>
