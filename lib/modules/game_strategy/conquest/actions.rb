@@ -229,15 +229,15 @@ module GameStrategy
           when :accessed_zone
             result = :accessed
             bonus = user.team.modify_bonus(code)
-            new_team_code = TeamCode.create(game_id: game.id, team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accessed), zone_id: code.hold_zone.id, bonus: bonus)
+            new_team_code = TeamCode.create(game_id: game.id, team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accessed), zone_id: code.hold_zone.id, bonus: bonus, data: params[:code])
             TeamZone.create(game_id: game.id, team_id: user.team.id, zone_id: code.hold_zone.id)
           when :accessed_task
             result = :accessed
             bonus = user.team.modify_bonus(code)
-            new_team_code = TeamCode.create(game_id: game.id, team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accessed), zone_id: code.zone.try(:id), bonus: bonus)
+            new_team_code = TeamCode.create(game_id: game.id, team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accessed), zone_id: code.zone.try(:id), bonus: bonus, data: params[:code])
           when :accepted
             bonus = user.team.modify_bonus(code)
-            new_team_code = TeamCode.create(game_id: game.id, team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accepted), zone_id: code.zone.try(:id), bonus: bonus)
+            new_team_code = TeamCode.create(game_id: game.id, team_id: user.team.id, code_id: code.id, state: Code::STATES.index(:accepted), zone_id: code.zone.try(:id), bonus: bonus, data: params[:code])
         end
 
         # Add to log
@@ -340,11 +340,17 @@ module GameStrategy
               # check if this is accept code for a new task
             elsif code.hold_task.present?
 
-              # Does team have enough codes to pass this code?
-              if have_enough_codes?(code, team)
-                result = :accessed_task
+              # Does it belongs to accessible task?
+              if code.task.blank? || code.task.is_available?(team)
+
+                # Does team have enough codes to pass this code?
+                if have_enough_codes?(code, team)
+                  result = :accessed_task
+                else
+                  result = :not_enough_costs
+                end
               else
-                result = :not_enough_costs
+                result = :not_available
               end
             else
               #Check if Zone of this code is available for this team

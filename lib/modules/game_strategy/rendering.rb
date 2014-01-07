@@ -23,6 +23,8 @@ module GameStrategy
       end
     end
 
+  private
+
     def verify_data(params)
       params[:game].is_a?(Game) && params[:user].is_a?(User)
     end

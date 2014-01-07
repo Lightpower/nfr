@@ -20,7 +20,7 @@ require 'unicode'
 # - total results;
 # - action block.
 #
-# All those element can be processed in full and mobile modes
+# All those elements can be processed in full and mobile modes
 #
 # Also, it define the possible actions for Action block due to Game type and state (e.g. show action when it
 # accessible only)
