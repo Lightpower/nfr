@@ -16,7 +16,7 @@ class ArchivesController < ApplicationController
   def show
     @game = Game.where(id: params[:id], is_archived: true).first
 
-    render *GameStrategy::Context.script_block({game: @game, user: current_user})
+    render *GameStrategy::Context.script_block({game: @game, user: current_user || User.new})
   end
 
   ##
@@ -25,7 +25,7 @@ class ArchivesController < ApplicationController
   def short_stat
     @game = Game.where(id: params[:id], is_archived: true).first
 
-    render *GameStrategy::Context.total_block({game: @game, user: current_user})
+    render *GameStrategy::Context.total_block({game: @game, user: current_user || User.new})
   end
 
   ##
@@ -34,6 +34,6 @@ class ArchivesController < ApplicationController
   def wide_stat
     @game = Game.where(id: params[:id], is_archived: true).first
 
-    render *GameStrategy::Context.archive_stat_block({game: @game, user: current_user})
+    render *GameStrategy::Context.archive_stat_block({game: @game, user: current_user || User.new})
   end
 end
