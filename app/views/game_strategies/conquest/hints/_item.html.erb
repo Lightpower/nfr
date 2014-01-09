@@ -13,7 +13,7 @@
 	  <% if task.is_available?(current_user.team) && task.hints.size > task.hints_of(current_user.team).size %>
 	    <%= form_for :hint, url: pass_game_codes_path(@game) do |f| %>
 			  <%= hidden_field_tag :task_id, task.id %>
-		    <%= f.submit 'Взять подсказку', confirm: 'Уверены, что хотите взять подсказку?' %>
+		    <%= f.submit('Взять подсказку', confirm: 'Уверены, что хотите взять подсказку?') unless task.is_finished?(current_user.team) %>
 	    <% end %>
     <% end %>
 	  </div>
