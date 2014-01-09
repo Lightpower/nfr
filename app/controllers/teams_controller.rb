@@ -4,7 +4,7 @@ class TeamsController < ApplicationController
 
   # GET /teams
   def index
-    @teams = Team.accessible_by(current_ability)
+    @teams = Team.accessible_by(current_ability).by_name
   end
 
   # GET /teams/1

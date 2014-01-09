@@ -22,6 +22,11 @@ class Team < ActiveRecord::Base
 
   before_destroy      {|team| User.where(team_id: team.id).each {|user| user.team_id = nil; user.save }}
 
+
+  # Scopes
+  scope :by_name, order(:name)
+
+
   ##
   # Number of all codes in all zones and without zones
   #
