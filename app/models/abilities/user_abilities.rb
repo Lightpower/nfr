@@ -12,7 +12,7 @@ module Abilities
     private
 
     def for_user_with_team(user)
-      return if user.team.present?
+      return if user.team.blank?
 
       can :read, Game, is_visible: true
 
@@ -23,7 +23,7 @@ module Abilities
     end
 
     def for_user_without_team(user)
-      return if user.team.blank?
+      return if user.team.present?
 
       can :create, Team
 
