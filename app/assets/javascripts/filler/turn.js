@@ -3,8 +3,9 @@ FIL.turn = {
     if(this.isEnd()) return;
 
     FIL.core.moveArea = undefined;
-    if(!FIL.players.canColor(newColor))
+    if(!FIL.players.canColor(newColor)) {
       return -1;
+    }
 
     var points;
     switch(FIL.players.list[FIL.players.currentPlayerId].type) {

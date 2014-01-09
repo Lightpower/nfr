@@ -28,7 +28,6 @@ div#filler_colors {
   width: 400px;
   margin: 5px auto;
   padding: 3px auto;
-  //border: 1px solid black;
 }
 
 div#filler_config {
@@ -62,6 +61,19 @@ div#filler_config_block {
   top: 0;
   opacity: 0.7;
   background-color: gray;
+}
+
+div#filler_warning {
+  display: inline-block;
+  margin: 4px 15px;
+  width: 300px;
+  height: 24px;
+  border: 2px solid darkred;
+  background-color: red;
+  color: black;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 input#field_width, input#field_height, input#color_count, input#unity_level {
@@ -104,17 +116,23 @@ a.fcell {
   border: 1px solid #333333;
   margin: 0px;
 }
-// ['white', 'black', 'red', 'orange', 'yellow', 'green', 'cyan', 'blue', 'magenta']
+// ['white', 'black', 'red', 'orange', 'yellow', 'green', 'cyan', 'blue', 'magenta', '#333333', '#003b00', 'violet', 'saddlebrown']
 
-a.fcell[data-color='0'] { background-color:  white }
-a.fcell[data-color='1'] { background-color:  black }
-a.fcell[data-color='2'] { background-color:  red }
-a.fcell[data-color='3'] { background-color:  orange }
-a.fcell[data-color='4'] { background-color:  yellow }
-a.fcell[data-color='5'] { background-color:  green }
-a.fcell[data-color='6'] { background-color:  cyan }
-a.fcell[data-color='7'] { background-color:  blue }
-a.fcell[data-color='8'] { background-color:  magenta }
+a.fcell[data-color='0']  { background-color:  white }
+a.fcell[data-color='1']  { background-color:  black }
+a.fcell[data-color='2']  { background-color:  red }
+a.fcell[data-color='3']  { background-color:  orange }
+a.fcell[data-color='4']  { background-color:  yellow }
+a.fcell[data-color='5']  { background-color:  green }
+a.fcell[data-color='6']  { background-color:  cyan }
+a.fcell[data-color='7']  { background-color:  blue }
+a.fcell[data-color='8']  { background-color:  magenta }
+a.fcell[data-color='9']  { background-color:  #333333 }
+a.fcell[data-color='10'] { background-color:  #003b00 }
+a.fcell[data-color='11'] { background-color:  violet }
+a.fcell[data-color='12'] { background-color:  saddlebrown }
+
+a.fcell.area { border: none; padding: 1px; }
 
 div.field_row {
   margin-bottom: 0px;

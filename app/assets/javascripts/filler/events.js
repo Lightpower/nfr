@@ -18,9 +18,10 @@ FIL.events = {
     if(FIL.turn.isEnd()) return;
 
     if(!FIL.players.canColor(color)) {
-      alert('This color is already taken! Choose new one.');
+      FIL.view.showWarning();
       return;
     }
+    FIL.view.hideWarning();
 
     FIL.turn.do(color);
     FIL.view.updateControl();

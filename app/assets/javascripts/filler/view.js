@@ -11,9 +11,10 @@ FIL.view = {
   colorDivId:            'filler_colors',
   startLinkClass:        'filler_start',
   resetLinkClass:        'filler_reset',
-  headDivId:           'filler_players',
+  headDivId:             'filler_players',
   playerTunDivId:        'player_turn',
   playerTurnSpanId:      'filler_player_turn',
+  chosenWarningDivId:    'filler_warning',
   // Config panel
   saveConfigLinkClass:   'filler_save_config',
   cancelConfigLinkClass: 'filler_cancel_config',
@@ -90,6 +91,7 @@ FIL.view = {
     // show FIL.core.field on <div id="field">
     var i, j,
       div = this.mainDiv(),
+      divSize = this.computeDivWidth(),
       cellWidth, cellHeight,
       newCell,
       cellColor,
@@ -97,7 +99,8 @@ FIL.view = {
     // Delete field
     div.children('div#' + this.fieldDivId).remove();
     // Create field
-    div.append('<div id="' + this.fieldDivId + '" name="' + this.fieldDivId + '"></div>');
+    div.append('<div id="' + this.fieldDivId + '" name="' + this.fieldDivId +
+      '" style="width: ' + divSize[0] + 'px; height: '+ divSize[1] +'px"></div>');
     div = div.children("div#" + this.fieldDivId);
 
     cellWidth = Math.floor(div.width() / FIL.core.width) - 2;
@@ -110,12 +113,25 @@ FIL.view = {
       for(i=0; i<FIL.core.width; i++) {
         cellColor = this.getColor(i, j);
         newCell = '<a href="#" class="' + this.fieldCellClass
+          + (FIL.core.field[i][j][1] == undefined ? '' : ' area')
           + '" style="width: ' + cellWidth + 'px; height: ' + cellHeight + 'px;"'
           + ' data-color="' + FIL.core.field[i][j][0] +'"'
           + ' data-coord="' + i + '_' + j + '">';
         rowDiv.append(newCell);
       }
     }
+  },
+
+  computeDivWidth: function() {
+    var divWidth = FIL.core.width * 20,
+        divHeight,
+        maxWidth = $('div#' + this.fillerDivId).width() - 10;
+    if(divWidth < 400) divWidth = 400;
+    if(divWidth > maxWidth) divWidth = maxWidth;
+    divWidth = ~~(divWidth / FIL.core.width) * FIL.core.width;
+    divHeight = divWidth / FIL.core.width * FIL.core.height;
+
+    return [divWidth, divHeight];
   },
 
   updateField: function() {
@@ -134,6 +150,7 @@ FIL.view = {
             cellColor = this.getColor(i, j);
             cell = div.children('div[data-coord='+ i + '_' + j +']');
             cell.data('color', cellColor);
+            if (FIL.core.moveArea[i][j] > 0) cell.addClass('area');
           }
         }
       }else {
@@ -146,16 +163,21 @@ FIL.view = {
   // Config
   //##########
   showConfig: function() {
-    $('div#' + FIL.view.configDivId).fadeIn();
-    $('div#' + FIL.view.configBlockDivId).fadeIn();
+    $('div#' + this.configDivId).fadeIn();
+    $('div#' + this.configBlockDivId).fadeIn();
   },
 
   hideConfig: function() {
-    $('div#' + FIL.view.configDivId).fadeOut();
-    $('div#' + FIL.view.configBlockDivId).fadeOut();
+    $('div#' + this.configDivId).fadeOut();
+    $('div#' + this.configBlockDivId).fadeOut();
   },
 
-
+  showWarning: function() {
+    $('div#' + this.chosenWarningDivId).fadeIn();
+  },
+  hideWarning: function() {
+    $('div#' + this.chosenWarningDivId).fadeOut();
+  },
 
   ///////////
   // PRIVATE
@@ -176,7 +198,7 @@ FIL.view = {
     div.append('<div id="'+this.playerTunDivId+'" name="'+this.playerTunDivId+'" style="display: none;">PLAYER <span id="'+this.playerTurnSpanId+'" name="'+this.playerTurnSpanId+'">' + 0 + '</span> TURNS</div>');
 
     // Control panel
-    div.append('<div id="' + this.controlDivId + '" name="' + this.controlDivId + '"><a href="#" class="' + this.startLinkClass + ' button">Start new game</a> <a href="#" class="' + this.resetLinkClass + ' button">Reset</a></div>');
+    div.append('<div id="' + this.controlDivId + '" name="' + this.controlDivId + '"><a href="#" class="' + this.startLinkClass + ' button">Start new game</a> <a href="#" class="' + this.resetLinkClass + ' button">Reset</a><div id="filler_warning" name="filler_warning" style="display: none;">This color is already chosen!</div></div');
 
     this.createColorPanel();
   },
