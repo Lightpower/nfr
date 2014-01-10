@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 ##
 # Standard elements rendering for Task Strategy
 #
@@ -18,17 +20,11 @@ module TaskStrategy
         user = params[:user]
         last_result = params[:last_result]
 
-        Rails.logger.info "!!!! task: #{task.id}, user: #{user.show_name}, last_result: #{last_result}"
-        Rails.logger.info "!!!! task.special: #{task.respond_to?(:special)}"
-        #Rails.logger.info "!!!! task: : #{task.inspect}"
-
         begin
-          #olimpian_table(task, user.team.id, last_result).html_safe
+          olimpian_table(task, user.team.id, last_result).html_safe
         rescue Exception => e
           "Ошибка структуры олимпийки! Поле task.special определено некорректно, task.id=#{task.id}"
         end
-
-        "Step 2"
       end
 
       private
@@ -37,19 +33,17 @@ module TaskStrategy
       # Form HTML-string with codes which are placed as olimpian
       #
       def olimpian_table(task, team_id, last_result)
-        #Rails.logger.info "!!!!!! task.special=#{task.special}"
+        struct = JSON.parse(task.special)
+        codes = {}
+        sql = "SELECT c.id, c.number, c.ko ko, c.color color, c.bonus bonus, (select data from code_strings cs where cs.code_id=c.id LIMIT 1) as data, tc.id found, tc.team_bonus_id bonus_id FROM codes c left outer join team_codes tc on (c.id=tc.code_id AND tc.team_id=#{team_id}) WHERE c.task_id=#{task.id} ORDER BY c.number"
+        pg_result = ActiveRecord::Base.connection.execute(sql)
+        pg_result.each do |row|
+          row.merge!('just' => 1) if last_result.present? && last_result.select{|i| i[:id] == row[:id]}.present?
+          codes.merge!(row['number'] => row.except('number'))
+        end
+        data, rowspan = define_rowspan!(struct, codes)
 
-        #struct = JSON.parse(task.special)
-        #codes = {}
-        #sql = "SELECT c.id, c.number, c.ko ko, c.color color, c.bonus bonus, (select data from code_strings cs where cs.code_id=c.id LIMIT 1) as data, tc.id found, tc.team_bonus_id bonus_id FROM codes c left outer join team_codes tc on (c.id=tc.code_id AND tc.team_id=#{team_id}) WHERE c.task_id=#{task.id} ORDER BY c.number"
-        #pg_result = ActiveRecord::Base.connection.execute(sql)
-        #pg_result.each do |row|
-        #  row.merge!('just' => 1) if last_result.present? && last_result.select{|i| i[:id] == row[:id]}.present?
-        #  codes.merge!(row['number'] => row.except('number'))
-        #end
-        #data, rowspan = define_rowspan!(struct, codes)
-        #
-        #'<table class="table-bordered"><tr>' + data.join('</tr><tr>') + '</tr></table>'
+        '<table class="table-bordered"><tr>' + data.join('</tr><tr>') + '</tr></table>'
       end
 
       ##
