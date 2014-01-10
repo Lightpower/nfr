@@ -19,7 +19,8 @@ module TaskStrategy
         last_result = params[:last_result]
 
         Rails.logger.info "!!!! task: #{task.id}, user: #{user.show_name}, last_result: #{last_result}"
-        Rails.logger.info "!!!! task.special: #{task.special}"
+        Rails.logger.info "!!!! task.special: #{task.respond_to?(special)}"
+        Rails.logger.info "!!!! task: : #{task.inspect}"
 
         begin
           #olimpian_table(task, user.team.id, last_result).html_safe
