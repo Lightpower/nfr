@@ -12,7 +12,7 @@
   <% if task.is_available?(current_user.team) %>
       <%= task.data.html_safe %><br>
   	  <% if task.codes.present? %>
-        <%= Rails.logger.info "!!!! task.special: #{task.respond_to?(special)}" %>
+        <%= Rails.logger.info "!!!! task.special: #{task.respond_to?(:special)}" %>
 
 
         <%= TaskStrategy::Context.codes_block({task: task, user: current_user, last_result: @results}) %>
