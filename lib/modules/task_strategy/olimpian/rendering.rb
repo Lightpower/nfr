@@ -35,7 +35,7 @@ module TaskStrategy
       # Form HTML-string with codes which are placed as olimpian
       #
       def olimpian_table(task, team_id, last_result)
-        Rails.logger.info "!!!!!! task.special=#{task.special}"
+        #Rails.logger.info "!!!!!! task.special=#{task.special}"
 
         #struct = JSON.parse(task.special)
         #codes = {}
