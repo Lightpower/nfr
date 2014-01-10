@@ -20,13 +20,13 @@ module TaskStrategy
 
         Rails.logger.info "task: #{task.id}, user: #{user.show_name}, last_result: #{last_result}"
 
-        #begin
-        #  olimpian_table(task, user.team.id, last_result).html_safe
-        #rescue Exception => e
-        #  "Ошибка структуры олимпийки! Поле task.special определено некорректно, task.id=#{task.id}"
-        #end
+        begin
+          olimpian_table(task, user.team.id, last_result).html_safe
+        rescue Exception => e
+          "Ошибка структуры олимпийки! Поле task.special определено некорректно, task.id=#{task.id}"
+        end
 
-        "Step 1"
+        "Step 2"
       end
 
       private
@@ -35,7 +35,9 @@ module TaskStrategy
       # Form HTML-string with codes which are placed as olimpian
       #
       def olimpian_table(task, team_id, last_result)
-        struct = JSON.parse(task.special)
+        Rails.logger.info "!!!!!! task.special=#{task.special}"
+
+        #struct = JSON.parse(task.special)
         #codes = {}
         #sql = "SELECT c.id, c.number, c.ko ko, c.color color, c.bonus bonus, (select data from code_strings cs where cs.code_id=c.id LIMIT 1) as data, tc.id found, tc.team_bonus_id bonus_id FROM codes c left outer join team_codes tc on (c.id=tc.code_id AND tc.team_id=#{team_id}) WHERE c.task_id=#{task.id} ORDER BY c.number"
         #pg_result = ActiveRecord::Base.connection.execute(sql)
