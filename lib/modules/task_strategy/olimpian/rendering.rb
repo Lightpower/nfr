@@ -18,11 +18,15 @@ module TaskStrategy
         user = params[:user]
         last_result = params[:last_result]
 
-        #begin
-        #  olimpian_table(task, user.team.id, last_result).html_safe
-        #rescue Exception => e
-        #  "Ошибка структуры олимпийки! Поле task.special определено некорректно, task.id=#{task.id}"
-        #end
+        Rails.logger.info "task: #{task.id}, user: #{user.show_name}, last_result: #{last_result}"
+
+        begin
+          olimpian_table(task, user.team.id, last_result).html_safe
+        rescue Exception => e
+          "Ошибка структуры олимпийки! Поле task.special определено некорректно, task.id=#{task.id}"
+        end
+
+        "Step 1"
       end
 
       private
@@ -32,16 +36,16 @@ module TaskStrategy
       #
       def olimpian_table(task, team_id, last_result)
         struct = JSON.parse(task.special)
-        codes = {}
-        sql = "SELECT c.id, c.number, c.ko ko, c.color color, c.bonus bonus, (select data from code_strings cs where cs.code_id=c.id LIMIT 1) as data, tc.id found, tc.team_bonus_id bonus_id FROM codes c left outer join team_codes tc on (c.id=tc.code_id AND tc.team_id=#{team_id}) WHERE c.task_id=#{task.id} ORDER BY c.number"
-        pg_result = ActiveRecord::Base.connection.execute(sql)
-        pg_result.each do |row|
-          row.merge!('just' => 1) if last_result.present? && last_result.select{|i| i[:id] == row[:id]}.present?
-          codes.merge!(row['number'] => row.except('number'))
-        end
-        data, rowspan = define_rowspan!(struct, codes)
-
-        '<table class="table-bordered"><tr>' + data.join('</tr><tr>') + '</tr></table>'
+        #codes = {}
+        #sql = "SELECT c.id, c.number, c.ko ko, c.color color, c.bonus bonus, (select data from code_strings cs where cs.code_id=c.id LIMIT 1) as data, tc.id found, tc.team_bonus_id bonus_id FROM codes c left outer join team_codes tc on (c.id=tc.code_id AND tc.team_id=#{team_id}) WHERE c.task_id=#{task.id} ORDER BY c.number"
+        #pg_result = ActiveRecord::Base.connection.execute(sql)
+        #pg_result.each do |row|
+        #  row.merge!('just' => 1) if last_result.present? && last_result.select{|i| i[:id] == row[:id]}.present?
+        #  codes.merge!(row['number'] => row.except('number'))
+        #end
+        #data, rowspan = define_rowspan!(struct, codes)
+        #
+        #'<table class="table-bordered"><tr>' + data.join('</tr><tr>') + '</tr></table>'
       end
 
       ##
