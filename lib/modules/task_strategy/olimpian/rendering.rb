@@ -18,13 +18,14 @@ module TaskStrategy
         user = params[:user]
         last_result = params[:last_result]
 
-        Rails.logger.info "task: #{task.id}, user: #{user.show_name}, last_result: #{last_result}"
+        Rails.logger.info "!!!! task: #{task.id}, user: #{user.show_name}, last_result: #{last_result}"
+        Rails.logger.info "!!!! task.special: #{task.special}"
 
-        #begin
-        #  olimpian_table(task, user.team.id, last_result).html_safe
-        #rescue Exception => e
-        #  "Ошибка структуры олимпийки! Поле task.special определено некорректно, task.id=#{task.id}"
-        #end
+        begin
+          #olimpian_table(task, user.team.id, last_result).html_safe
+        rescue Exception => e
+          "Ошибка структуры олимпийки! Поле task.special определено некорректно, task.id=#{task.id}"
+        end
 
         "Step 2"
       end
