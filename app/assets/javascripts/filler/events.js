@@ -26,11 +26,9 @@ FIL.events = {
     FIL.turn.do(color);
     FIL.view.updateControl();
 
-    if(!FIL.turn.isEnd()) {
-      while(FIL.players.list[FIL.players.currentPlayerId].type == 1) { // make turn for all AI
-        FIL.turn.do(-1);
-        FIL.view.updateControl();
-      }
+    while(!FIL.turn.isEnd() && FIL.players.list[FIL.players.currentPlayerId].type == 1) { // make turn for all AI
+      FIL.turn.do(-1);
+      FIL.view.updateControl();
     }
   },
 
