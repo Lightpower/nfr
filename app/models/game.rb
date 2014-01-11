@@ -29,6 +29,8 @@ class Game < ActiveRecord::Base
   has_many :archive_teams
 
   has_one  :config, class_name: 'GameConfig'
+  has_one :game_prequel
+  alias :prequel :game_prequel
 
   attr_accessible :number, :name, :format, :format_id, :game_type, :start_date, :finish_date, :price, :area, :image_html,
                   :preview, :legend, :brief_place, :dopy_list, :is_active, :is_archived, :prepare_url, :discuss_url,
@@ -119,7 +121,7 @@ class Game < ActiveRecord::Base
   end
 
   ##
-  # Define if user can create game request
+  # Define if user can delete game request
   #
   def can_delete_request?(user)
     self.is_active &&
@@ -135,5 +137,19 @@ class Game < ActiveRecord::Base
     self.is_active &&
       self.teams.include?(user.team) &&
       (self.start_date < Time.now) && (!self.finish_date || self.finish_date > Time.now)
+  end
+
+  ##
+  # Check if game has active prequel (even unstarted)
+  #
+  def has_prequel?
+    prequel && prequel.is_active && (self.start_date > Time.now)
+  end
+
+  ##
+  # Define if game's prequel can be shown for defined team
+  #
+  def can_show_prequel_for?(team)
+    self.has_prequel? && self.teams.include?(team)
   end
 end
