@@ -7,7 +7,11 @@
           <b>Взнос: <%= game.price %> грн.</b><br>
       <% end %>
       <br>
+
       <%= game.image_html.try(:html_safe) || '' %><br>
+
+      <%= render 'games/prequel', game: game %>
+
       <div class="details openable_holder">
         <%= openable_tag(nil, false, 'Подробней') %>
         <div class="openable hidden">
@@ -22,9 +26,6 @@
           <% if game.brief_place %>
               <p><b>Место брифинга: </b> <%= game.brief_place.try(:html_safe) %></p>
           <% end %>
-
-          <%= render 'games/prequel', game: game %>
-
         </div>
       </div>
       <div class="details">
