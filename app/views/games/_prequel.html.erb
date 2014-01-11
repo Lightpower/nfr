@@ -5,10 +5,11 @@
       <% done = game.prequel.is_finished_by?(current_user.team) ? '(пройден вашей командой)' : '' %>
       <%= link_to_enter_game(game, "Войти в приквел #{done}") %>
     <% else %>
-      <%= "Приквел будет доступен <b>#{game.prequel.start_at.localtime.strftime('%d.%m.%y в %H:%M')}</b>" %>
+      Приквел будет доступен <b><%= game.prequel.start_at.localtime.strftime('%d.%m.%y в %H:%M') %></b>
     <% end %>
   <% else %>
-    <%= "Приквел доступен только для игроков команд, чьи заявки на игру приняты. Старт приквела <b>#{game.prequel.start_at.localtime.strftime('%d.%m.%y в %H:M')}</b>" %>
+    Приквел доступен только для игроков команд, чьи заявки на игру приняты.<br>
+    Старт приквела <b><%= game.prequel.start_at.localtime.strftime('%d.%m.%y в %H:%M') %></b>.
   <% end %>
 </div>
 <% end %>

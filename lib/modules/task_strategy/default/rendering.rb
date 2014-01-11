@@ -1,3 +1,4 @@
+# encoding: UTF-8
 ##
 # Standard elements rendering for Task Strategy
 #

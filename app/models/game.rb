@@ -127,7 +127,7 @@ class Game < ActiveRecord::Base
     self.is_active &&
       user.is_captain? &&
       self.teams.include?(user.team) &&
-      (self.start_date < Time.now) && (!self.finish_date || self.finish_date > Time.now)
+      (self.start_date > Time.now)# && (!self.finish_date || self.finish_date > Time.now)
   end
 
   ##
