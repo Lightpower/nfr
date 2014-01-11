@@ -16,23 +16,22 @@ class GamesController < ApplicationController
   # Play the Game
   #
   def show
-    if @game.try(:is_active) && @game.teams.include?(current_user.team) && (@game.start_date < Time.now)# check if game is active
+    # Prequel
+    show_prequel ||
 
-      render *GameStrategy::Context.main_block({game: @game, user: current_user})
-    elsif @game.blank?
-      redirect_to root_path, alert: "Игра с таким номером (#{params[:id]}) не найдена!"
-    elsif @game.is_archived
-      redirect_to archive_path(@game), notice: 'Выбранная игра уже в архиве'
-    else
-      redirect_to root_path, notice: 'Выбранная игра неактивна'
-    end
+    # Real Game
+    show_started_game
   end
 
   ##
-  # Get statistics
+  # Get statistics of started game
   #
   def stat
-    render *GameStrategy::Context.stat_block( {game: @game, user: current_user} )
+    if @game.start_date > Time.now
+      redirect_to game_path(@game), notice: 'Статистика будет доступна после старта игры.'
+    else
+      render *GameStrategy::Context.stat_block( {game: @game, user: current_user} )
+    end
   end
 
   ##
@@ -66,6 +65,36 @@ class GamesController < ApplicationController
 
   def authorize_game!
     authorize! :play, @game
+  end
+
+  ##
+  # Show prequel
+  #
+  def show_prequel
+    # check if prequel is accessible by current team AND game is not started yet
+    if @game.can_show_prequel_for?(current_user.team) && (@game.start_date > Time.now)
+      zone = @game.prequel.zone
+      TeamZone.create(game_id: @game.id, team_id: current_user.team.id, zone_id: zone.id) if TeamZone.where(team_id: current_user.team.id, zone_id: zone.id).blank?
+      render *GameStrategy::Context.main_block({game: @game, user: current_user})
+    end
+  end
+
+
+  ##
+  # Show game that is started
+  #
+  def show_started_game
+    if @game.try(:is_active) && @game.teams.include?(current_user.team) && (@game.start_date < Time.now)# check if game is active
+
+      render *GameStrategy::Context.main_block({game: @game, user: current_user})
+    elsif @game.blank?
+      redirect_to root_path, alert: "Игра с таким номером (#{params[:id]}) не найдена!"
+    elsif @game.is_archived
+      redirect_to archive_path(@game), notice: 'Выбранная игра уже в архиве'
+    else
+      redirect_to root_path, notice: 'Выбранная игра неактивна'
+    end
+
   end
 
 end
