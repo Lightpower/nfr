@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140107100501) do
+ActiveRecord::Schema.define(:version => 20140111153500) do
 
   create_table "archive_code_strings", :force => true do |t|
     t.string  "data",    :null => false
@@ -178,6 +178,17 @@ ActiveRecord::Schema.define(:version => 20140107100501) do
   end
 
   add_index "game_configs", ["game_id"], :name => "index_game_configs_on_game_id", :unique => true
+
+  create_table "game_prequels", :id => false, :force => true do |t|
+    t.datetime "start_at"
+    t.boolean  "is_active"
+    t.float    "bonus"
+    t.integer  "game_id"
+    t.integer  "zone_id"
+  end
+
+  add_index "game_prequels", ["game_id"], :name => "index_game_prequels_on_game_id"
+  add_index "game_prequels", ["zone_id"], :name => "index_game_prequels_on_zone_id"
 
   create_table "game_requests", :force => true do |t|
     t.boolean  "is_accepted", :default => false, :null => false
