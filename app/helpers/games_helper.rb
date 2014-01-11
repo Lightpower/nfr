@@ -21,8 +21,8 @@ module GamesHelper
   ##
   # Create link_to for enter the game
   #
-  def link_to_enter_game(game)
-    link_to 'Вход в игру', game_path(game), class: 'enter_game'
+  def link_to_enter_game(game, caption='Вход в игру')
+    link_to caption, game_path(game), class: 'enter_game'
   end
 
   ##
