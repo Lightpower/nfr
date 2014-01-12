@@ -21,10 +21,9 @@ module Abilities
         game.can_request?(user)
       end
 
-      can :delete, GameRequest do |gr|
+      can :destroy, GameRequest do |gr|
         game = Game.find(gr.game_id)
-
-        gr.team_id == user.team_id && !game.is_finished?
+        game.can_delete_request?(user) && (gr.team_id == user.team_id)
       end
     end
   end

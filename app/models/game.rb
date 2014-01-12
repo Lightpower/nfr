@@ -130,9 +130,10 @@ class Game < ActiveRecord::Base
   #
   def can_delete_request?(user)
     self.is_active &&
+      self.is_visible &&
       user.is_captain? &&
       self.teams.include?(user.team) &&
-      (self.start_date > Time.now)# && (!self.finish_date || self.finish_date > Time.now)
+      (self.start_date > Time.now)
   end
 
   ##
