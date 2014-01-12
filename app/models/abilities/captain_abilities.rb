@@ -18,7 +18,7 @@ module Abilities
 
       can :create, GameRequest do |gr|
         game = Game.find(gr.game_id)
-        game.teams.include?(user.team) && game.is_visible? && !game.is_finished?
+        game.can_request?(user)
       end
 
       can :delete, GameRequest do |gr|

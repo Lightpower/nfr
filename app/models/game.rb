@@ -110,14 +110,19 @@ class Game < ActiveRecord::Base
     self.is_active && (self.start_date < Time.now) && (!self.finish_date || self.finish_date > Time.now)
   end
 
+  def is_finished?
+    self.finish_date && self.finish_date < Time.now
+  end
+
   ##
   # Define if user can create game request
   #
   def can_request?(user)
     self.is_active &&
+      self.is_visible &&
       user.is_captain? &&
       ! self.teams.include?(user.team) &&
-      (!self.finish_date || self.finish_date > Time.now)
+      ! self.is_finished?
   end
 
   ##
