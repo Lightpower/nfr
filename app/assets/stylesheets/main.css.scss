@@ -313,6 +313,11 @@ a.nav_link.refresh {
 a.openable {
   text-decoration: none;
   color: blue;
+
+  span.sign {
+    font-family: "Courier New" monospace;
+    padding-right: 5px;
+  }
 }
 
 div#log {

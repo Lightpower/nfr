@@ -2,19 +2,20 @@ $(function() {
   $("a.openable").bind("click", function(e) {
     var id = this.id,
       submenu = $(this).parents('.openable_holder').first().children("div.openable"),
-      this_text = $(this).text();
+      sign = $(this).children('span.sign').first(),
+      sign_text = sign.text();
+
     if(submenu.hasClass("hidden")) {
       submenu.removeClass("hidden");
-      this_text = "- " + this_text.split("+")[1];
+      sign_text = '[-]';
       if(id != '') NFR.openable.open(id);
     } else {
       submenu.addClass("hidden");
-      if(this_text[0] == '-') {
-        this_text = "+" + this_text.split("- ")[1];
-      }
+      sign_text = '[+]';
+
       if(id != '') NFR.openable.close(id);
     }
-    $(this).text(this_text);
+    sign.text(sign_text);
 
     e.preventDefault();
   });
