@@ -1,30 +1,29 @@
 <div class='task openable_holder<%= ' unavailable' unless task.is_available?(current_user.team) %><%= ' finished' if task.is_finished?(current_user.team)%>'>
 
   <% if task.is_available?(current_user.team) %>
-    <%= openable_tag(task.make_id, true, "#{task.number}. #{task.name}") %>
-    <%= "(сдано #{task.passed_code_count(current_user.team)} из #{task.code_count}#{", необходимо #{task.code_quota}" if task.code_quota})" if task.code_count > 0 %>
+      <%= openable_tag(task.make_id, true, "#{task.number}. #{task.name}") %>
+      <%= "(сдано #{task.passed_code_count(current_user.team)} из #{task.code_count}#{", необходимо #{task.code_quota}" if task.code_quota})" if task.code_count > 0 %>
   <% else %>
       <%= openable_tag(task.make_id, true, "#{task.number}. #{task.name} (Недоступно)") %>
   <% end %>
 
   <div class='openable'>
 
-  <% if task.is_available?(current_user.team) %>
-      <%= task.data.html_safe %><br>
-  	  <% if task.codes.present? %>
-        <%= TaskStrategy::Context.codes_block({task: task, user: current_user, last_result: @results}) %>
-      <% end %>
-
-      <% if task.tasks.present? %>
-        <% task.tasks.by_order.each do |included_task| %>
-          <%= render 'game_strategies/conquest/tasks/item', task: included_task %>
+    <% if task.is_available?(current_user.team) %>
+        <%= task.data.html_safe %><br>
+        <% if task.codes.present? %>
+            <%= TaskStrategy::Context.codes_block({task: task, user: current_user, last_result: @results}) %>
         <% end %>
-      <% end %>
-  <% else %>
-    <%= show_preview(task).html_safe %>
-  <% end %>
 
-	<%= render 'game_strategies/conquest/hints/item', task: task %>
+        <%= render 'game_strategies/conquest/hints/item', task: task %>
 
+        <% if task.tasks.present? %>
+            <% task.tasks.by_order.each do |included_task| %>
+                <%= render 'game_strategies/conquest/tasks/item', task: included_task %>
+            <% end %>
+        <% end %>
+    <% else %>
+        <%= show_preview(task).html_safe %>
+    <% end %>
   </div>
 </div>

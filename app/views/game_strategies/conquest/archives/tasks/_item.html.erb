@@ -9,13 +9,12 @@
         <br><b>KO:</b> <%= task.archive_codes.by_order.map{|code| show_opened_code(code)}.join(', ').html_safe %>
     <% end %>
 
+    <%= render 'game_strategies/conquest/archives/hints/item', task: task %>
+
     <% if task.archive_tasks.present? %>
         <% task.archive_tasks.by_order.each do |included_task| %>
             <%= render 'game_strategies/conquest/archives/tasks/item', task: included_task %>
         <% end %>
     <% end %>
-
-    <%= render 'game_strategies/conquest/archives/hints/item', task: task %>
-
   </div>
 </div>

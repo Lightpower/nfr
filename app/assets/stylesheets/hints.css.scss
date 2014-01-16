@@ -4,9 +4,14 @@
 
 div.hint, div.hint_data {
   display: block;
-  margin: 5px;
-  background-color: #CCCCCC;
+  margin: 25px 5px;
+  background-color: #B0B0B0;
   border-color: #000000;
   border-width: 1px;
   border-style: solid
+}
+
+span.hint_caption {
+  font-weight: bold;
+  font-size: 1.3em;
 }
