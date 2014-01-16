@@ -20,7 +20,7 @@
             <td><%= code[:data] %></td>
             <td><%= code[:ko] %></td>
             <% teams.size.times do |i| %>
-              <td><%= code[:passed][i].try(:strftime, '%d.%m.%y %H:%M:%S') %></td>
+              <td><%= code[:passed][i].try(:strftime, '%H:%M:%S') %></td>
             <% end %>
           </tr>
       <% end %>
