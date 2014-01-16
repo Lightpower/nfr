@@ -81,7 +81,7 @@ module GameStrategy
         game = params[:game]
         user = params[:user]
 
-        if user.is_admin?
+        if user.is_admin? || user.is_moderator?
           logs = game.logs.where(result_code: [0, 1, 6, 9]).includes(:code).order('created_at DESC').all
         else
           logs = game.logs.where(team_id: user.team.id).includes(:code).order('created_at DESC')

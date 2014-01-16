@@ -21,7 +21,7 @@ module ApplicationHelper
     result = ''
     team = current_user.team
 
-    if current_user.is_admin?
+    if current_user.is_admin? || current_user.is_moderator?
       @game.teams.each do |t|
         if t.game_zones(@game).size > 0
           result << content_tag(:tr, content_tag(:td, t.name))
