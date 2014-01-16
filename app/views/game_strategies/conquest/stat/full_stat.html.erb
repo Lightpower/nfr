@@ -1,0 +1,24 @@
+<table class="table table-bordered">
+  <thead>
+  <th>Задание</th>
+  <th>Код</th>
+  <th>КО</th>
+  <% teams.each do |team| %>
+      <th><%= team %></th>
+  <% end %>
+  </thead>
+  <tbody>
+  <% data.each do |task| %>
+      <% task[:codes].each_with_index do |code, ix| %>
+          <tr>
+            <%= content_tag(:td, task[:name], rowspan: task[:codes].size) if ix == 0%>
+            <td><%= code[:data] %></td>
+            <td><%= code[:ko] %></td>
+            <% teams.size.times do |i| %>
+              <td><%= code[:passed][i].try(:strftime, '%H:%M:%S') %></td>
+            <% end %>
+          </tr>
+      <% end %>
+  <% end %>
+  </tbody>
+</table>
