@@ -1,20 +1,20 @@
-  <table class="table table-bordered">
-    <thead>
-      <th>Задание</th>
-      <th>Номер кода</th>
-      <th>Мы сдали?</th>
-      <th>Всего сдали</th>
-    </thead>
-    <tbody>
-    <% data.each do |task|%>
+<table class="table table-bordered">
+  <thead>
+  <th>Задание</th>
+  <th>Номер кода</th>
+  <th>Мы сдали?</th>
+  <th>Всего сдали</th>
+  </thead>
+  <tbody>
+  <% data.each do |task|%>
       <% task[:codes].each_with_index do |code, ix| %>
-        <tr>
-          <%= content_tag(:td, task[:name], rowspan: task[:codes].size) if ix == 0%>
-          <td><%= code[:id] %></td>
-          <td><%= 'ДА' if code[:me] == 1 %></td>
-          <td><%= code[:total] if code[:total] > 0 %></td>
-        </tr>
+          <tr>
+            <%= content_tag(:td, task[:name], rowspan: task[:codes].size) if ix == 0%>
+            <td><%= code[:id] %></td>
+            <td><%= 'ДА' if code[:me] == 1 %></td>
+            <td><%= code[:total] if code[:total] > 0 %></td>
+          </tr>
       <% end %>
-    <% end %>
-    </tbody>
-  </table>
+  <% end %>
+  </tbody>
+</table>

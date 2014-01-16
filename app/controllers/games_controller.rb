@@ -27,7 +27,7 @@ class GamesController < ApplicationController
   # Get statistics of started game
   #
   def stat
-    if @game.start_date > Time.now
+    if (@game.start_date > Time.now) && !(current_user.is_admin? || current_user.is_moderator?)
       redirect_to game_path(@game), notice: 'Статистика будет доступна после старта игры.'
     else
       render *GameStrategy::Context.stat_block( {game: @game, user: current_user} )

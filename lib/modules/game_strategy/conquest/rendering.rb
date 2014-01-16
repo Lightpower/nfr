@@ -63,8 +63,14 @@ module GameStrategy
       # 'game_strategies/conquest/stat/item', locals: { data: {...} }, layout: 'game_strategies/conquest/layouts/game'
       #
       def stat_block(params)
-        data = subtotal({ game: params[:game], team: params[:user].team })
-        return "#{TEMPLATE_PREFIX}stat/index", locals: {data: data}, layout: LAYOUT
+        user = params[:user]
+        if user.is_admin? || user.is_moderator?
+          teams, data = full_subtotal({ game: params[:game], team: user.team })
+          return "#{TEMPLATE_PREFIX}stat/full_stat", locals: {data: data, teams: teams}, layout: LAYOUT_SINGLE
+        else
+          data = subtotal({ game: params[:game], team: user.team })
+          return "#{TEMPLATE_PREFIX}stat/index", locals: {data: data}, layout: LAYOUT
+        end
       end
 
       ##
@@ -188,7 +194,7 @@ module GameStrategy
         game = params[:game]
         team = params[:team]
         data = []
-        Task.where(game_id: game.id).order(:id).each do |task|
+        game.tasks.order(:id).each do |task|
           if task.codes.size > 0
             new_task = { id: task.id, name: task.number.to_s + '. ' + task.name, codes: [] }
             task.codes.by_order.each do |code|
@@ -202,6 +208,30 @@ module GameStrategy
           end
         end
         data
+      end
+
+      ##
+      # Subtotal data
+      # It is used during the game
+      #
+      def full_subtotal(params)
+        game = params[:game]
+        data = []
+        teams = game.teams.map{|team| {id: team.id, name: team.name} }
+        game.tasks.order(:id).each do |task|
+          if task.codes.size > 0
+            new_task = { id: task.id, name: task.number.to_s + '. ' + task.name, codes: [] }
+            task.codes.by_order.each do |code|
+              new_code = {data: code.show_code, ko: code.ko, passed: []}
+              teams.each do |team|
+                new_code[:passed] << TeamCode.where(team_id: team[:id], code_id: code.id).try(:first).try(:created_at).try(:localtime)
+              end
+              new_task[:codes] << new_code
+            end
+            data << new_task
+          end
+        end
+        [teams.map {|team| team[:name]}, data]
       end
 
       ##
