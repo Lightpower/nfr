@@ -84,7 +84,7 @@ class GamesController < ApplicationController
   # Show game that is started
   #
   def show_started_game
-    if @game.try(:is_active) && @game.teams.include?(current_user.team) && (@game.start_date < Time.now)# check if game is active
+    if @game.is_going? && @game.teams.include?(current_user.team)
 
       render *GameStrategy::Context.main_block({game: @game, user: current_user})
     elsif @game.blank?
