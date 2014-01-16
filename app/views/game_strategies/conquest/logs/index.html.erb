@@ -10,6 +10,7 @@
 	    <th>Цена</th>
 	    <th>С бонусом</th>
 	    <th>Отправитель</th>
+	    <%= content_tag(:th, 'Команда') if can? :update, @game %>
 	  </thead>
 	  <tbody>
   <% logs.each do |log|  %>
@@ -27,8 +28,7 @@
         <td></td><td></td><td></td><td></td><td></td>
       <% end %>
       <%= content_tag(:td, log.login) %>
-
-
+      <%= content_tag(:td, log.team.name) if can? :update, @game %>
     </tr>
 	<% end %>
 	  </tbody>
