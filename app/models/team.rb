@@ -31,7 +31,7 @@ class Team < ActiveRecord::Base
   # Number of all codes in all zones and without zones
   #
   def total_codes_number(time=Time.now)
-
+    TeamCode.codes_number_of_team(self.id, :all, time)
   end
 
   ##
