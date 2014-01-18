@@ -3,6 +3,7 @@
   <% if task.is_available?(current_user.team) %>
       <%= openable_tag(task.make_id, true, "#{task.number}. #{task.name}") %>
       <%= "(сдано #{task.passed_code_count(current_user.team)} из #{task.code_count}#{", необходимо #{task.code_quota}" if task.code_quota})" if task.code_count > 0 %>
+      <%= ("открыто по коду: <b>#{task.access_code.show_code}</b>").html_safe if task.access_code.present? %>
   <% else %>
       <%= openable_tag(task.make_id, true, "#{task.number}. #{task.name} (Недоступно)") %>
   <% end %>
@@ -12,7 +13,9 @@
     <% if task.is_available?(current_user.team) %>
         <%= task.data.html_safe %><br>
         <% if task.codes.present? %>
+            <div class="codes_block">
             <%= TaskStrategy::Context.codes_block({task: task, user: current_user, last_result: @results}) %>
+            </div>
         <% end %>
 
         <%= render 'game_strategies/conquest/hints/item', task: task %>

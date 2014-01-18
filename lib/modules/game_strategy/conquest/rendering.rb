@@ -27,7 +27,7 @@ module GameStrategy
         game = params[:game]
         zones = params[:user].team.zones.where('zones.game_id=?', game.id)
         # Don't show prequel Zone if game is started
-        zones = zones.where('zones.id <> ?', game.prequel.zone.try(:id)) if game.is_going? && game.prequel
+        zones = zones.where('zones.id <> ?', game.prequel.zone.try(:id)) if game.is_going? && game.prequel.try(:zone).try(:id)
         return "#{TEMPLATE_PREFIX}zones/index", locals: {zones: zones}, layout: LAYOUT
       end
 
