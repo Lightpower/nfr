@@ -20,6 +20,12 @@ class TeamCode < ActiveRecord::Base
     #
     def codes_number_of_team(team_id, zone_id=:all, time=Time.now)
       if zone_id != :all
+        # HACK!
+        if zone_id
+          game = Zone.find(zone_id).game
+          prequel_zone_id = game.prequel.try(:zone).try(:id)
+          zone_id = [zone_id, prequel_zone_id] if prequel_zone_id
+        end
         sum = where(team_id: team_id, zone_id: zone_id).where('created_at <= ?', time).inject(0) {|sum1, item| sum1 + item.bonus }
         sum + TeamHint.where(team_id: team_id, zone_id: zone_id).where('created_at <= ?', time).inject(0) {|sum2, item| sum2 + item.cost }
       else
