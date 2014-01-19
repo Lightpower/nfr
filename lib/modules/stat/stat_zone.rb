@@ -59,10 +59,10 @@ module StatZone
             zone.id =>{
               name: zone.name,
               class: zone.css_class,
-              team_codes: asking_team.codes_number_in_zone(zone).round(3),
+              team_codes: asking_team.codes_number_in_zone(zone.try(:id)).round(3),
               holder: {
                 name:  team.name,
-                codes: team.codes_number_in_zone(zone).round(3),
+                codes: team.codes_number_in_zone(zone.try(:id)).round(3),
                 time:  Time.at(Time.now.localtime - holder.time.localtime).gmtime.strftime('%H:%M:%S'),
                 image: team.image_url
               }

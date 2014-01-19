@@ -242,7 +242,7 @@ module GameStrategy
         game = params[:game]
         data = []
         game.archive_teams.each do |team|
-          data << {team: team.name, result: team.codes_number_in_zone(nil)}
+          data << {team: team.name, result: team.codes_number_in_zone(:all)}
         end
         data.sort{|x, y| y[:result] <=> x[:result]}
       end

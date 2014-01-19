@@ -288,7 +288,7 @@ module GameStrategy
             return false
         end
 
-        team.codes_number_in_zone(zone) + cost >= 0
+        team.codes_number_in_zone(zone.try(:id)) + cost >= 0
       end
 
       ##
@@ -313,7 +313,7 @@ module GameStrategy
         zones.each do |zone|
           current_holder = ZoneHolder.where(zone_id: zone.id).order(:created_at).last
           if current_holder.blank? || current_holder.team_id != team.id
-            amount = team.codes_number_in_zone(zone)
+            amount = team.codes_number_in_zone(zone.try(:id))
             if current_holder.blank? || current_holder.amount < amount
               team_code = results.select {|res| res[:team_code].zone_id == zone.id}.first[:team_code]
               ZoneHolder.create(game_id: game.id, amount: amount, zone_id: zone.id,

@@ -15,7 +15,7 @@ module ArchiveFacade
           GameRequest.where(game_id: game.id).map(&:delete)
         end
         # Copying the tables and clear them
-        %w(Zone Task Code CodeString Hint TeamBonus TeamCode TeamHint TeamZone TeamCorrection).each do |table|
+        %w(Zone Task Code CodeString Hint TeamBonus TeamCode TeamHint TeamZone).each do |table|
           copy_and_clear_table({ table: table, game: game, team_table: team_table })
         end
         # Copy logs - successful records only

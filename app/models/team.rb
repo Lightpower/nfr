@@ -37,8 +37,8 @@ class Team < ActiveRecord::Base
   ##
   # Number of accepted codes in defined zone
   #
-  def codes_number_in_zone(zone, time=Time.now)
-    TeamCode.codes_number_of_team(self.id, zone.try(:id), time)
+  def codes_number_in_zone(zone_id, time=Time.now)
+    TeamCode.codes_number_of_team(self.id, zone_id, time)
   end
 
   ##

@@ -28,7 +28,7 @@ module ApplicationHelper
 
           t.game_zones(@game).each do |zone|
             zone_html =  content_tag(:td, content_tag(:b, "#{zone.name}:") )
-            zone_html << content_tag(:td, t.codes_number_in_zone(zone).round(3) )
+            zone_html << content_tag(:td, t.codes_number_in_zone(zone.try(:id)).round(3) )
 
             result << content_tag(:tr, zone_html)
           end
@@ -37,7 +37,7 @@ module ApplicationHelper
     else
       team.game_zones(@game).each do |zone|
           zone_html =  content_tag(:td, content_tag(:b, "#{zone.name}:") )
-          zone_html << content_tag(:td, team.codes_number_in_zone(zone).round(3) )
+          zone_html << content_tag(:td, team.codes_number_in_zone(zone.try(:id)).round(3) )
 
           result << content_tag(:tr, zone_html)
       end
