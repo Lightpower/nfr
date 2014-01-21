@@ -255,7 +255,7 @@ module GameStrategy
 
         game.archive_zones.by_order.each do |zone|
           data << {id: zone.id, name: zone.name, codes: [], hints:[], level: 0}
-          zone.archive_tasks.by_order.each {|task| data += task_data(task, teams, 0)}
+          zone.archive_tasks.by_order.where(task_id: nil).each {|task| data += task_data(task, teams, 0)}
         end
 
         [game, teams.map {|team| team[:name]}, data]
