@@ -8,6 +8,7 @@
   <th>Задание</th>
   <th>Код/Подск.</th>
   <th>КО</th>
+  <th>Цена</th>
   <% teams.each do |team| %>
       <th><%= team %></th>
   <% end %>
@@ -24,10 +25,11 @@
           <% (row[:codes] + row[:hints]).each_with_index do |code, ix| %>
               <tr<%= ' class=hint' if code[:ko].blank? %>>
                 <%= content_tag(:td, row[:name], rowspan: row[:codes].size + row[:hints].size, 'data-level' => row[:level]) if ix == 0%>
-                <td><%= code[:data] %></td>
-                <td><%= code[:ko] %></td>
+                <%= content_tag(:td, code[:data]) %>
+                <%= content_tag(:td, code[:ko]) %>
+                <%= content_tag(:td, code[:bonus], class: 'right') %>
                 <% teams.size.times do |i| %>
-                    <td><%= code[:passed][i].try(:strftime, '%H:%M:%S') %></td>
+                    <%= content_tag(:td, code[:passed][i].try(:strftime, '%H:%M:%S'), class: 'right') %>
                 <% end %>
               </tr>
           <% end %>

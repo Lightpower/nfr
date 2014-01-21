@@ -269,7 +269,7 @@ module GameStrategy
         codes += archive_task.archive_codes.by_order
 
         codes.each do |code|
-          new_code = {data: code.show_code, ko: code.ko, passed: []}
+          new_code = {data: code.show_code, ko: code.ko, bonus: code.bonus, passed: []}
           teams.each do |team|
             new_code[:passed] << ArchiveTeamCode.where(team_id: team[:id], code_id: code.id).try(:first).try(:created_at).try(:localtime)
           end
@@ -278,7 +278,7 @@ module GameStrategy
 
         # Hints
         archive_task.archive_hints.by_order.each do |hint|
-          new_hint = {data: "Подсказка #{hint.number}", passed: []}
+          new_hint = {data: "Подсказка #{hint.number}", bonus: hint.cost, passed: []}
           teams.each do |team|
             new_hint[:passed] << ArchiveTeamHint.where(team_id: team[:id], hint_id: hint.id).try(:first).try(:created_at).try(:localtime)
           end
