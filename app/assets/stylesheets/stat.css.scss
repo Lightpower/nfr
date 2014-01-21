@@ -82,3 +82,10 @@ div.arren {
   top:  -240px;
 }
 
+td[data-level="1"] { padding-left: 20px; }
+td[data-level="2"] { padding-left: 40px; }
+td[data-level="3"] { padding-left: 60px; }
+td[data-level="4"] { padding-left: 80px; }
+td[data-level="5"] { padding-left: 100px; }
+tr.hint { color: #884000 }
+

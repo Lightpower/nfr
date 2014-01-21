@@ -1,10 +1,16 @@
 <div class='task openable_holder'>
 
   <%= openable_tag(task.make_id, true, "#{task.number}. #{task.name}") %>
-
+  <%= ("открыто по коду: <b>#{task.access_code.show_code}</b>").html_safe if task.access_code.present? %>
   <div class='openable'>
 
-    <%= task.data.html_safe %><br>
+    <% if task.access_code.present? %>
+      <p style="padding: 5px 20px;"><b>Превью задания:</b><br>
+        <%= task.preview.try(:html_safe) %>
+      </p>
+    <% end %>
+
+    <%= content_tag(:p, task.data.html_safe) %>
     <% if task.archive_codes.present? %>
         <br><b>KO:</b> <%= task.archive_codes.by_order.map{|code| show_opened_code(code)}.join(', ').html_safe %>
     <% end %>

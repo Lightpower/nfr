@@ -24,6 +24,6 @@ module CodesHelper
     code_text = "#{code.ko}[#{code.bonus}] (#{code.show_code})"
     code_text = content_tag(:b, content_tag(:span, code_text, style: style))
     code_text += (", информация к коду:<br>#{code.info}<br>").html_safe if code.info.present?
-    code_text.html_safe
+    content_tag(:div, code_text.html_safe)
   end
 end

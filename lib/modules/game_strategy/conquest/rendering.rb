@@ -212,7 +212,7 @@ module GameStrategy
 
       ##
       # Subtotal data
-      # It is used during the game
+      # It is used during the game by moderators only
       #
       def full_subtotal(params)
         game = params[:game]
@@ -249,24 +249,46 @@ module GameStrategy
 
       def stat(params)
         game = params[:game]
-        teams = game.archive_teams.map{|team| {id: team.id, name: team.name} }
+        teams = game.archive_teams.map{|team| {id: team.id, name: team.name, scores: team.codes_number_in_zone(:all)} }.
+          sort{|a, b| b[:scores] <=> a[:scores]}
         data = []
 
-        game.archive_tasks.order(:id).each do |task|
-          if task.archive_codes.size > 0
-            new_task = {id: task.id, name: task.number.to_s + '. ' + task.name, codes: []}
-            task.archive_codes.by_order.each do |code|
-              new_code = {data: code.show_code, ko: code.ko, passed: []}
-              teams.each do |team|
-                new_code[:passed] << ArchiveTeamCode.where(team_id: team[:id], code_id: code.id).try(:first).try(:created_at).try(:localtime)
-              end
-              new_task[:codes] << new_code
-            end
-            data << new_task
-          end
+        game.archive_zones.by_order.each do |zone|
+          data << {id: zone.id, name: zone.name, codes: [], hints:[], level: 0}
+          zone.archive_tasks.by_order.each {|task| data += task_data(task, teams, 0)}
         end
 
         [game, teams.map {|team| team[:name]}, data]
+      end
+
+      def task_data(archive_task, teams, level)
+        new_task = {id: archive_task.id, name: archive_task.number.to_s + '. ' + archive_task.name, level: level, codes: [], hints: []}
+        # Codes
+        codes = []
+        codes = [archive_task.access_code] if archive_task.access_code && !archive_task.access_code.archive_task
+        codes += archive_task.archive_codes.by_order
+
+        codes.each do |code|
+          new_code = {data: code.show_code, ko: code.ko, passed: []}
+          teams.each do |team|
+            new_code[:passed] << ArchiveTeamCode.where(team_id: team[:id], code_id: code.id).try(:first).try(:created_at).try(:localtime)
+          end
+          new_task[:codes] << new_code
+        end
+
+        # Hints
+        archive_task.archive_hints.by_order.each do |hint|
+          new_hint = {data: "Подсказка #{hint.number}", passed: []}
+          teams.each do |team|
+            new_hint[:passed] << ArchiveTeamHint.where(team_id: team[:id], hint_id: hint.id).try(:first).try(:created_at).try(:localtime)
+          end
+          new_task[:hints] << new_hint
+        end
+
+        # Included tasks
+        return_tasks = [new_task]
+        archive_task.archive_tasks.by_order.each { |included_task| return_tasks += task_data(included_task, teams, level+1)}
+        return_tasks
       end
     end
   end

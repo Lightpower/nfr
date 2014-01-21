@@ -6,23 +6,31 @@
 <table class="table table-bordered">
   <thead>
   <th>Задание</th>
-  <th>Код</th>
+  <th>Код/Подск.</th>
   <th>КО</th>
   <% teams.each do |team| %>
       <th><%= team %></th>
   <% end %>
   </thead>
   <tbody>
-  <% data.each do |task| %>
-      <% task[:codes].each_with_index do |code, ix| %>
-          <tr>
-            <%= content_tag(:td, task[:name], rowspan: task[:codes].size) if ix == 0%>
-            <td><%= code[:data] %></td>
-            <td><%= code[:ko] %></td>
-            <% teams.size.times do |i| %>
-              <td><%= code[:passed][i].try(:strftime, '%H:%M:%S') %></td>
-            <% end %>
-          </tr>
+  <% data.each do |row| %>
+      <% if row[:codes].size + row[:hints].size == 0 %>
+        <tr>
+          <td colspan="<%= teams.size + 2 %>"<%= " data-level=\"#{row[:level]}\"" if row[:level] > 0 %>>
+            <b><%= row[:name] %></b>
+          </td>
+        <tr>
+      <% else %>
+          <% (row[:codes] + row[:hints]).each_with_index do |code, ix| %>
+              <tr<%= ' class=hint' if code[:ko].blank? %>>
+                <%= content_tag(:td, row[:name], rowspan: row[:codes].size + row[:hints].size, 'data-level' => row[:level]) if ix == 0%>
+                <td><%= code[:data] %></td>
+                <td><%= code[:ko] %></td>
+                <% teams.size.times do |i| %>
+                    <td><%= code[:passed][i].try(:strftime, '%H:%M:%S') %></td>
+                <% end %>
+              </tr>
+          <% end %>
       <% end %>
   <% end %>
   </tbody>
