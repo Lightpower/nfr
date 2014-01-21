@@ -4,7 +4,7 @@
   <%= ("открыто по коду: <b>#{task.access_code.show_code}</b>").html_safe if task.access_code.present? %>
   <div class='openable'>
 
-    <% if task.access_code.present? %>
+    <% if task.preview.present?  %>
       <p style="padding: 5px 20px;"><b>Превью задания:</b><br>
         <%= task.preview.try(:html_safe) %>
       </p>
