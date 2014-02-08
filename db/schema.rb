@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140111153500) do
+ActiveRecord::Schema.define(:version => 20140208183000) do
 
   create_table "archive_code_strings", :force => true do |t|
     t.string  "data",    :null => false
@@ -92,6 +92,19 @@ ActiveRecord::Schema.define(:version => 20140111153500) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "archive_team_corrections", :force => true do |t|
+    t.float   "bonus"
+    t.text    "description"
+    t.boolean "is_active"
+    t.integer "game_id"
+    t.integer "team_id"
+    t.integer "zone_id"
+  end
+
+  add_index "archive_team_corrections", ["game_id"], :name => "index_archive_team_corrections_on_game_id"
+  add_index "archive_team_corrections", ["team_id"], :name => "index_archive_team_corrections_on_team_id"
+  add_index "archive_team_corrections", ["zone_id"], :name => "index_archive_team_corrections_on_zone_id"
 
   create_table "archive_team_hints", :force => true do |t|
     t.float    "cost"
@@ -350,6 +363,19 @@ ActiveRecord::Schema.define(:version => 20140111153500) do
   add_index "team_codes", ["team_id"], :name => "index_team_codes_on_team_id"
   add_index "team_codes", ["zone_id"], :name => "index_team_codes_on_zone_id"
 
+  create_table "team_corrections", :force => true do |t|
+    t.float   "bonus"
+    t.text    "description"
+    t.boolean "is_active"
+    t.integer "game_id"
+    t.integer "team_id"
+    t.integer "zone_id"
+  end
+
+  add_index "team_corrections", ["game_id"], :name => "index_team_corrections_on_game_id"
+  add_index "team_corrections", ["team_id"], :name => "index_team_corrections_on_team_id"
+  add_index "team_corrections", ["zone_id"], :name => "index_team_corrections_on_zone_id"
+
   create_table "team_hints", :force => true do |t|
     t.float    "cost",       :default => 0.0, :null => false
     t.integer  "team_id"
@@ -437,7 +463,7 @@ ActiveRecord::Schema.define(:version => 20140111153500) do
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["role"], :name => "index_users_on_role"
   add_index "users", ["team_id"], :name => "index_users_on_team_id"
-  add_index "users", ["username"], :name => "index_users_on_username"
+  add_index "users", ["username"], :name => "index_users_on_username", :unique => true
 
   create_table "zone_holders", :force => true do |t|
     t.float    "amount",       :null => false
