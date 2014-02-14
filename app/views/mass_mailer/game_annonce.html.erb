@@ -2,10 +2,10 @@
 
 <p>Приглашаем Вас принять участие в новой игре проекта NeFoRmat "<%= game.name %>", которая состоится <%= game.start_date.localtime.strftime('%d.%m.%y в %H:%M') %>.</p>
 
-<% if game.dopy.present? %>
+<% if game.dopy_list.present? %>
 <p>
   При себе иметь:<br>
-  <%= game.dopy %>
+  <%= game.dopy_list %>
 </p>
 <% else %>
     <p>В игре могут появиться дополнительные принадлежности, поэтому следите за анонсом на сайте.</p>
