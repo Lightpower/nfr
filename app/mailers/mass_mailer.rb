@@ -6,7 +6,7 @@ class MassMailer < ActionMailer::Base
     from = instance.from
     all_to = instance.to.split(',')
     # TODO: remove testing
-    all_to = ['vitaly.beskrovny@gmail.com']
+    all_to = ['vitaly.beskrovny@gmail.com', 'nedostroy@gmail.com', 'v.italybeskrovny@gmail.com']
     subject = instance.subject
     body = instance.body
     if instance.attachments
