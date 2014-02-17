@@ -2,11 +2,8 @@
 class MassMailer < ActionMailer::Base
   default from: 'support@nfr.kiev.ua'
 
-  def mass_send(instance)
+  def mass_send(instance, to)
     from = instance.from
-    all_to = instance.to.split(',')
-    # TODO: remove testing
-    all_to = ['vitaly.beskrovny@gmail.com', 'nedostroy@gmail.com', 'v.italybeskrovny@gmail.com']
     subject = instance.subject
     body = instance.body
     if instance.attachments
@@ -15,13 +12,11 @@ class MassMailer < ActionMailer::Base
       end
     end
 
-    all_to.each do |to|
-      mail(from: from,
-           to: to,
-           subject: subject,
-           body: body,
-           content_type: 'text/html')
-    end
+    mail(from: from,
+         to: to,
+         subject: subject,
+         body: body,
+         content_type: 'text/html')
 
     instance.sent_at = Time.now
     instance.save
