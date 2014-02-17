@@ -2,7 +2,7 @@
   <% if team_request_list[:from_me].present? %>
     <div id="i_want_to_team" name="i_want_to_team" class="block_half">
       <h3>Запросы в команды</h3>
-      <div style="padding: 10px; white-space: normal;">
+      <div class="user_link_holder">
         <% team_request_list[:from_me].each do |team_request| %>
           <%= render 'team_requests/team_request', name: team_request.name_for_user, team_request_id: team_request.id, can_manage: false %>
         <% end %>
@@ -12,7 +12,7 @@
   <% if team_request_list[:to_me].present? %>
     <div id="requests_me_to_team" name="requests_me_to_team" class="block_half">
       <h3>Меня пригласили</h3>
-      <div style="padding: 10px; white-space: normal;">
+      <div class="user_link_holder">
         <% team_request_list[:to_me].each do |team_request| %>
           <%= render 'team_requests/team_request', name: team_request.name_for_user, team_request_id: team_request.id, can_manage: true %>
         <% end %>
