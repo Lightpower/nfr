@@ -348,12 +348,6 @@ module GameStrategy
         end
         result
       end
-
-
-
-
-
-
     end
   end
 end
