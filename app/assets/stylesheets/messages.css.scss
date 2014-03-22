@@ -1,0 +1,18 @@
+div.team_message {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 3px 3px 3px #282b1f;
+  -moz-box-shadow: 3px 3px 3px #282b1f;
+  box-shadow: 3px 3px 3px #282b1f;
+
+  border: solid 1px #000;
+  line-height: 1.2;
+  margin: 0 auto 5px auto;
+  padding: 5px 0 7px;
+  text-align: center;
+  background-color: red;
+  color: yellow;
+  font-weight: bold;
+  font-size: 1.1em;
+}
