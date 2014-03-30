@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
   has_many :teams # captain of team
   has_many :team_requests
 
+  has_one :user_parent
+
   # Setup accessible (or protected) attributes for your model
   attr_accessible :username, :email, :password, :password_confirmation, :remember_me,
                   :team_id, :avatar_url, :domain, :domain_id
@@ -64,4 +66,12 @@ class User < ActiveRecord::Base
     username.present? ? username : email
   end
 
+  ##
+  # Returns user's parent
+  #
+  def parent
+    return :none if self.user_parent.parent_type.blank?
+
+    self.user_parent.parent_type.constantize.find(self.user_parent.parent_id)
+  end
 end
