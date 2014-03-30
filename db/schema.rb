@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140329205402) do
+ActiveRecord::Schema.define(:version => 20140330141539) do
 
   create_table "archive_code_strings", :force => true do |t|
     t.string  "data",    :null => false
@@ -234,6 +234,21 @@ ActiveRecord::Schema.define(:version => 20140329205402) do
   end
 
   add_index "game_requests", ["game_id", "team_id"], :name => "index_game_requests_on_game_id_and_team_id", :unique => true
+
+  create_table "game_team_lines", :force => true do |t|
+    t.integer  "num",                          :null => false
+    t.integer  "game_id",                      :null => false
+    t.integer  "team_id",                      :null => false
+    t.integer  "task_id",                      :null => false
+    t.datetime "start_at"
+    t.datetime "finish_at"
+    t.boolean  "stopped",   :default => false, :null => false
+  end
+
+  add_index "game_team_lines", ["game_id", "team_id", "num"], :name => "index_game_team_lines_on_game_id_and_team_id_and_num"
+  add_index "game_team_lines", ["game_id"], :name => "index_game_team_lines_on_game_id"
+  add_index "game_team_lines", ["task_id"], :name => "index_game_team_lines_on_task_id"
+  add_index "game_team_lines", ["team_id"], :name => "index_game_team_lines_on_team_id"
 
   create_table "games", :force => true do |t|
     t.string   "number",                                    :null => false
