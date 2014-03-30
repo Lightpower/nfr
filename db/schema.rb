@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140208183000) do
+ActiveRecord::Schema.define(:version => 20140329205402) do
 
   create_table "archive_code_strings", :force => true do |t|
     t.string  "data",    :null => false
@@ -165,6 +165,15 @@ ActiveRecord::Schema.define(:version => 20140208183000) do
   add_index "codes", ["ko"], :name => "index_codes_on_ko"
   add_index "codes", ["number"], :name => "index_codes_on_number"
 
+  create_table "domains", :force => true do |t|
+    t.string "name",      :null => false
+    t.string "full_name", :null => false
+    t.string "owner",     :null => false
+  end
+
+  add_index "domains", ["full_name"], :name => "index_domains_on_full_name", :unique => true
+  add_index "domains", ["name"], :name => "index_domains_on_name", :unique => true
+
   create_table "experience_format_ratios", :force => true do |t|
     t.integer "format_id",                        :null => false
     t.integer "outer_format_id",                  :null => false
@@ -191,6 +200,19 @@ ActiveRecord::Schema.define(:version => 20140208183000) do
   end
 
   add_index "game_configs", ["game_id"], :name => "index_game_configs_on_game_id", :unique => true
+
+  create_table "game_messages", :force => true do |t|
+    t.integer  "game_id",                            :null => false
+    t.integer  "team_id"
+    t.boolean  "from_admin",   :default => true
+    t.string   "message_type", :default => "notice", :null => false
+    t.text     "data"
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+  end
+
+  add_index "game_messages", ["game_id"], :name => "index_game_messages_on_game_id"
+  add_index "game_messages", ["team_id"], :name => "index_game_messages_on_team_id"
 
   create_table "game_prequels", :id => false, :force => true do |t|
     t.datetime "start_at"
@@ -233,8 +255,10 @@ ActiveRecord::Schema.define(:version => 20140208183000) do
     t.integer  "format_id"
     t.boolean  "is_visible",        :default => false,      :null => false
     t.boolean  "auto_teams_accept", :default => false,      :null => false
+    t.integer  "domain_id",                                 :null => false
   end
 
+  add_index "games", ["domain_id"], :name => "index_games_on_domain_id"
   add_index "games", ["format_id"], :name => "index_games_on_format_id"
   add_index "games", ["name"], :name => "index_games_on_name", :unique => true
   add_index "games", ["start_date"], :name => "index_games_on_start_date"
@@ -457,8 +481,10 @@ ActiveRecord::Schema.define(:version => 20140208183000) do
     t.float    "account",                :default => 0.0
     t.integer  "level"
     t.string   "avatar_url"
+    t.integer  "domain_id",                               :null => false
   end
 
+  add_index "users", ["domain_id"], :name => "index_users_on_domain_id"
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["role"], :name => "index_users_on_role"
