@@ -10,6 +10,6 @@ class GamePrequel < ActiveRecord::Base
   # Check if team finished this prequel
   #
   def is_finished_by?(team)
-    ! zone.tasks.map {|task| task.is_finished?(team) }.include?(false)
+    ! zone.tasks.map {|task| task.is_finished?(team) }.include?(false) rescue false
   end
 end
