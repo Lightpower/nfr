@@ -111,4 +111,18 @@ module ApplicationHelper
     params.merge!(id: id) if id.present?
     content_tag(:a, caption, params).html_safe
   end
+
+  ##
+  # Show list of messages for current user's team in current game
+  #
+  def game_messages
+    messages = GameMessage.team_game_messages(current_user.team_id, @game.id)
+    messages.map { |message|
+      data = message.from_admin ? 'От организатора, в ' : 'От команды, в '
+      data << message.created_at.strftime('%H:%M:%S')
+      data << ('<br>').html_safe
+      data << message.data.html_safe
+      content_tag(:div, data.html_safe, class: message.message_type).html_safe
+    }.join.html_safe
+  end
 end
