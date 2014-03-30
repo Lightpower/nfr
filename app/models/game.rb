@@ -2,6 +2,7 @@
 class Game < ActiveRecord::Base
 
   belongs_to :format
+  belongs_to :domain
 
   has_many :codes
   has_many :code_strings
