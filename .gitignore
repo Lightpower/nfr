@@ -25,5 +25,4 @@
 
 /db/old_seeds
 /db/seeds
-/db/seeds.rb
 *.sql
