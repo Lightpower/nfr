@@ -47,7 +47,6 @@ class Game < ActiveRecord::Base
     def actual
       where(is_archived: false).order('start_date')
     end
-
   end
 
   ##
@@ -158,5 +157,34 @@ class Game < ActiveRecord::Base
   #
   def can_show_prequel_for?(team)
     self.has_prequel? && self.teams.include?(team)
+  end
+
+  ##
+  # Logger to save all actions in game
+  #
+  def logger
+    dir = File.dirname("#{Rails.root}/log/#{self.id}/game.log")
+    FileUtils.mkdir_p(dir) unless File.directory?(dir)
+    @logger ||= Logger.new("#{Rails.root}/log/#{self.id}/game.log")
+  end
+
+  def log(params, user)
+    user_id = user.id
+    user_name = user.show_name
+    team = user.team
+    team_id = team.id
+    team_name = team.name
+    if params[:code_string]
+      action = 'Код'
+      data = params[:code_string][:code]
+    elsif params[:task_id]
+      action = 'Подсказка'
+      data = params[:task_id]
+    elsif
+      action = 'Ошибка действия'
+      data = "params: #{params.to_json}"
+    end
+
+    logger.info("#{Time.now.strftime('%F %T')} #{team_id} #{team_name} #{user_id} #{user_name} - #{action}: `#{data}`")
   end
 end

@@ -12,13 +12,16 @@ class CodesController < ApplicationController
   end
 
   def pass
+    # Logging
+    @game.log(params, current_user)
+
     # Codes processing
-    if params[:code_string].present?
-      @results = GameStrategy::Context.send_code({game: @game, code_string: params[:code_string][:code], user: current_user})
+    @results = if params[:code_string].present?
+      GameStrategy::Context.send_code({game: @game, code_string: params[:code_string][:code], user: current_user})
     elsif params[:task_id].present?
-      @results = [GameStrategy::Context.get_hint({game: @game, task_id: params[:task_id], user: current_user})]
+      [GameStrategy::Context.get_hint({game: @game, task_id: params[:task_id], user: current_user})]
     else
-      @results = nil
+      nil
     end
 
     #render *GameStrategy::Context.main_block({game: @game, user: current_user})
