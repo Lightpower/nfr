@@ -26,6 +26,7 @@ class UsersController < ApplicationController
     prevent_admin_role
     # Cannot set team_id when user is being created
     @user.team_id = nil
+    @user.domain_id ||= Domain.all.first.id
 
     if @user.save
       redirect_to @user, notice: 'Пользователь успешно создан!'
@@ -37,11 +38,10 @@ class UsersController < ApplicationController
   # PUT /users/1
   def update
     prevent_admin_role
-
     if cannot? :manage, :role
       params[:user].delete(:role)
     end
-    if @user.password.blank?
+    if params[:user][:password].blank?
       params[:user].delete(:password)
       params[:user].delete(:password_confirmation)
     end

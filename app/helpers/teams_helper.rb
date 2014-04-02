@@ -35,5 +35,4 @@ module TeamsHelper
 
     content_tag(:div, ret_val, class: 'team_link')
   end
-
 end
