@@ -1,0 +1,126 @@
+div#miner {
+  width: 100%;
+  min-height: 400px;
+}
+
+div#miner_status {
+  border: 1px solid #454545;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  -webkit-box-shadow: 2px 2px 2px #2d3121;
+  -moz-box-shadow: 2px 2px 2px #2d3121;
+  box-shadow: 2px 2px 2px #2d3121;
+}
+
+div#miner_field {
+  -webkit-box-shadow: 4px 4px 6px #2d3121;
+  -moz-box-shadow: 4px 4px 6px #2d3121;
+  box-shadow: 4px 4px 6px #2d3121;
+  width: 400px;
+  height: 400px;
+  margin: 20px auto;
+  border: 1px solid black;
+  padding: 1px;
+}
+
+div#miner_config {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 289px;
+  height: 150px;
+  margin-left: -150px;
+  margin-top: -200px;
+  background-color: gray;
+  border: 1px solid black;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 12px 12px 15px #4a4d39;
+  -moz-box-shadow: 12px 12px 15px #4a4d39;
+  box-shadow: 12px 12px 15px #4a4d39;
+}
+
+div#miner_config_block {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  left: -50%;
+  top: -50%;
+  opacity: 0.7;
+  background-color: gray;
+}
+
+input#field_width, input#field_height, input#mine_count {
+  width: 40px;
+}
+
+div#miner {
+  a.button {
+    display: inline-block;
+    width: 120px;
+    height: 20px;
+    text-align: center;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    color: #000000;
+    text-decoration: none;
+    background-color: #AAAAAA;
+    border-color: #000000;
+    border-width: 1px 1px 1px 1px;
+    border-style: solid;
+    -webkit-box-shadow: 2px 2px 3px #282b1f;
+    -moz-box-shadow: 2px 2px 3px #282b1f;
+    box-shadow: 2px 2px 3px #282b1f;
+    padding: 2px;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 5px;
+  }
+
+  a.button:hover {
+    background-color: #565656;
+  }
+
+}
+
+a.mc {
+  display: inline-block;
+  text-decoration: none;
+  background-color: white;
+  padding: 0px;
+  border: 1px outset #333333;
+  margin: 0px;
+  font-weight: bold;
+}
+
+a.mc:hover, a.mc:visited, a.mc:active {
+  color: white;
+}
+
+a.mc.mark {
+  color: orange;
+}
+
+a.mc.m_open {
+  border-style: dashed;
+  background-color: gray;
+}
+a.mc.m_open:hover, a.mc.m_open:visited, a.mc.m_open:active, a.mc.m_boom:hover, a.mc.m_boom:visited, a.mc.m_boom:active {
+  color: black;
+}
+
+a.mc.m_boom {
+  border-style: dashed;
+  background-color: red;
+
+  :hover, :visited, :active {
+    color: black;
+  }
+}
+
+div.fld_row {
+  margin-bottom: 0px;
+}
