@@ -15,5 +15,5 @@ def add_code(data, ko, bonus, task, game, info=nil)
 end
 
 def img_tag(filename)
-  "<img src=\"http://klads.org.ua/nfr/006/#{filename}\">"
+  "<img src=\"http://klads.org.ua/fastiv/002/#{filename}\">"
 end
