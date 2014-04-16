@@ -2,4 +2,5 @@
 // All this logic will automatically be available in application.js.
 
 var NFR = {}, // Main site for class
-    FIL = {}; // Filler minigame, see filler.js
+    FIL = {}, // Filler mini-game, see filler/*.js
+    MIN = {}; // Miner  mini-game, see miner/*.js
