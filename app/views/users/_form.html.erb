@@ -1,7 +1,7 @@
-<%= form_for @user, html: { class: "form-horizontal" } do |f| %>
+<%= form_for @user, html: { class: 'form-horizontal' } do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> не дают сохранить пользователя:</h2>
+      <h2><%= pluralize(@user.errors.count, 'error') %> не дают сохранить пользователя:</h2>
 
       <ul>
       <% @user.errors.full_messages.each do |msg| %>
@@ -12,11 +12,11 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :username, "Логин", class: "caption" %>
+    <%= f.label :username, 'Логин', class: 'caption' %>
     <%= f.text_field :username %>
   </div>
   <div class="field">
-    <%= f.label :username, "Ссылка на аватар", class: "caption" %>
+    <%= f.label :username, 'Ссылка на аватар', class: 'caption' %>
     <%= f.text_field :avatar_url, class: 'long' %>
   </div>
 
@@ -26,22 +26,25 @@
     </div>
   <% end %>
 
+  <%= f.label :domain_id, 'Домен', class: 'caption' %>
+  <%= domain_select({f: f}) %>
+
   <div class="field">
-    <%= f.label :password, "Пароль", class: "caption" %>
+    <%= f.label :password, 'Пароль', class: 'caption' %>
     <%= f.text_field :password %>
   </div>
   <div class="field">
-    <%= f.label :password_confirmation, "Подтверждение пароля", class: "caption" %>
+    <%= f.label :password_confirmation, 'Подтверждение пароля', class: 'caption' %>
     <%= f.text_field :password_confirmation %>
   </div>
   <div class="field">
-    <%= f.label :email, class: "caption" %>
+    <%= f.label :email, class: 'caption' %>
     <%= f.text_field :email %>
   </div>
-  <%= f.label :team_id, (@user.team ? "Команда" : "Запрос в команду:"), class: "caption" %>
+  <%= f.label :team_id, (@user.team ? 'Команда' : 'Запрос в команду:'), class: 'caption' %>
   <%= team_select({f: f, user: @user}) %>
   <div class="actions button">
-    <%= f.submit "Сохранить", class: "action_button" %>
+    <%= f.submit 'Сохранить', class: 'action_button' %>
   </div>
 <% end %>
 

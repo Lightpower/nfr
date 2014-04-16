@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140330141539) do
+ActiveRecord::Schema.define(:version => 20140330150233) do
 
   create_table "archive_code_strings", :force => true do |t|
     t.string  "data",    :null => false
@@ -328,6 +328,11 @@ ActiveRecord::Schema.define(:version => 20140330141539) do
     t.datetime "updated_at",  :null => false
   end
 
+  create_table "partners", :force => true do |t|
+    t.string  "name",      :null => false
+    t.integer "domain_id", :null => false
+  end
+
   create_table "projects", :force => true do |t|
     t.string "name",      :null => false
     t.string "css_class"
@@ -476,6 +481,14 @@ ActiveRecord::Schema.define(:version => 20140330141539) do
   end
 
   add_index "user_experiences", ["user_id", "format_id"], :name => "index_user_experiences_on_user_id_and_format_id"
+
+  create_table "user_parents", :force => true do |t|
+    t.integer "user_id",                         :null => false
+    t.string  "parent_type", :default => "User"
+    t.integer "parent_id"
+  end
+
+  add_index "user_parents", ["user_id"], :name => "index_user_parents_on_user_id"
 
   create_table "users", :force => true do |t|
     t.integer  "team_id"

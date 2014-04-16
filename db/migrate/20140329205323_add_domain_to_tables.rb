@@ -9,6 +9,7 @@ class AddDomainToTables < ActiveRecord::Migration
     end
 
     domain = Domain.create(name: 'default', full_name: 'NeFoRmat Київ', owner: 'Lightpower')
+    Domain.create(name: 'fastiv', full_name: 'NeFoRmat Фастів', owner: 'Beri4ka')
 
     User.all.each do |obj|
       obj.username = obj.username + '_' if obj.username.size == 2
