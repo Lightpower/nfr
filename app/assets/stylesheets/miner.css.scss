@@ -108,6 +108,7 @@ a.mc.mark {
 a.mc.m_open {
   border-style: dashed;
   background-color: gray;
+  color: black;
 }
 a.mc.m_open:hover, a.mc.m_open:visited, a.mc.m_open:active, a.mc.m_boom:hover, a.mc.m_boom:visited, a.mc.m_boom:active {
   color: black;
@@ -116,6 +117,7 @@ a.mc.m_open:hover, a.mc.m_open:visited, a.mc.m_open:active, a.mc.m_boom:hover, a
 a.mc.m_boom {
   border-style: dashed;
   background-color: red;
+  color: black;
 
   :hover, :visited, :active {
     color: black;
