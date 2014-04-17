@@ -8,18 +8,15 @@ MIN.view = {
   // Control panel
   statusDivId:           'miner_status',
   controlDivId:          'miner_control',
-  configLinkClass:        'miner_start',
+  configLinkClass:       'miner_start',
   resetLinkClass:        'miner_reset',
-  headDivId:             'miner_players',
-  playerTunDivId:        'player_turn',
-  playerTurnSpanId:      'miner_player_turn',
-  chosenWarningDivId:    'miner_warning',
+  stateLabelId:          'miner_state_label',
+  stateTextId:           'miner_state_text',
   // Config panel
   saveConfigLinkClass:   'miner_save_config',
   cancelConfigLinkClass: 'miner_cancel_config',
   configDivId:           'miner_config',
   configBlockDivId:      'miner_config_block',
-  playerConfigClass:     'player_config',
   fieldWidthInputId:     'field_width',
   fieldHeightInputId:    'field_height',
   mineCountInputId:      'mine_count',
@@ -44,9 +41,7 @@ MIN.view = {
   //################
 
   updateControl: function() {
-    var i = 0,
-      div = this.mainDiv(),
-      row, subDiv;
+    this.updateStatus();
   },
 
   //#########
@@ -78,7 +73,7 @@ MIN.view = {
       for(i=0; i<MIN.core.width; i++) {
         newCell = '<a href="#" class="' + this.fieldCellClass
           + '" style="width: ' + cellWidth + 'px; height: ' + cellHeight + 'px;"'
-          + ' data-coord="' + i + '_' + j + '">.';
+          + ' data-coord="' + i + '_' + j + '">&nbsp;';
         rowDiv.append(newCell);
       }
     }
@@ -118,13 +113,8 @@ MIN.view = {
 
   markCell: function(point) {
     var cell = this.mainDiv().find('a[data-coord='+ point[0] + '_' + point[1] +']'),
-        mark = cell.text() === "#" ? "." : "#";
-    cell.text(mark);
-    if(mark === "#")
-      cell.addClass('mark');
-    else
-      cell.removeClass('mark');
-
+        mark = cell.text() === "#" ? "&nbsp;" : "#";
+    cell.html(mark);
   },
 
   isCellOpen: function(point) {
@@ -157,7 +147,12 @@ MIN.view = {
     div = div.children("div#" + this.statusDivId);
 
     // Control panel
-    div.append('<div id="' + this.controlDivId + '" name="' + this.controlDivId + '"><a href="#" class="' + this.configLinkClass + ' button">Config</a> <a href="#" class="' + this.resetLinkClass + ' button">Reset</a></div');
+    div.append('<div id="' + this.controlDivId + '" name="' + this.controlDivId + '">'
+      + '<a href="#" class="' + this.configLinkClass + ' button">Config</a> '
+      + '<a href="#" class="' + this.resetLinkClass + ' button">Reset</a>'
+      + '<span id="' + this.stateLabelId + '" name="' + this.stateLabelId + '"></span>'
+      + '<span id="' + this.stateTextId + '" name="' + this.stateTextId + '"></span>'
+      + '</div>');
   },
 
   createConfig: function() {
@@ -194,5 +189,20 @@ MIN.view = {
     div.append('<div><a href="#" class="' + this.saveConfigLinkClass + ' button">Save and Start</a>' +
       ' <a href="#" class="' + this.cancelConfigLinkClass + ' button">Cancel</a></div>');
 
+  },
+
+  updateStatus: function() {
+    var label = $('span#' + this.stateLabelId + ''),
+        text  = $('span#' + this.stateTextId + '');
+    if(MIN.core.dead) {
+      label.html('&nbsp;');
+      text.html(':(');
+    }else if(MIN.core.openCellLeft === 0) {
+      label.html('&nbsp;');
+      text.html('Victory!');
+    }else{
+      label.html('Closed cells left: ');
+      text.html(MIN.core.openCellLeft);
+    }
   }
 }

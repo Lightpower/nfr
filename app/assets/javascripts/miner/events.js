@@ -7,7 +7,7 @@ MIN.events = {
   onReset: function() {
     MIN.core.start(MIN.core.width, MIN.core.height, MIN.core.mineCount);
     MIN.view.createField();
-    MIN.view.updateControl();
+    MIN.view.updateStatus();
   },
 
   onConfig: function() {
@@ -18,6 +18,7 @@ MIN.events = {
     if(MIN.turn.isEnd()) return;
 
     MIN.view.updateCell(point, MIN.turn.do(point));
+    MIN.view.updateStatus();
   },
 
   onStartGame: function() {

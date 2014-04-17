@@ -95,15 +95,11 @@ a.mc {
   border: 1px outset #333333;
   margin: 0px;
   font-weight: bold;
-  color: white;
+  color: orangered;
 }
 
 a.mc:hover, a.mc:visited, a.mc:active {
-  color: white;
-}
-
-a.mc.mark {
-  color: orange;
+  color: orangered;
 }
 
 a.mc.m_open {
