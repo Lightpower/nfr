@@ -1,4 +1,5 @@
 MIN.core = {
+  predefined: false,
   width: 20,
   height: 20,
   mineCount: 40,
@@ -11,6 +12,7 @@ MIN.core = {
     var array = data.split(';'),
         fieldData = array[3].split(',');
 
+    this.predefined = true;
     this.width  = parseInt(array[0]);
     this.height = parseInt(array[1]);
     this.mineCount = parseInt(array[2]);

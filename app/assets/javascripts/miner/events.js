@@ -5,13 +5,14 @@ MIN.events = {
     if(predefine)
       MIN.core.predefine(predefine);
 
-    MIN.view.createDivs(!predefine);
+    MIN.view.createDivs();
   },
 
   onReset: function() {
-    MIN.core.start(MIN.core.width, MIN.core.height, MIN.core.mineCount);
-    MIN.view.createField();
-    MIN.view.updateStatus();
+    document.location.reload();
+//    MIN.core.start(MIN.core.width, MIN.core.height, MIN.core.mineCount);
+//    MIN.view.createField();
+//    MIN.view.updateStatus();
   },
 
   onConfig: function() {
