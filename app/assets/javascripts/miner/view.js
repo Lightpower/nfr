@@ -23,6 +23,8 @@ MIN.view = {
   // Cell classes
   cellExplode:           'm_boom',
   cellOpen:              'm_open',
+  // Numbers classes
+  opened_classes: ['m0', 'm1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7', 'm8'],
 
   mainDiv: function() { return $('div#' + this.minerDivId) },
 
@@ -98,6 +100,7 @@ MIN.view = {
         cell = this.mainDiv().find('a[data-coord='+ i + '_' + j +']');
 
     switch(result) {
+      case undefined:
       case -1:
         return;
       case 9:
@@ -106,6 +109,8 @@ MIN.view = {
         break;
       default:
         cell.addClass(this.cellOpen);
+        if(result >= 0 && result <= 8)
+          cell.addClass(this.opened_classes[result]);
         cell.text(result);
         break;
     }

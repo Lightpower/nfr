@@ -86,29 +86,20 @@ div#miner {
 
 }
 
+div.fld_row {
+  margin-bottom: 0px;
+}
+
 a.mc {
   display: inline-block;
   text-decoration: none;
   text-align: center;
-  background-color: white;
+  background-color: lightgray;
   padding: 0px;
   border: 1px outset #333333;
   margin: 0px;
   font-weight: bold;
   color: orangered;
-}
-
-a.mc:hover, a.mc:visited, a.mc:active {
-  color: orangered;
-}
-
-a.mc.m_open {
-  border-style: dashed;
-  background-color: gray;
-  color: black;
-}
-a.mc.m_open:hover, a.mc.m_open:visited, a.mc.m_open:active, a.mc.m_boom:hover, a.mc.m_boom:visited, a.mc.m_boom:active {
-  color: black;
 }
 
 a.mc.m_boom {
@@ -121,6 +112,45 @@ a.mc.m_boom {
   }
 }
 
-div.fld_row {
-  margin-bottom: 0px;
+a.mc:hover, a.mc:visited, a.mc:active {
+  color: orangered;
 }
+
+a.mc.m_open {
+  border-style: dashed;
+  background-color: white;
+  color: black;
+
+}
+a.mc.m_open:hover, a.mc.m_open:visited, a.mc.m_open:active, a.mc.m_boom:hover, a.mc.m_boom:visited, a.mc.m_boom:active {
+  color: black;
+}
+
+a.mc.m_open.m0 {
+  color: white;
+}
+a.mc.m_open.m1 {
+  color: blue;
+}
+a.mc.m_open.m2 {
+  color: green;
+}
+a.mc.m_open.m3 {
+  color: red;
+}
+a.mc.m_open.m4 {
+  color: darkblue;
+}
+a.mc.m_open.m5 {
+  color: darkred;
+}
+a.mc.m_open.m6 {
+  color: aqua;
+}
+a.mc.m_open.m7 {
+  color: darkgreen;
+}
+a.mc.m_open.m8 {
+  color: orange;
+}
+
