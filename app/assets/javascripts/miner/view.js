@@ -32,10 +32,10 @@ MIN.view = {
     return this.mainDiv().children('div.' + this.fieldCellClass).length > 0
   },
 
-  createDivs: function() {
+  createDivs: function(startWithConfig) {
     this.createControl();
     if(MIN.core.field) this.createField();
-    this.createConfig();
+    this.createConfig(startWithConfig);
   },
 
   //################
@@ -160,16 +160,18 @@ MIN.view = {
       + '</div>');
   },
 
-  createConfig: function() {
+  createConfig: function(openConfig) {
     var div = this.mainDiv(),
         headDiv, subDiv;
 
     // Delete config panel
     div.children('div#' + this.configDivId).remove();
     // Create background div
-    div.append('<div id="' + this.configBlockDivId + '" name="' + this.configBlockDivId + '"></div>');
+    div.append('<div id="' + this.configBlockDivId + '" name="' + this.configBlockDivId + '"'
+      + (openConfig ? '' : ' style="display: none;"')
+      + '></div>');
     // Create config panel
-    div.append('<div id="' + this.configDivId + '" name="' + this.configDivId + '" style="display: inline;"></div>');
+    div.append('<div id="' + this.configDivId + '" name="' + this.configDivId + '" style="display: ' + (openConfig ? 'inline' : 'none') + ';"></div>');
     div = div.children("div#" + this.configDivId);
 
     // Place field config

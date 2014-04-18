@@ -7,9 +7,21 @@ MIN.core = {
   dead: false,
   openCellLeft: 0,
 
+  predefine: function(data) {
+    var array = data.split(';'),
+        fieldData = array[3].split(',');
+
+    this.width  = parseInt(array[0]);
+    this.height = parseInt(array[1]);
+    this.mineCount = parseInt(array[2]);
+
+    this.initFieldArray();
+    this.fillPredefined(fieldData);
+    this.dead = false;
+    this.openCellLeft = this.width * this.height - this.mineCount;
+  },
   // Start
   start: function(width, height, mineCount) {
-    var i, j, point;
     this.width = width;
     this.height = height;
     this.mineCount = mineCount;
@@ -26,12 +38,12 @@ MIN.core = {
     for(var i=0; i<this.width; i++) {
       this.field[i] = new Array(this.height);
       for(var j=0; j<this.height; j++) {
-        // undefined color, undefined owner
         this.field[i][j] = 0
       }
     }
   },
 
+  // Init field by 0
   fieldRandom: function() {
     var x, y,
         minesLeft = this.mineCount;
@@ -43,6 +55,15 @@ MIN.core = {
         this.field[x][y] = 1;
       }else{
         minesLeft ++;
+      }
+    }
+  },
+
+  // Fill the field by custom data
+  fillPredefined: function(data) {
+    for(var j=0; j<this.height; j++) {
+      for(var i=0; i<this.width; i++) {
+        this.field[i][j] = ((data[j] & Math.pow(2, i)) > 0) ? 1 : 0;
       }
     }
   },

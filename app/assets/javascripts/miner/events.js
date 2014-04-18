@@ -1,7 +1,11 @@
 MIN.events = {
   onLoad: function() {
+    var predefine = MIN.view.mainDiv().data('predefine');
     // create divs
-    MIN.view.createDivs();
+    if(predefine)
+      MIN.core.predefine(predefine);
+
+    MIN.view.createDivs(!predefine);
   },
 
   onReset: function() {
