@@ -9,10 +9,13 @@ MIN.events = {
   },
 
   onReset: function() {
-    document.location.reload();
-//    MIN.core.start(MIN.core.width, MIN.core.height, MIN.core.mineCount);
-//    MIN.view.createField();
-//    MIN.view.updateStatus();
+    if(MIN.core.predefined)
+      document.location.reload();
+    else {
+      MIN.core.start(MIN.core.width, MIN.core.height, MIN.core.mineCount);
+      MIN.view.createField();
+      MIN.view.updateStatus();
+    }
   },
 
   onConfig: function() {
