@@ -35,7 +35,7 @@ MIN.view = {
   createDivs: function() {
     this.createControl();
     if(MIN.core.field) this.createField();
-    if(MIN.core.predefined) this.createConfig();
+    if(!MIN.core.predefined) this.createConfig();
   },
 
   //################
