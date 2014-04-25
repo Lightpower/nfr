@@ -46,7 +46,7 @@ class UsersController < ApplicationController
       params[:user].delete(:password_confirmation)
     end
     # Team request
-    if params[:user].keys.include? 'team_id'
+    if params[:user][:team_id] && @user.team_id != params[:user][:team_id].to_i
       if @user.is_captain?
         # Captain cannot change his team
         params[:user].delete(:team_id)
