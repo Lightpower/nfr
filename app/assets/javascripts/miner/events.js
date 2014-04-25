@@ -66,9 +66,10 @@ $(function() {
       x = parseInt(coords[0]),
       y = parseInt(coords[1]);
 
-    if(e.altKey)
+    if(e.altKey || MIN.view.markerMode) {
       MIN.view.markCell([x, y]);
-    else {
+      MIN.view.markerMode = false;
+    } else {
       if(
         $(this).hasClass('m_open') ||
           ($(this).text() === "#")
@@ -90,6 +91,12 @@ $(function() {
   //Click on Close on Config panel
   $('a.' + MIN.view.cancelConfigLinkClass).on("click", function(e) {
     MIN.events.onCloseConfig();
+    e.preventDefault();
+  });
+
+  // Click on "Set mine marker"
+  $('a.' + MIN.view.markerModeClass).on("click", function(e) {
+    MIN.view.markerMode = !MIN.view.markerMode;
     e.preventDefault();
   });
 });

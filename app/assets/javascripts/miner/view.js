@@ -26,6 +26,10 @@ MIN.view = {
   // Numbers classes
   opened_classes: ['m0', 'm1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7', 'm8'],
 
+  markerModeClass:       'set_marker',
+  // If true then next click will set cell's caption to # (mine marker)
+  markerMode: false,
+
   mainDiv: function() { return $('div#' + this.minerDivId) },
 
   isFieldBuilt: function() {
@@ -156,7 +160,8 @@ MIN.view = {
       + (MIN.core.predefined ? '' : '<a href="#" class="' + this.configLinkClass + ' button">Config</a> ')
       + '<a href="#" class="' + this.resetLinkClass + ' button">Reset</a>'
       + '<span id="' + this.stateLabelId + '" name="' + this.stateLabelId + '"></span>'
-      + '<span id="' + this.stateTextId + '" name="' + this.stateTextId + '"></span>'
+      + '<span id="' + this.stateTextId + '" name="' + this.stateTextId + '"></span><br>'
+      + '<a href="#" class="' + this.markerModeClass + ' button">Set marker</a> <span>(or press and hold ALT button)</span>'
       + '</div>');
   },
 
