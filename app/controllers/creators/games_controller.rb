@@ -24,7 +24,7 @@ class Creators::GamesController < ApplicationController
   # Edit Game's common data
   #
   def edit
-    load_formats_and_domains_and_domains
+    load_formats_and_domains
   end
 
   ##
@@ -61,7 +61,7 @@ class Creators::GamesController < ApplicationController
 
   def load_formats_and_domains
     @formats = Format. all.map { |f| [ [f.project.try(:name), f.name].join(' '), f.id] }
-    @domains = Domains.all.map { |d| [ [d.project.try(:full_name), d.name].join(' '), d.id] }
+    @domains = Domain.all.map { |d| [d.full_name, d.id] }
   end
 
 end

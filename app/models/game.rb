@@ -35,7 +35,7 @@ class Game < ActiveRecord::Base
 
   attr_accessible :number, :name, :format, :format_id, :game_type, :start_date, :finish_date, :price, :area, :image_html,
                   :preview, :legend, :brief_place, :dopy_list, :is_active, :is_archived, :prepare_url, :discuss_url,
-                  :is_visible, :auto_teams_accept
+                  :is_visible, :auto_teams_accept, :domain, :domain_id
 
   CSS_CLASSES = ['neformat nedostroy', 'neformat game', 'dozor klad', 'dozor classic', 'dozor lite', 'en tochki', 'en cx', 'fastiv lite']
 
