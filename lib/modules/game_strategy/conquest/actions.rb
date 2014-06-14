@@ -273,7 +273,7 @@ module GameStrategy
       end
 
       ##
-      # Check if team has enough codes in this zone to pass this code
+      # Check if team has enough codes in this zone to pass this code of hint
       #
       def have_enough_codes?(code_or_hint, team)
         case code_or_hint.class.name
@@ -288,7 +288,8 @@ module GameStrategy
             return false
         end
 
-        team.codes_number_in_zone(zone.try(:id)) + cost >= 0
+        #TODO This line is for code number restricting
+        team.codes_number_in_zone(zone.try(:id)) + cost <= 3000
       end
 
       ##
