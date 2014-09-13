@@ -289,7 +289,7 @@ module GameStrategy
         end
 
         #TODO This line is for code number restricting
-        team.codes_number_in_zone(zone.try(:id)) + cost <= 3000
+        team.codes_number_in_zone(zone.try(:id)) + cost >= 0
       end
 
       ##
