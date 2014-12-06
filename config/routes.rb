@@ -81,6 +81,9 @@ Nfr::Application.routes.draw do
     end
   end
 
+  # Games
+  # Game 10
+  get '/pic/yandex.jpg', to: redirect('http://klads.org.ua/nfr/010/pic/yandex.jpg')
   # Easters
 
   get '/blackjack', to: redirect('http://absolutist.ru/online/bjack/blackjack.swf')
