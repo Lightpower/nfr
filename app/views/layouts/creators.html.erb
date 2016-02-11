@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>"Взаперти" - создание игр</title>
+  <link rel="shortcut icon" href="/assets/favicon.ico"/>
+  <%= stylesheet_link_tag    'application', :media => 'all' %>
+  <%= javascript_include_tag 'application' %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <div id="wrap">
+  	<%= render 'layouts/creators/navigation' %>
+    <div id="content">
+    
+      <%= yield %>
+
+    </div>
+  </div>
+</body>
+</html>

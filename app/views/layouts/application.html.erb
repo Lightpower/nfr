@@ -1,35 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>NeFoRmat - необычные квесты</title>
-  <link rel="shortcut icon" href="/images/favicon.ico"/>
+  <title>"Взаперти" - квесты в реальной жизни</title>
+  <meta name="keywords" content="квест, quest, игра, автоквест, авто квест, городской квест, ночной квест, пешеходный квест, footquest, foot quest, реальный квест, киев">
+  <meta name="description" content="Взаперти - городские квесты. Команда на автомобиле либо пешком должна разгадать все задания и найти все коды, передвигаясь по городу.">
+  <link rel="shortcut icon" href="/assets/favicon.ico"/>
   <%= stylesheet_link_tag    'application', :media => 'all' %>
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-<div id="center">
-	<a href="/"><header class="logo"></header></a>
+  <div id="wrap">
+  	<header>
+  	  <div id="logo">
+  	    <a href="/"><%= image_tag 'logo/ua_static.gif', alt: 'Взаперти' %></a>
+  	  </div>
+  	</header>
 
-	<%= render 'layouts/site/header_menu' %>
-	<section id="container" name='container'>
-		<nav id="site_info_container">
-		  <%= render 'layouts/site/user_info' %><br>
-		  <%= render 'layouts/site/team_info' %><br>
-		  <%= render 'layouts/site/navigation' %>
-		</nav>
+  	<%= render 'layouts/site/navigation' %>
 
-		<section class="site_main_content">
-		  <%= show_flash %>
+	<span id="content_hook"></span>
+    <div id="content">
+    
+      <%= yield %>
 
-		  <%= yield %>
-		</section>
-
-		<aside class="site_aside_right">
-          <%= render 'layouts/site/banners' %>
-		</aside>
-	</section>
-</div>
-
+    </div>
+  </div>
 </body>
 </html>

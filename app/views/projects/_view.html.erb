@@ -1,0 +1,9 @@
+<% 
+  div_content = image_tag(project.image_url) + 
+    content_tag(:div, content_tag(:span, project.name), class: 'quest_name')
+  div_img = content_tag(:div, div_content, class: 'bwWrapper') 
+  link = link_to div_img, project.url 
+%>
+
+<%= content_tag :div, link, id: "project_#{project.id}", class: 'quest_block' %>
+

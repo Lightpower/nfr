@@ -13,6 +13,6 @@ class CreateHints < ActiveRecord::Migration
     add_index :hints, :number
     add_index :hints, :task_id
     add_index :hints, :game_id
-    add_index :hints, [:number, :task_id], unique: true
+    add_index :hints, [:game_id, :number, :task_id], unique: true
   end
 end

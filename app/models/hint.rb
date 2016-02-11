@@ -4,8 +4,6 @@ class Hint < ActiveRecord::Base
   belongs_to :game
   has_many   :team_hints
 
-  attr_accessible :game, :game_id, :cost, :data, :delay, :number, :task, :task_id
-
   class << self
     ##
     # Ordered by number

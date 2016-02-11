@@ -4,6 +4,7 @@
 #
 class Creators::GamesController < ApplicationController
 
+  layout 'layouts/creators'
   load_and_authorize_resource :game, except: [:index]
 
   ##
@@ -24,7 +25,7 @@ class Creators::GamesController < ApplicationController
   # Edit Game's common data
   #
   def edit
-    load_formats_and_domains
+    load_formats
   end
 
   ##
@@ -42,7 +43,7 @@ class Creators::GamesController < ApplicationController
   # New game
   #
   def new
-    load_formats_and_domains
+    load_formats
   end
 
   ##
@@ -59,9 +60,8 @@ class Creators::GamesController < ApplicationController
 
   private
 
-  def load_formats_and_domains
-    @formats = Format. all.map { |f| [ [f.project.try(:name), f.name].join(' '), f.id] }
-    @domains = Domain.all.map { |d| [d.full_name, d.id] }
+  def load_formats
+    @formats = Format.all.map { |f| [ [f.project.try(:name), f.name].join(' - '), f.id] }
   end
 
 end

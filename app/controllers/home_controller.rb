@@ -1,8 +1,9 @@
 # encoding: UTF-8
 class HomeController < ApplicationController
 
+  # List of projects
   def index
-    @games = Game.accessible_by(current_ability).actual
+    @projects = Project.accessible_by(current_ability).by_order.all
   end
 
 end

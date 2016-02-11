@@ -6,8 +6,6 @@ class TeamCode < ActiveRecord::Base
   belongs_to :team_bonus
   belongs_to :game
 
-  attr_accessible :game, :game_id, :code, :code_id, :data, :team, :team_id, :state, :zone, :zone_id, :bonus, :team_bonus, :team_bonus_id
-
   class << self
 
     ##

@@ -3,8 +3,10 @@ class CreateTasks < ActiveRecord::Migration
     create_table :tasks do |t|
       t.integer  :number
       t.string   :name
+      t.string   :task_type
       t.text     :preview
       t.text     :data
+      t.text     :special
       t.integer  :code_quota
       t.float    :bonus
       t.integer  :duration

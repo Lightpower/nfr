@@ -17,36 +17,16 @@ class Game < ActiveRecord::Base
   has_many :team_zones
   has_many :zones
 
-  has_many :archive_codes
-  has_many :archive_code_strings
-  has_many :archive_hints
-  has_many :archive_logs
-  has_many :archive_tasks
-  has_many :archive_team_bonuses
-  has_many :archive_team_codes
-  has_many :archive_team_hints
-  has_many :archive_team_zones
-  has_many :archive_zones
-  has_many :archive_teams
-
   has_one  :config, class_name: 'GameConfig'
   has_one :game_prequel
   alias :prequel :game_prequel
 
-  attr_accessible :number, :name, :format, :format_id, :game_type, :start_date, :finish_date, :price, :area, :image_html,
-                  :preview, :legend, :brief_place, :dopy_list, :is_active, :is_archived, :prepare_url, :discuss_url,
-                  :is_visible, :auto_teams_accept, :domain, :domain_id
-
   CSS_CLASSES = ['neformat nedostroy', 'neformat game', 'dozor klad', 'dozor classic', 'dozor lite', 'en tochki', 'en cx', 'fastiv lite']
 
-  class << self
+  scope :actual, -> { where(is_archived: false).order('start_date') }
 
-    ##
-    # Games which are not in archive
-    #
-    def actual
-      where(is_archived: false).order('start_date')
-    end
+  def self.of_project(project_id)
+    Format.of_project(project_id).map(&:games).flatten.select{|f| f.games.active}
   end
 
   ##

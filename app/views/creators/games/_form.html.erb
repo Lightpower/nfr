@@ -18,10 +18,6 @@
       <%= f.text_field :number, required: true %>
     </div>
     <div class='field'>
-      <%= f.label :domain_id, 'Домен', class: 'caption' %>
-      <%= f.select(:domain_id, @domains) %>
-    </div>
-    <div class='field'>
       <%= f.label :format_id, 'Формат', class: 'caption' %>
       <%= f.select(:format_id, @formats) %>
     </div>

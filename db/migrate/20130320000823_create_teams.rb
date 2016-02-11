@@ -4,8 +4,11 @@ class CreateTeams < ActiveRecord::Migration
       t.string :name,             null: false
       t.string :alternative_name
       t.string :image_url
+
+      t.references :user, null: false
     end
 
     add_index :teams, :name
+    add_index :teams, :user_id
   end
 end

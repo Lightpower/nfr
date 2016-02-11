@@ -70,4 +70,9 @@ class CodesController < ApplicationController
   def authorize_game!
     authorize! :play, @game
   end
+
+  def code_params
+    params.require(:code).permit(:game, :game_id, :info, :ko, :name, :number, :parent_id, :type, :code_strings, :color, :bonus, :task, :task_id,
+      code_string: [:game, :game_id, :code, :code_id, :data, :color])
+  end
 end

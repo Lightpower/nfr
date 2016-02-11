@@ -1,8 +1,10 @@
+<div id="games">
 <% if @games.present? %>
-  <h1>Анонсы игр</h1>
+  <h2>Анонсы игр</h2>
   <% @games.each do |game| %>
-		<%= render 'games/view', game: game %>
+	<%= render 'games/view', game: game %>
   <% end %>
 <% else %>
-	<h1>Нет запланированных игр</h1>
+	<h2>Нет запланированных игр</h2>
 <% end %>
+</div>

@@ -1,15 +1,19 @@
 # encoding: UTF-8
 class GamesController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, except: [:index, :preview, :archive]
 
   load_resource
-  before_filter :authorize_game!,     except: [:show, :archive]
+  before_filter :authorize_game!,     except: [:index, :preview, :show, :archive]
 
   ##
   # Get the list of all games (announce)
   #
   def index
-    redirect_to root_path
+    if params[:project_id]
+      @games = Game.of_project(params[:project_id])
+    else
+      @games = Game.actual
+    end
   end
 
   ##
@@ -21,6 +25,9 @@ class GamesController < ApplicationController
 
     # Real Game
     show_started_game
+  end
+
+  def preview
   end
 
   ##

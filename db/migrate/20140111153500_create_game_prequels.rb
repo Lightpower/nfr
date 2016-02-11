@@ -9,7 +9,7 @@ class CreateGamePrequels < ActiveRecord::Migration
       t.references :zone
     end
 
-    add_index :game_prequels, :game_id, uniq: true
-    add_index :game_prequels, :zone_id, uniq: true
+    add_index :game_prequels, :game_id, unique: true
+    add_index :game_prequels, :zone_id, unique: true
   end
 end

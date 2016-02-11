@@ -4,5 +4,5 @@ class Format < ActiveRecord::Base
   has_many   :games
   belongs_to :project
 
-  attr_accessible :id, :project_id, :name, :css_class, :organizer, :show_in_archives
+  scope :of_project, lambda { |project_id| where(project_id: project_id) }
 end

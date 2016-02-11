@@ -3,7 +3,7 @@ class CreateCodes < ActiveRecord::Migration
     create_table :codes do |t|
       t.integer :number,  null: false
       t.string  :name,    null: false
-      t.string  :info
+      t.text    :info
       t.string  :ko,      null: false
       t.string  :color
       t.float   :bonus,   null:false, default: 0

@@ -1,0 +1,10 @@
+<div id="quests">
+  <div id="queststrigger" class="scrolltrigger"></div>
+  <div class="contentblock">
+    <h1>Наши приключения</h1>
+
+    <% @projects.each do |project| %>
+      <%= render 'projects/view', project: project %>
+    <% end %>
+  </div>
+</div>

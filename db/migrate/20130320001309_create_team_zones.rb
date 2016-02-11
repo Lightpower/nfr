@@ -6,7 +6,7 @@ class CreateTeamZones < ActiveRecord::Migration
       t.references :game,   null: false
     end
 
-    add_index :team_zones, [:team_id, :zone_id], unique: true
+    add_index :team_zones, [:game_id, :team_id, :zone_id], unique: true
     add_index :team_zones, :game_id
   end
 end
