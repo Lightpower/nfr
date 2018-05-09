@@ -24,13 +24,12 @@ NFR.codes = {
       data: data_string
     }).done(function(message){
       if(message.result == "ok") {
-        alert("Код зачислен в зону!");
+        
         location.reload();
       }else{
         alert("Ошибка зачисления кода!");
       }
     });
-
   }
 };
 
