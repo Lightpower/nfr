@@ -1,8 +1,8 @@
 <% if game.present? %>
     <article class="game <%= game.css_class %>">
-      <h1><%= game.start_date.localtime.strftime('%d.%m.%y') %> - <%= game.name %></h1>
+      <h1><%= game.start_at.localtime.strftime('%d.%m.%y') %> - <%= game.name %></h1>
       <h3><%= game.project.try(:name) %> <%= game.format.try(:name) %> #<%= game.number %></h3>
-      <b>Старт: <%= game.start_date.localtime.strftime('%H:%M') %></b><br>
+      <b>Старт: <%= game.start_at.localtime.strftime('%H:%M') %></b><br>
       <% if (game.price || 0) > 0 %>
           <b>Взнос: <%= game.price %> грн.</b><br>
       <% end %>

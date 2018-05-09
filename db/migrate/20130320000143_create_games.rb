@@ -3,13 +3,13 @@ class CreateGames < ActiveRecord::Migration
     create_table :games do |t|
       t.string   :number,     null: false
       t.string   :name,       null: false
-      t.string   :format,     null: false
       t.string   :game_type,  null: false, default: 'conquest'
-      t.datetime :start_date, null: false
-      t.datetime :finish_date
+      t.datetime :start_at, null: false
+      t.datetime :finish_at
       t.integer  :price
       t.string   :area
       t.text     :image_html
+      t.text     :video_html
       t.text     :preview
       t.text     :legend
       t.text     :brief_place
@@ -27,7 +27,7 @@ class CreateGames < ActiveRecord::Migration
     end
 
     add_index :games, :name
-    add_index :games, :start_date
+    add_index :games, :start_at
     add_index :games, :format_id
   end
 end

@@ -23,7 +23,7 @@ class Game < ActiveRecord::Base
 
   CSS_CLASSES = ['neformat nedostroy', 'neformat game', 'dozor klad', 'dozor classic', 'dozor lite', 'en tochki', 'en cx', 'fastiv lite']
 
-  scope :actual, -> { where(is_archived: false).order('start_date') }
+  scope :actual, -> { where(is_archived: false).order('start_at') }
 
   def self.of_project(project_id)
     Format.of_project(project_id).map(&:games).flatten.select{|f| f.games.active}
@@ -84,14 +84,14 @@ class Game < ActiveRecord::Base
   end
 
   ##
-  # Does current game has "is_active = true" and its start_date is being started
+  # Does current game has "is_active = true" and its start_at is being started
   #
   def is_going?
-    self.is_active && (self.start_date < Time.now) && (!self.finish_date || self.finish_date > Time.now)
+    self.is_active && (self.start_at < Time.now) && (!self.finish_at || self.finish_at > Time.now)
   end
 
   def is_finished?
-    self.finish_date && self.finish_date < Time.now
+    self.finish_at && self.finish_at < Time.now
   end
 
   ##
@@ -113,7 +113,7 @@ class Game < ActiveRecord::Base
       self.is_visible &&
       user.is_captain? &&
       self.teams.include?(user.team) &&
-      (self.start_date > Time.now)
+      (self.start_at > Time.now)
   end
 
   ##
@@ -122,14 +122,14 @@ class Game < ActiveRecord::Base
   def can_enter?(user)
     self.is_active &&
       self.teams.include?(user.team) &&
-      (self.start_date < Time.now) && (!self.finish_date || self.finish_date > Time.now)
+      (self.start_at < Time.now) && (!self.finish_at || self.finish_at > Time.now)
   end
 
   ##
   # Check if game has active prequel (even unstarted)
   #
   def has_prequel?
-    prequel && prequel.is_active && (self.start_date > Time.now)
+    prequel && prequel.is_active && (self.start_at > Time.now)
   end
 
   ##

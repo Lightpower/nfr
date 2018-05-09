@@ -34,7 +34,7 @@ class GamesController < ApplicationController
   # Get statistics of started game
   #
   def stat
-    if (@game.start_date > Time.now) && !(current_user.is_admin? || current_user.is_moderator?)
+    if (@game.start_at > Time.now) && !(current_user.is_admin? || current_user.is_moderator?)
       redirect_to game_path(@game), notice: 'Статистика будет доступна после старта игры.'
     else
       render *GameStrategy::Context.stat_block( {game: @game, user: current_user} )
@@ -79,7 +79,7 @@ class GamesController < ApplicationController
   #
   def show_prequel
     # check if prequel is accessible by current team AND game is not started yet
-    if @game.can_show_prequel_for?(current_user.team) && (@game.start_date > Time.now)
+    if @game.can_show_prequel_for?(current_user.team) && (@game.start_at > Time.now)
       zone = @game.prequel.zone
       TeamZone.create(game_id: @game.id, team_id: current_user.team.id, zone_id: zone.id) if !@game.is_going? && TeamZone.where(team_id: current_user.team.id, zone_id: zone.id).blank?
       render *GameStrategy::Context.main_block({game: @game, user: current_user})

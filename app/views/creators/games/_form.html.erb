@@ -30,12 +30,12 @@
       <%= f.text_field :game_type, required: true %>
     </div>
     <div class='field'>
-      <%= f.label :start_date, 'Начало (ГГГГ-ММ-ДД ЧЧ:ММ)', class: 'caption' %>
-      <%= f.text_field :start_date, required: true, default: Time.now.strftime('%d.%m.%Y %H:%M') %>
+      <%= f.label :start_at, 'Начало (ГГГГ-ММ-ДД ЧЧ:ММ)', class: 'caption' %>
+      <%= f.text_field :start_at, required: true, default: Time.now.strftime('%d.%m.%Y %H:%M') %>
     </div>
     <div class='field'>
-      <%= f.label :finish_date, 'Конец (ГГГГ-ММ-ДД ЧЧ:ММ)', class: 'caption' %>
-      <%= f.text_field :finish_date %>
+      <%= f.label :finish_at, 'Конец (ГГГГ-ММ-ДД ЧЧ:ММ)', class: 'caption' %>
+      <%= f.text_field :finish_at %>
     </div>
     <div class='field'>
       <%= f.label :price, 'Цена (грн.)', class: 'caption' %>
@@ -47,6 +47,19 @@
     </div>
     <div class='field'>
       <%= f.label :image_html, 'HTML картинки анонса', class: 'caption' %>
+
+      <div class="hint openable_holder">
+        <%= openable_tag('image_html_div', false, 'Последний сохранённый HTML') %>
+        <div class="openable">
+          <%= @game.image_html.try(:html_safe) %>
+        </div>
+      </div>
+
+      <%= f.text_field :image_html, class: 'long' %>
+    </div>
+
+    <div class='field'>
+      <%= f.label :video_html, 'HTML видео анонса', class: 'caption' %>
 
       <div class="hint openable_holder">
         <%= openable_tag('image_html_div', false, 'Последний сохранённый HTML') %>
@@ -108,6 +121,14 @@
     </div>
     <div class='field'>
       <%= f.label :discuss_url, 'Ссылка на форум (обсуждение)', class: 'caption' %>
+      <%= f.text_field :discuss_url, class: 'long' %>
+    </div>
+    <div class='field'>
+      <%= f.label :statistics_url, 'Ссылка на статистику (если игра не на стандартном движке)', class: 'caption' %>
+      <%= f.text_field :prepare_url, class: 'long' %>
+    </div>
+    <div class='field'>
+      <%= f.label :scenario_url, 'Ссылка на сценарий (если игра не на стандартном)', class: 'caption' %>
       <%= f.text_field :discuss_url, class: 'long' %>
     </div>
 

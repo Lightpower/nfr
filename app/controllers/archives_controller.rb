@@ -7,7 +7,7 @@ class ArchivesController < ApplicationController
   # List of Games in archive
   #
   def index
-    @games = Game.where(is_archived: true).order('start_date DESC')
+    @games = Game.where(is_archived: true).order('start_at DESC')
   end
 
   ##

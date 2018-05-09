@@ -115,7 +115,7 @@ module StatZone
       log = game.logs.order(:created_at)
       zones = game.zones.map(&:id)
       teams = game.teams.map(&:id)
-      finish_time = game.finish_date
+      finish_time = game.finish_at
 
       zone_holders = {}
       zones.each {|z| zone_holders[z] = {team: nil, sum: 0, time: nil} }
@@ -207,7 +207,7 @@ module StatZone
       log = game.archive_logs.order(:created_at)
       zones = game.archive_zones.map(&:id)
       teams = game.archive_teams.map(&:id)
-      finish_time = game.finish_date
+      finish_time = game.finish_at
 
       zone_holders = {}
       zones.each {|z| zone_holders[z] = {team: nil, sum: 0, time: nil} }

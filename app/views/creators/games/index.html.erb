@@ -12,7 +12,7 @@
     <tr>
       <td><%= link_to game.number, edit_creators_game_url(game) %></td>
       <td><%= link_to game.name,   edit_creators_game_url(game) %></td>
-      <td><%= game.start_date.strftime('%d.%m.%Y') %></td>
+      <td><%= game.start_at.strftime('%d.%m.%Y') %></td>
       <td><%= game.project.try(:name) %></td>
       <td><%= game.format.try(:name) %></td>
     </tr>

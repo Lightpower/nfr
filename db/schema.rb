@@ -120,13 +120,13 @@ ActiveRecord::Schema.define(version: 20140330150233) do
   create_table "games", force: true do |t|
     t.string   "number",                                 null: false
     t.string   "name",                                   null: false
-    t.string   "format",                                 null: false
     t.string   "game_type",         default: "conquest", null: false
-    t.datetime "start_date",                             null: false
-    t.datetime "finish_date"
+    t.datetime "start_at",                               null: false
+    t.datetime "finish_at"
     t.integer  "price"
     t.string   "area"
     t.text     "image_html"
+    t.text     "video_html"
     t.text     "preview"
     t.text     "legend"
     t.text     "brief_place"
@@ -144,7 +144,7 @@ ActiveRecord::Schema.define(version: 20140330150233) do
 
   add_index "games", ["format_id"], name: "index_games_on_format_id", using: :btree
   add_index "games", ["name"], name: "index_games_on_name", using: :btree
-  add_index "games", ["start_date"], name: "index_games_on_start_date", using: :btree
+  add_index "games", ["start_at"], name: "index_games_on_start_at", using: :btree
 
   create_table "hints", force: true do |t|
     t.integer "number",  null: false

@@ -1,6 +1,6 @@
 <article class="archive">
   <%= archive_links(@game) %>
-  <h3><%= @game.project.try(:name) %> <%= @game.format.try(:name) %> #<%= @game.number %> - <%= @game.start_date.strftime('%d.%m.%y') %></h3>
+  <h3><%= @game.project.try(:name) %> <%= @game.format.try(:name) %> #<%= @game.number %> - <%= @game.start_at.strftime('%d.%m.%y') %></h3>
   <h1><%= @game.name %></h1>
   <% if @game.legend %>
       <p><b>Легенда</b><br> <%= @game.legend.try(:html_safe) %></p>

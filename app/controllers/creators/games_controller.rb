@@ -5,7 +5,7 @@
 class Creators::GamesController < ApplicationController
 
   layout 'layouts/creators'
-  load_and_authorize_resource :game, except: [:index]
+  authorize_resource :game, except: [:index]
 
   ##
   # Show the list of my games and shared with me ones.
@@ -18,13 +18,14 @@ class Creators::GamesController < ApplicationController
   # Show game data
   #
   def show
-
+    @game = Game.find params[:id]
   end
 
   ##
   # Edit Game's common data
   #
   def edit
+    @game = Game.find params[:id]
     load_formats
   end
 
@@ -32,7 +33,8 @@ class Creators::GamesController < ApplicationController
   # Update Game's common data
   #
   def update
-    if @game.update_attributes(params[:game])
+    @game = Game.find params[:id]
+    if @game.update_attributes(game_params)
       redirect_to creators_games_path, notice: 'Игра успешно изменена.'
     else
       render action: 'edit'
@@ -43,6 +45,7 @@ class Creators::GamesController < ApplicationController
   # New game
   #
   def new
+    @game = Game.new
     load_formats
   end
 
@@ -50,6 +53,8 @@ class Creators::GamesController < ApplicationController
   # Create my game
   #
   def create
+    byebug
+    @game = Game.new game_params
     if @game.save
       redirect_to @game, notice: 'Игра успешно создана'
     else
@@ -64,4 +69,10 @@ class Creators::GamesController < ApplicationController
     @formats = Format.all.map { |f| [ [f.project.try(:name), f.name].join(' - '), f.id] }
   end
 
+  def game_params
+    params.require(:game).permit(:number, :format_id, :name, :game_type, :start_at, :finish_at, :price, 
+      :area, :image_html, :video_html, :preview, :legend, :brief_place, :dopy_list, 
+      :is_visible, :is_active, :is_archived, :auto_teams_accept, :prepare_url, :discuss_url,
+      :statistics_url, :scenario_url)
+  end
 end

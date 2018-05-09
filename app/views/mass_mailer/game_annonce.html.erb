@@ -1,6 +1,6 @@
 Привет!
 
-<p>Приглашаем Вас принять участие в новой игре проекта NeFoRmat "<%= game.name %>", которая состоится <%= game.start_date.localtime.strftime('%d.%m.%y в %H:%M') %>.</p>
+<p>Приглашаем Вас принять участие в новой игре проекта NeFoRmat "<%= game.name %>", которая состоится <%= game.start_at.localtime.strftime('%d.%m.%y в %H:%M') %>.</p>
 
 <% if game.dopy_list.present? %>
 <p>
