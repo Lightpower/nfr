@@ -139,6 +139,7 @@ ActiveRecord::Schema.define(version: 20140330150233) do
     t.string   "discuss_url"
     t.string   "statistics_url"
     t.string   "scenario_url"
+    t.string   "test_url"
     t.integer  "format_id"
   end
 

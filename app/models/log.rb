@@ -4,6 +4,9 @@ class Log < ActiveRecord::Base
   belongs_to :code
   belongs_to :game
 
+  # TODO: change attr_accessible for new rains
+  # attr_accessible :game, :game_id, :data, :team, :team_id, :login, :result_code, :code, :code_id
+
   def can_show_info?
     ! [
         Code::STATES.index(:not_found),

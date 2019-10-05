@@ -3,4 +3,5 @@
 
 var NFR = {}, // Main site for class
     FIL = {}, // Filler mini-game, see filler/*.js
-    MIN = {}; // Miner  mini-game, see miner/*.js
+    MIN = {}, // Miner  mini-game, see miner/*.js
+    MINT = {}; // Miner  mini-game, see miner/*.js    

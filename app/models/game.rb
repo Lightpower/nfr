@@ -26,7 +26,7 @@ class Game < ActiveRecord::Base
   scope :actual, -> { where(is_archived: false).order('start_at') }
 
   def self.of_project(project_id)
-    Format.of_project(project_id).map(&:games).flatten.select{|f| f.games.active}
+    Format.of_project(project_id).map(&:games).flatten.select{|g| g.is_active}
   end
 
   ##

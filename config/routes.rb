@@ -82,9 +82,9 @@ Nfr::Application.routes.draw do
     end
   end
 
-  # # Games
-  # # Game 10
-  # get '/pic/yandex.jpg', to: redirect('http://klads.org.ua/nfr/010/pic/yandex.jpg')
+  # Games
+  # Game 10
+  get '/pic/yandex.jpg', to: redirect('http://klads.org.ua/nfr/010/pic/yandex.jpg')
 
 
   # Easters
@@ -95,7 +95,7 @@ Nfr::Application.routes.draw do
   get '/miner' =>  'easters#miner'
 
   # Vzaperti parser
-  get '/parse': 'parser#index'
+  get '/parse' => 'parser#index'
 
 
 end

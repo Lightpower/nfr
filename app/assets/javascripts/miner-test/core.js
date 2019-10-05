@@ -1,8 +1,8 @@
-MIN.core = {
+MINT.core = {
   predefined: false,
-  width: 20,
-  height: 20,
-  mineCount: 40,
+  width: 5,
+  height: 5,
+  mineCount: 5,
   // Field is [X][Y] array which contains whether it has mine (0=empty, 1=mine), and label
   field: undefined,
   dead: false,
@@ -88,7 +88,6 @@ MIN.core = {
           returnNumber += 1;
       }
     }
-    this.openCellLeft --;
     return returnNumber;
   },
 

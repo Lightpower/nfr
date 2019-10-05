@@ -9,6 +9,10 @@ class Task < ActiveRecord::Base
   has_many   :hints
   has_many   :codes
 
+  # TODO: change attr_accessible for new rains
+  # attr_accessible :game, :game_id, :bonus, :code_quota, :preview, :data, :name, :number, :duration, :task, :task_id, :zone, :zone_id,
+  #               :access_code, :code_id, :bonus, :task_type, :special
+
 
   class << self
 

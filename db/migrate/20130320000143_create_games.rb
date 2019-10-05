@@ -22,6 +22,7 @@ class CreateGames < ActiveRecord::Migration
       t.string   :discuss_url
       t.string   :statistics_url
       t.string   :scenario_url
+      t.string   :test_url
 
       t.references :format
     end

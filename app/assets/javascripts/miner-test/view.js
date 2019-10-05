@@ -1,5 +1,5 @@
 // Show status panel and game field
-MIN.view = {
+MINT.view = {
   minerDivId:           'miner',
   // Field
   fieldDivId:            'miner_field',
@@ -12,6 +12,7 @@ MIN.view = {
   resetLinkClass:        'miner_reset',
   stateLabelId:          'miner_state_label',
   stateTextId:           'miner_state_text',
+  minerCountLabelId:     'miner_count_label',
   // Config panel
   saveConfigLinkClass:   'miner_save_config',
   cancelConfigLinkClass: 'miner_cancel_config',
@@ -38,8 +39,8 @@ MIN.view = {
 
   createDivs: function() {
     this.createControl();
-    if(MIN.core.field) this.createField();
-    if(!MIN.core.predefined) this.createConfig();
+    if(MINT.core.field) this.createField();
+    if(!MINT.core.predefined) this.createConfig();
   },
 
   //################
@@ -55,7 +56,7 @@ MIN.view = {
   //#########
 
   createField: function() {
-    // show MIN.core.field on <div id="field">
+    // show MINT.core.field on <div id="field">
     var i, j,
       div = this.mainDiv(),
       divSize = this.computeDivWidth(),
@@ -69,14 +70,14 @@ MIN.view = {
       '" style="width: ' + divSize[0] + 'px; height: '+ divSize[1] +'px"></div>');
     div = div.children("div#" + this.fieldDivId);
 
-    cellWidth = Math.floor(div.width() / MIN.core.width) - 2;
-    cellHeight = Math.floor(div.height() / MIN.core.height) - 2;
+    cellWidth = Math.floor(div.width() / MINT.core.width) - 2;
+    cellHeight = Math.floor(div.height() / MINT.core.height) - 2;
 
     // Place cells on the field
-    for(j=0; j<MIN.core.height; j++) {
+    for(j=0; j<MINT.core.height; j++) {
       div.append('<div class="' + this.fieldRowClass + '" style="height: ' + (cellHeight+2) + 'px;"></div>');
       rowDiv = div.children().last();
-      for(i=0; i<MIN.core.width; i++) {
+      for(i=0; i<MINT.core.width; i++) {
         newCell = '<a href="#" class="' + this.fieldCellClass
           + '" style="width: ' + cellWidth + 'px; height: ' + cellHeight + 'px;"'
           + ' data-coord="' + i + '_' + j + '">&nbsp;';
@@ -86,19 +87,19 @@ MIN.view = {
   },
 
   computeDivWidth: function() {
-    var divWidth = MIN.core.width * 20,
+    var divWidth = MINT.core.width * 20,
         divHeight,
         maxWidth = $('div#' + this.minerDivId).width() - 10;
     if(divWidth < 400) divWidth = 400;
     if(divWidth > maxWidth) divWidth = maxWidth;
-    divWidth = ~~(divWidth / MIN.core.width) * MIN.core.width;
-    divHeight = divWidth / MIN.core.width * MIN.core.height;
+    divWidth = ~~(divWidth / MINT.core.width) * MINT.core.width;
+    divHeight = divWidth / MINT.core.width * MINT.core.height;
 
     return [divWidth, divHeight];
   },
 
   updateCell: function(point, result) {
-    // show MIN.core.field on <div id="field">
+    // show MINT.core.field on <div id="field">
     var i=point[0],
         j= point[1],
         cell = this.mainDiv().find('a[data-coord='+ i + '_' + j +']');
@@ -112,10 +113,11 @@ MIN.view = {
         cell.text('@');
         break;
       default:
-        cell.addClass(this.cellOpen);
-        if(result >= 0 && result <= 8)
-          cell.addClass(this.opened_classes[result]);
-        cell.text(result);
+        if (!cell.hasClass(this.cellOpen)) { 
+          cell.addClass(this.cellOpen);
+          MINT.core.openCellLeft --;
+        }
+        $('span#' + this.minerCountLabelId).text(result);
         break;
     }
   },
@@ -151,16 +153,18 @@ MIN.view = {
     var div = this.mainDiv();
     // Remove status panel
     div.children("div#" + this.statusDivId).remove();
+    div.children("div#" + this.minerCountLabelId).remove();
     // Create status panel
-    div.prepend('<div id="' + this.statusDivId + '" name="' + this.statusDivId + '"></div>');
+    div.prepend('<div id="' + this.statusDivId + '" name="' + this.statusDivId + '">');
     div = div.children("div#" + this.statusDivId);
 
     // Control panel
     div.append('<div id="' + this.controlDivId + '" name="' + this.controlDivId + '">'
-      + (MIN.core.predefined ? '' : '<a href="#" class="' + this.configLinkClass + ' button">Config</a> ')
+      + (MINT.core.predefined ? '' : '<a href="#" class="' + this.configLinkClass + ' button">Config</a> ')
       + '<a href="#" class="' + this.resetLinkClass + ' button">Reset</a>'
       + '<span id="' + this.stateLabelId + '" name="' + this.stateLabelId + '"></span>'
-      + '<span id="' + this.stateTextId + '" name="' + this.stateTextId + '"></span><br>'
+      + '<span id="' + this.stateTextId + '" name="' + this.stateTextId + '"></span>'
+      + '<span id="' + this.minerCountLabelId + '" name="' + this.minerCountLabelId + '"></span><br>'
       + '<a href="#" class="' + this.markerModeClass + ' button">Set marker</a> <span>(or press and hold ALT button)</span>'
       + '</div>');
   },
@@ -173,10 +177,10 @@ MIN.view = {
     div.children('div#' + this.configDivId).remove();
     // Create background div
     div.append('<div id="' + this.configBlockDivId + '" name="' + this.configBlockDivId + '"'
-      + (MIN.core.predefined ? ' style="display: none;"' : '')
+      + (MINT.core.predefined ? ' style="display: none;"' : '')
       + '></div>');
     // Create config panel
-    div.append('<div id="' + this.configDivId + '" name="' + this.configDivId + '" style="display: ' + (MIN.core.predefined ? 'none' : 'inline') + ';"></div>');
+    div.append('<div id="' + this.configDivId + '" name="' + this.configDivId + '" style="display: ' + (MINT.core.predefined ? 'none' : 'inline') + ';"></div>');
     div = div.children("div#" + this.configDivId);
 
     // Place field config
@@ -186,17 +190,17 @@ MIN.view = {
     headDiv.append('<tr>');
     subDiv = headDiv.find('tr').last();
     subDiv.append('<td>Field width:</td>');
-    subDiv.append('<td><input id="' + this.fieldWidthInputId + '" name="' + this.fieldWidthInputId + '" value="20"></td>');
+    subDiv.append('<td><input id="' + this.fieldWidthInputId + '" name="' + this.fieldWidthInputId + '" value="'+MINT.core.width+'"></td>');
     // Height
     headDiv.append('<tr>');
     subDiv = headDiv.find('tr').last();
     subDiv.append('<td>Field height:</td>');
-    subDiv.append('<td><input id="' + this.fieldHeightInputId + '" name="' + this.fieldHeightInputId + '" value="20"></td>');
+    subDiv.append('<td><input id="' + this.fieldHeightInputId + '" name="' + this.fieldHeightInputId + '" value="'+MINT.core.height+'"></td>');
     // Mine number
     headDiv.append('<tr>');
     subDiv = headDiv.find('tr').last();
     subDiv.append('<td>Mine number: </td>');
-    subDiv.append('<td><input id="' + this.mineCountInputId + '" name="' + this.mineCountInputId + '" value="50"></td>');
+    subDiv.append('<td><input id="' + this.mineCountInputId + '" name="' + this.mineCountInputId + '" value="'+MINT.core.mineCount+'"></td>');
 
     div.append('<div><a href="#" class="' + this.saveConfigLinkClass + ' button">Save and Start</a>' +
       ' <a href="#" class="' + this.cancelConfigLinkClass + ' button">Cancel</a></div>');
@@ -204,17 +208,19 @@ MIN.view = {
   },
 
   updateStatus: function() {
-    var label = $('span#' + this.stateLabelId + ''),
-        text  = $('span#' + this.stateTextId + '');
-    if(MIN.core.dead) {
+    var label = $('span#' + this.stateLabelId),
+        text  = $('span#' + this.stateTextId),
+        spanCount = $('span#' + this.minerCountLabelId);
+    if(MINT.core.dead) {
       label.html('&nbsp;');
       text.html(':(');
-    }else if(MIN.core.openCellLeft === 0) {
+    }else if(MINT.core.openCellLeft === 0) {
       label.html('&nbsp;');
-      text.html('Victory!');
+      text.html('');
+      spanCount.html('Victory!');
     }else{
-      label.html('Closed cells left: ');
-      text.html(MIN.core.openCellLeft);
+      // label.html('Closed cells left: ');
+      // text.html(MINT.core.openCellLeft);
     }
   }
 }

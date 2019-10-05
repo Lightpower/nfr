@@ -185,7 +185,7 @@ MIN.view = {
     // Width
     headDiv.append('<tr>');
     subDiv = headDiv.find('tr').last();
-    subDiv.append('<td>Field width:</td>');
+    subDiv.append('<td>Field width!!!:</td>');
     subDiv.append('<td><input id="' + this.fieldWidthInputId + '" name="' + this.fieldWidthInputId + '" value="20"></td>');
     // Height
     headDiv.append('<tr>');

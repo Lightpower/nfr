@@ -9,6 +9,9 @@ class Zone < ActiveRecord::Base
   belongs_to :access_code, class_name: 'Code', foreign_key: 'code_id'
   belongs_to :game
 
+  # TODO: change attr_accessible for new rains
+  # attr_accessible :game, :game_id, :name, :number, :image_url, :access_code, :code_id, :preview
+
   CLASS_NAMES = {
       'Север' => 'north',
       'Замковый Утёс' => 'casterly',

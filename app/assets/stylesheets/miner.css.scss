@@ -27,7 +27,7 @@ div#miner_field {
 div#miner_config {
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 70%;
   width: 289px;
   height: 150px;
   margin-left: -150px;
@@ -152,5 +152,12 @@ a.mc.m_open.m7 {
 }
 a.mc.m_open.m8 {
   color: orange;
+}
+
+span#miner_count_label {
+  color: red;
+  font-weight: bold;
+  font-size: 2em;
+  padding-left: 20px;
 }
 

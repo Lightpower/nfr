@@ -45,58 +45,58 @@ MIN.events = {
 }
 
 $(function() {
-  MIN.events.onLoad();
+  // MIN.events.onLoad();
 
-  // Click on "Config"
-  $('a.miner_start').on("click", function(e) {
-    MIN.events.onConfig();
-    e.preventDefault();
-  });
+  // // Click on "Config"
+  // $('a.miner_start').on("click", function(e) {
+  //   MIN.events.onConfig();
+  //   e.preventDefault();
+  // });
 
-  // Click on "Reset"
-  $('a.miner_reset').on("click", function(e) {
-    MIN.events.onReset();
-    e.preventDefault();
-  });
+  // // Click on "Reset"
+  // $('a.miner_reset').on("click", function(e) {
+  //   MIN.events.onReset();
+  //   e.preventDefault();
+  // });
 
-  // Click on Cell (player makes his turn)
-  $('div#miner').on("click", 'a.' + MIN.view.fieldCellClass, function(e) {
-    // parse coordinates
-    var coords = $(this).data('coord').split('_'),
-      x = parseInt(coords[0]),
-      y = parseInt(coords[1]);
+  // // Click on Cell (player makes his turn)
+  // $('div#miner').on("click", 'a.' + MIN.view.fieldCellClass, function(e) {
+  //   // parse coordinates
+  //   var coords = $(this).data('coord').split('_'),
+  //     x = parseInt(coords[0]),
+  //     y = parseInt(coords[1]);
 
-    if(e.altKey || MIN.view.markerMode) {
-      MIN.view.markCell([x, y]);
-      MIN.view.markerMode = false;
-    } else {
-      if(
-        $(this).hasClass('m_open') ||
-          ($(this).text() === "#")
-        ) {}
-      else {
-        // Click with Alt button
-        MIN.events.onMakeTurn([x, y]);
-      }
-    }
-    e.preventDefault();
-  });
+  //   if(e.altKey || MIN.view.markerMode) {
+  //     MIN.view.markCell([x, y]);
+  //     MIN.view.markerMode = false;
+  //   } else {
+  //     if(
+  //       $(this).hasClass('m_open') ||
+  //         ($(this).text() === "#")
+  //       ) {}
+  //     else {
+  //       // Click with Alt button
+  //       MIN.events.onMakeTurn([x, y]);
+  //     }
+  //   }
+  //   e.preventDefault();
+  // });
 
-  // Click on Save on Config panel
-  $('a.' + MIN.view.saveConfigLinkClass).on("click", function(e) {
-    MIN.events.onStartGame();
-    e.preventDefault();
-  });
+  // // Click on Save on Config panel
+  // $('a.' + MIN.view.saveConfigLinkClass).on("click", function(e) {
+  //   MIN.events.onStartGame();
+  //   e.preventDefault();
+  // });
 
-  //Click on Close on Config panel
-  $('a.' + MIN.view.cancelConfigLinkClass).on("click", function(e) {
-    MIN.events.onCloseConfig();
-    e.preventDefault();
-  });
+  // //Click on Close on Config panel
+  // $('a.' + MIN.view.cancelConfigLinkClass).on("click", function(e) {
+  //   MIN.events.onCloseConfig();
+  //   e.preventDefault();
+  // });
 
-  // Click on "Set mine marker"
-  $('a.' + MIN.view.markerModeClass).on("click", function(e) {
-    MIN.view.markerMode = !MIN.view.markerMode;
-    e.preventDefault();
-  });
+  // // Click on "Set mine marker"
+  // $('a.' + MIN.view.markerModeClass).on("click", function(e) {
+  //   MIN.view.markerMode = !MIN.view.markerMode;
+  //   e.preventDefault();
+  // });
 });
