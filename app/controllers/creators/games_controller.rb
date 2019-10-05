@@ -73,6 +73,6 @@ class Creators::GamesController < ApplicationController
     params.require(:game).permit(:number, :format_id, :name, :game_type, :start_at, :finish_at, :price, 
       :area, :image_html, :video_html, :preview, :legend, :brief_place, :dopy_list, 
       :is_visible, :is_active, :is_archived, :auto_teams_accept, :prepare_url, :discuss_url,
-      :statistics_url, :scenario_url)
+      :statistics_url, :scenario_url, :test_url)
   end
 end

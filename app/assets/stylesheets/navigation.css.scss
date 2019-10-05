@@ -32,6 +32,48 @@ nav#site_info_container {
   border-style: solid;
 }
 
+nav#top_panel {
+   top: 150px;
+   z-index: 1000;
+   border-bottom:1px solid #6e5646;
+   border-top:1px solid #6e5646;
+   width:100%;
+   min-width:320px;
+   height:30px;
+   background:#000;
+   background-image:url(menu_bg.png);
+   text-align:left;
+   display:block;
+   padding-top:5px;  
+}
+#top_panel ul {
+    height: auto;
+    padding: 0px;
+    display: table;
+    max-width: 380px;
+    width: 100%;
+}
+#top_panel ul li {
+  display: table-cell;
+  font-weight:bold;
+}
+#top_panel a {
+  list-style: none;
+  color:#FFF;
+  font-size:large;
+  text-decoration:none;
+  text-shadow: #444 1px 0 0px, #444 0 1px 0px, #444 -1px 0 0px, #444 0 -1px 0px;
+}
+
+#top_panel a:hover{
+  color:#CCC;
+  transition: color 0.2s linear;
+}
+
+
+
+
+
 aside.menu {
   display: block;
   -webkit-border-radius: 2px;

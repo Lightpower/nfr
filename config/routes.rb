@@ -76,18 +76,11 @@ Nfr::Application.routes.draw do
     resources :games
   end
 
-  # resources :info, only: [] do
-  #   collection do
-  #     get :about
-  #     get :contacts
-  #   end
-  # end
-
-  # resources :mailouts, except: [:delete] do
-  #   collection do
-  #     put :send_mail
-  #   end
-  # end
+  resources :mailouts, except: [:delete] do
+    collection do
+      put :send_mail
+    end
+  end
 
   # # Games
   # # Game 10
@@ -100,5 +93,9 @@ Nfr::Application.routes.draw do
   get '/hookers',   to: redirect('https://www.google.com.ua/search?site=imghp&tbm=isch&q=%D1%88%D0%BB%D1%8E%D1%85%D0%B8')
   get '/filler' => 'easters#filler'
   get '/miner' =>  'easters#miner'
+
+  # Vzaperti parser
+  get '/parse': 'parser#index'
+
 
 end
