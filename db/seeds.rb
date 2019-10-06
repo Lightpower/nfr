@@ -16,18 +16,12 @@ Project.delete_all
 Team.delete_all
 User.delete_all
 
-cq = Project.create(name: 'Карквест', en_name: 'carquest', url: nil, image_url: 'projects/carquest.jpg', position: 3)
-fq = Project.create(name: 'Пеший квест', en_name: 'footquest', url: nil, image_url: 'projects/footquest.jpg', position: 2)
-vq = Project.create(name: 'Виртуальный квест', en_name: 'virtualquest', url: nil, image_url: 'projects/virtualquest.jpg', position: 1)
-Project.create(name: 'Квест-комнаты', en_name: 'carquest', url: 'http://vzaperti.com.ua', image_url: 'projects/questrooms.jpg', position: 0)
+cq = Project.create(name: 'Городские квесты', en_name: 'cityquest', url: nil, image_url: 'projects/cityquest.jpg', position: 0)
 
-f_cq = Format.create(name: 'Приключение', css_class: 'advanture', project: cq)
-f_fq = Format.create(name: 'Прогулка',    css_class: 'walk',      project: fq)
-f_vq = Format.create(name: 'Онлайн',      css_class: 'online',    project: vq)
+f_cq = Format.create(name: 'Conquest', css_class: 'conquest', project: cq)
 
  # => User(id: integer, username: string, role: string, avatar_url: string, account: float, level: integer, team_id: integer, created_at: datetime, updated_at: datetime, email: string, 
 # encrypted_password: string, reset_password_token: string, reset_password_sent_at: datetime, remember_created_at: datetime, sign_in_count: integer, current_sign_in_at: datetime, 
 # last_sign_in_at: datetime, current_sign_in_ip: string, last_sign_in_ip: string) 
 
-admin = User.create(username: 'admin', role: 'admin', password: 'qweqweqwe', password_confirmation: 'qweqweqwe', email: 'bva@bva.ua')
-moder = User.create(username: 'moder', role: 'moderator', password: 'qweqweqwe', password_confirmation: 'qweqweqwe', email: 'test@test.ua')
+admin = User.create(username: 'admin', role: 'admin', password: 'qweqweqwe', password_confirmation: 'qweqweqwe', email: 'admin@admin.ua')

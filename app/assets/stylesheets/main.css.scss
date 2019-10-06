@@ -52,6 +52,10 @@ aside.aside_right {
   border-style: solid
 }
 
+aside#banners img {
+  max-width: 200px;
+}
+
 section.main_content {
   min-height: 220px;
   width: 800px;

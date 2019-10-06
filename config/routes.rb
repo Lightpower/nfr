@@ -13,50 +13,50 @@ Nfr::Application.routes.draw do
     end
   end
 
-  # resources :games, only: [:index, :show] do
-  #   member do
-  #     get :stat
-  #     get :archive
-  #   end
+  resources :games, only: [:index, :show] do
+    member do
+      get :stat
+      get :archive
+    end
 
-  #   get '/m' => 'mobile#index'
+    get '/m' => 'mobile#index'
 
-  #   resources :logs,    only: [:index] do
-  #     collection do
-  #       get :results
-  #     end
-  #   end
+    resources :logs,    only: [:index] do
+      collection do
+        get :results
+      end
+    end
 
-  #   resources :codes, only: [:index] do
-  #     collection do
-  #       put :attach
-  #       put :bonus_action
-  #       post :pass
-  #     end
-  #   end
-  # end
+    resources :codes, only: [:index] do
+      collection do
+        put :attach
+        put :bonus_action
+        post :pass
+      end
+    end
+  end
 
   resources :teams
 
   resources :game_requests, only: [:create, :destroy]
 
-  # resources :archives, only: [:index, :show] do
-  #   member do
-  #     get :short_stat
-  #     get :wide_stat
-  #   end
-  # end
+  resources :archives, only: [:index, :show] do
+    member do
+      get :short_stat
+      get :wide_stat
+    end
+  end
 
-  resource :users
-  # get '/users' => 'users#index',          as: :users
-  # post '/users' => 'users#create',        as: :users
-  # get '/users/new' => 'users#new',        as: :new_user
-  # get '/users/:id/edit' => 'users#edit',  as: :edit_user
+  # resource :users
+  get '/users' => 'users#index',          as: :users
+  post '/users' => 'users#create',        as: :users
+  get '/users/new' => 'users#new',        as: :new_user
+  get '/users/:id/edit' => 'users#edit',  as: :edit_user
   get '/users/:id/team_requests' => 'users#team_requests',  as: :team_requests_user
-  # get '/users/:id' => 'users#show',       as: :user
-  # put '/users/:id' => 'users#update',     as: :user
+  get '/users/:id' => 'users#show',       as: :user
+  put '/users/:id' => 'users#update',     as: :user
   get '/users/:id/exclude' => 'users#exclude',     as: :exclude_user
-  # delete '/users/:id' => 'users#destroy',    via: :delete, as: :user
+  delete '/users/:id' => 'users#destroy',    via: :delete, as: :user
 
   resources :team_requests, only: [] do
     member do
@@ -76,22 +76,22 @@ Nfr::Application.routes.draw do
     resources :games
   end
 
-  # resources :info, only: [] do
-  #   collection do
-  #     get :about
-  #     get :contacts
-  #   end
-  # end
+  resources :info, only: [] do
+    collection do
+      get :about
+      get :contacts
+    end
+  end
 
-  # resources :mailouts, except: [:delete] do
-  #   collection do
-  #     put :send_mail
-  #   end
-  # end
+  resources :mailouts, except: [:delete] do
+    collection do
+      put :send_mail
+    end
+  end
 
-  # # Games
-  # # Game 10
-  # get '/pic/yandex.jpg', to: redirect('http://klads.org.ua/nfr/010/pic/yandex.jpg')
+  # Games
+  # Game 10
+  get '/pic/yandex.jpg', to: redirect('http://klads.org.ua/nfr/010/pic/yandex.jpg')
 
 
   # Easters
